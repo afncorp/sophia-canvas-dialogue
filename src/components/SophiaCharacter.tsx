@@ -40,22 +40,14 @@ export const SophiaCharacter = ({ scrollProgress, onSectionEnter }: SophiaCharac
         transform: 'translateY(-50%)'
       }}
     >
-      <div className="relative">
-        {/* Glow effect */}
-        <div className="absolute inset-0 blur-3xl opacity-40 animate-pulse">
-          <div className="w-full h-full bg-primary rounded-full"></div>
-        </div>
-        
-        {/* Sophia video */}
-        <video 
-          src={sophiaVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="relative w-64 h-auto drop-shadow-2xl animate-float"
-        />
-      </div>
+      <video 
+        src={sophiaVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="w-64 h-auto animate-float"
+      />
     </div>
   );
 };
