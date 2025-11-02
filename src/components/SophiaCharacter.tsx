@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import sophiaImage from "@/assets/sophia.png";
+import sophiaVideo from "@/assets/sophia-video.mp4";
 
 interface SophiaCharacterProps {
   scrollProgress: number;
@@ -46,10 +46,13 @@ export const SophiaCharacter = ({ scrollProgress, onSectionEnter }: SophiaCharac
           <div className="w-full h-full bg-primary rounded-full"></div>
         </div>
         
-        {/* Sophia image */}
-        <img 
-          src={sophiaImage} 
-          alt="Sophia AI Assistant" 
+        {/* Sophia video */}
+        <video 
+          src={sophiaVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
           className="relative w-64 h-auto drop-shadow-2xl animate-float"
         />
       </div>
