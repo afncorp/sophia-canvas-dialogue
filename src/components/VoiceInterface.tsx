@@ -12,6 +12,7 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
   const { toast } = useToast();
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const chatRef = useRef<RealtimeChat | null>(null);
 
   const handleMessage = (event: any) => {
@@ -36,10 +37,14 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
 
     // Error handling
     if (event.type === 'conversation.item.input_audio_transcription.failed') {
-      const msg =
-        event?.error?.message?.includes('429')
-          ? 'Rate limited. Please wait a few seconds and try again.'
-          : event?.error?.message || 'Transcription failed.';
+      const isRateLimited = !!event?.error?.message?.includes('429');
+      if (isRateLimited) {
+        setCooldown((c) => (c > 0 ? c : 10));
+        chatRef.current?.setMicEnabled(false);
+      }
+      const msg = isRateLimited
+        ? 'Rate limited. Pausing mic for a few seconds...'
+        : event?.error?.message || 'Transcription failed.';
       toast({
         title: 'Voice not captured',
         description: msg,
@@ -98,6 +103,26 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
   };
 
   useEffect(() => {
+    if (cooldown > 0) {
+      const id = setInterval(() => {
+        setCooldown((c) => {
+          if (c <= 1) {
+            clearInterval(id);
+            chatRef.current?.setMicEnabled(true);
+            toast({
+              title: "Ready",
+              description: "Mic re-enabled. You can speak now.",
+            });
+            return 0;
+          }
+          return c - 1;
+        });
+      }, 1000);
+      return () => clearInterval(id);
+    }
+  }, [cooldown, toast]);
+
+  useEffect(() => {
     return () => {
       chatRef.current?.disconnect();
     };
@@ -105,6 +130,9 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
 
   return (
     <div className="fixed bottom-8 right-8 z-50">
+      {isConnected && cooldown > 0 && (
+        <div className="mb-2 text-sm">Cooling down: {cooldown}s</div>
+      )}
       {!isConnected ? (
         <Button 
           onClick={startConversation}

@@ -64,6 +64,7 @@ export class RealtimeChat {
   private pc: RTCPeerConnection | null = null;
   private dc: RTCDataChannel | null = null;
   private audioEl: HTMLAudioElement;
+  private micTrack: MediaStreamTrack | null = null;
 
   constructor(private onMessage: (message: any) => void) {
     this.audioEl = document.createElement("audio");
@@ -117,7 +118,8 @@ export class RealtimeChat {
           noiseSuppression: true,
         } 
       });
-      this.pc.addTrack(ms.getTracks()[0]);
+      this.micTrack = ms.getTracks()[0];
+      this.pc.addTrack(this.micTrack);
       console.log("Microphone track added");
 
       // Set up data channel for events
@@ -144,9 +146,9 @@ export class RealtimeChat {
                 output_audio_format: "pcm16",
                 turn_detection: {
                   type: "server_vad",
-                  threshold: 0.5,
+                  threshold: 0.6,
                   prefix_padding_ms: 300,
-                  silence_duration_ms: 1000,
+                  silence_duration_ms: 1500,
                 },
               },
             };
@@ -296,6 +298,10 @@ export class RealtimeChat {
     this.dc.send(JSON.stringify({type: 'response.create'}));
   }
 
+  setMicEnabled(enabled: boolean) {
+    if (this.micTrack) this.micTrack.enabled = enabled;
+  }
+
   disconnect() {
     console.log("Disconnecting...");
     if (this.dc) {
@@ -305,6 +311,10 @@ export class RealtimeChat {
     if (this.pc) {
       this.pc.close();
       this.pc = null;
+    }
+    if (this.micTrack) {
+      try { this.micTrack.stop?.(); } catch {}
+      this.micTrack = null;
     }
     if (this.audioEl.srcObject) {
       const tracks = (this.audioEl.srcObject as MediaStream).getTracks();
