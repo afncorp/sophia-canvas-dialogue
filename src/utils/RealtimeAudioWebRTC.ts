@@ -68,6 +68,9 @@ export class RealtimeChat {
   constructor(private onMessage: (message: any) => void) {
     this.audioEl = document.createElement("audio");
     this.audioEl.autoplay = true;
+    this.audioEl.setAttribute("playsinline", "true");
+    this.audioEl.style.display = "none";
+    document.body.appendChild(this.audioEl);
   }
 
   async init() {
@@ -91,7 +94,11 @@ export class RealtimeChat {
       console.log("Ephemeral token received successfully");
 
       // Create peer connection
-      this.pc = new RTCPeerConnection();
+      this.pc = new RTCPeerConnection({
+        iceServers: [
+          { urls: ["stun:stun.l.google.com:19302", "stun:global.stun.twilio.com:3478"] }
+        ]
+      });
 
       // Set up remote audio - this is how we'll hear Sophia
       this.pc.ontrack = (e) => {
@@ -134,11 +141,32 @@ export class RealtimeChat {
         console.error("Data channel error:", err);
       };
 
-      // Create and set local description
+      // Create and set local description, then wait for ICE gathering to complete
       console.log("Creating offer...");
       const offer = await this.pc.createOffer();
       await this.pc.setLocalDescription(offer);
-      console.log("Local description set");
+      console.log("Local description set, waiting for ICE gathering to complete...");
+
+      await new Promise<void>((resolve) => {
+        if (!this.pc) return resolve();
+        if (this.pc.iceGatheringState === "complete") {
+          resolve();
+        } else {
+          const checkState = () => {
+            if (!this.pc) return resolve();
+            if (this.pc.iceGatheringState === "complete") {
+              this.pc.removeEventListener("icegatheringstatechange", checkState);
+              resolve();
+            }
+          };
+          this.pc.addEventListener("icegatheringstatechange", checkState);
+        }
+      });
+      
+      const localDescription = this.pc.localDescription;
+      if (!localDescription?.sdp) {
+        throw new Error("Failed to gather ICE candidates");
+      }
 
       // Connect to OpenAI's Realtime API
       const baseUrl = "https://api.openai.com/v1/realtime";
@@ -147,7 +175,7 @@ export class RealtimeChat {
       console.log("Connecting to OpenAI with ephemeral key...");
       const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
         method: "POST",
-        body: offer.sdp,
+        body: localDescription.sdp,
         headers: {
           Authorization: `Bearer ${EPHEMERAL_KEY}`,
           "Content-Type": "application/sdp"
