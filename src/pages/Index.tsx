@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { SophiaCharacter } from "@/components/SophiaCharacter";
-import { ConversationDemo } from "@/components/ConversationDemo";
 import { SophiaMessage } from "@/components/SophiaMessage";
-import { ChatInput } from "@/components/ChatInput";
+import { ConversationDemo } from "@/components/ConversationDemo";
 import { ChatMessages } from "@/components/ChatMessages";
+import { ChatInput } from "@/components/ChatInput";
+import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
 import { Sparkles, Brain, Zap, MessageSquare } from "lucide-react";
 
@@ -17,6 +18,7 @@ const Index = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentSection, setCurrentSection] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const { messages, isLoading, sendMessage } = useChat();
 
   useEffect(() => {
@@ -159,6 +161,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Voice Interface */}
+      <VoiceInterface onSpeakingChange={setIsSpeaking} />
     </div>
   );
 };
