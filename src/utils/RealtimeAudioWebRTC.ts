@@ -64,7 +64,6 @@ export class RealtimeChat {
   private pc: RTCPeerConnection | null = null;
   private dc: RTCDataChannel | null = null;
   private audioEl: HTMLAudioElement;
-  private recorder: AudioRecorder | null = null;
 
   constructor(private onMessage: (message: any) => void) {
     this.audioEl = document.createElement("audio");
@@ -77,46 +76,75 @@ export class RealtimeChat {
       console.log("Getting ephemeral token...");
       const { data, error } = await supabase.functions.invoke("realtime-chat");
       
-      if (error) throw error;
+      if (error) {
+        console.error("Edge function error:", error);
+        throw error;
+      }
+      
+      console.log("Edge function response:", data);
+      
       if (!data?.client_secret?.value) {
-        throw new Error("Failed to get ephemeral token");
+        throw new Error("Failed to get ephemeral token from response");
       }
 
       const EPHEMERAL_KEY = data.client_secret.value;
-      console.log("Ephemeral token received");
+      console.log("Ephemeral token received successfully");
 
       // Create peer connection
       this.pc = new RTCPeerConnection();
 
-      // Set up remote audio
-      this.pc.ontrack = e => {
+      // Set up remote audio - this is how we'll hear Sophia
+      this.pc.ontrack = (e) => {
         console.log("Received remote audio track");
         this.audioEl.srcObject = e.streams[0];
+        this.audioEl.play().catch(err => console.error("Error playing audio:", err));
       };
 
-      // Add local audio track
+      // Add local audio track for microphone
       console.log("Requesting microphone access...");
-      const ms = await navigator.mediaDevices.getUserMedia({ audio: true });
-      this.pc.addTrack(ms.getTracks()[0]);
-
-      // Set up data channel
-      this.dc = this.pc.createDataChannel("oai-events");
-      this.dc.addEventListener("message", (e) => {
-        const event = JSON.parse(e.data);
-        console.log("Received event:", event.type);
-        this.onMessage(event);
+      const ms = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          sampleRate: 24000,
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true,
+        } 
       });
+      this.pc.addTrack(ms.getTracks()[0]);
+      console.log("Microphone track added");
+
+      // Set up data channel for events
+      this.dc = this.pc.createDataChannel("oai-events");
+      
+      this.dc.onopen = () => {
+        console.log("Data channel opened");
+      };
+      
+      this.dc.onmessage = (e) => {
+        try {
+          const event = JSON.parse(e.data);
+          console.log("Received event:", event.type);
+          this.onMessage(event);
+        } catch (err) {
+          console.error("Error parsing data channel message:", err);
+        }
+      };
+
+      this.dc.onerror = (err) => {
+        console.error("Data channel error:", err);
+      };
 
       // Create and set local description
       console.log("Creating offer...");
       const offer = await this.pc.createOffer();
       await this.pc.setLocalDescription(offer);
+      console.log("Local description set");
 
       // Connect to OpenAI's Realtime API
       const baseUrl = "https://api.openai.com/v1/realtime";
       const model = "gpt-4o-realtime-preview-2024-12-17";
       
-      console.log("Connecting to OpenAI...");
+      console.log("Connecting to OpenAI with ephemeral key...");
       const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
         method: "POST",
         body: offer.sdp,
@@ -127,16 +155,21 @@ export class RealtimeChat {
       });
 
       if (!sdpResponse.ok) {
-        throw new Error(`OpenAI connection failed: ${sdpResponse.status}`);
+        const errorText = await sdpResponse.text();
+        console.error("OpenAI API error:", sdpResponse.status, errorText);
+        throw new Error(`OpenAI connection failed: ${sdpResponse.status} - ${errorText}`);
       }
 
-      const answer = {
-        type: "answer" as RTCSdpType,
-        sdp: await sdpResponse.text(),
+      const answerSdp = await sdpResponse.text();
+      console.log("Received answer from OpenAI");
+      
+      const answer: RTCSessionDescriptionInit = {
+        type: "answer",
+        sdp: answerSdp,
       };
       
       await this.pc.setRemoteDescription(answer);
-      console.log("WebRTC connection established");
+      console.log("WebRTC connection established successfully!");
 
     } catch (error) {
       console.error("Error initializing chat:", error);
@@ -168,8 +201,19 @@ export class RealtimeChat {
   }
 
   disconnect() {
-    this.recorder?.stop();
-    this.dc?.close();
-    this.pc?.close();
+    console.log("Disconnecting...");
+    if (this.dc) {
+      this.dc.close();
+      this.dc = null;
+    }
+    if (this.pc) {
+      this.pc.close();
+      this.pc = null;
+    }
+    if (this.audioEl.srcObject) {
+      const tracks = (this.audioEl.srcObject as MediaStream).getTracks();
+      tracks.forEach(track => track.stop());
+      this.audioEl.srcObject = null;
+    }
   }
 }
