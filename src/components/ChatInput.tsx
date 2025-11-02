@@ -3,7 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 
-export const ChatInput = () => {
+interface ChatInputProps {
+  onSendMessage: (message: string) => void;
+  disabled?: boolean;
+}
+
+export const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   const [message, setMessage] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,10 +32,9 @@ export const ChatInput = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!message.trim() || disabled) return;
     
-    // Here you would handle the actual message sending
-    console.log("Sending message:", message);
+    onSendMessage(message);
     setMessage("");
   };
 
@@ -45,16 +49,18 @@ export const ChatInput = () => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Ask me anything..."
             className="flex-1 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-base px-6"
+            disabled={disabled}
           />
           <Button 
             type="submit" 
             size="icon"
             className="rounded-full w-12 h-12 bg-gradient-to-br from-primary to-accent hover:shadow-glow transition-all"
+            disabled={!message.trim() || disabled}
           >
             <Send className="w-5 h-5" />
           </Button>
         </div>
-        {!message && showCursor && (
+        {!message && showCursor && !disabled && (
           <div className="absolute left-8 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-foreground animate-pulse"></div>
         )}
       </div>

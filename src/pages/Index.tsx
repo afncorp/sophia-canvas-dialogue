@@ -3,6 +3,8 @@ import { SophiaCharacter } from "@/components/SophiaCharacter";
 import { ConversationDemo } from "@/components/ConversationDemo";
 import { SophiaMessage } from "@/components/SophiaMessage";
 import { ChatInput } from "@/components/ChatInput";
+import { ChatMessages } from "@/components/ChatMessages";
+import { useChat } from "@/hooks/useChat";
 import { Sparkles, Brain, Zap, MessageSquare } from "lucide-react";
 
 const sectionMessages: Record<string, string> = {
@@ -15,6 +17,7 @@ const Index = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentSection, setCurrentSection] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const { messages, isLoading, sendMessage } = useChat();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -143,12 +146,22 @@ const Index = () => {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Let's explore your mortgage options together. Ask me anything about home loans!
             </p>
-            <div className="pt-8">
-              <ChatInput />
+            
+            <div className="w-full max-w-3xl mx-auto pt-8">
+              {messages.length > 0 && (
+                <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-3xl p-8 shadow-soft border border-border/50 mb-6 max-h-[400px] overflow-y-auto">
+                  <ChatMessages messages={messages} isLoading={isLoading} />
+                </div>
+              )}
+              
+              <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+              
+              {messages.length === 0 && (
+                <p className="text-sm text-muted-foreground pt-4 text-center">
+                  Try asking: "What credit score do I need?" or "How much do I need for a down payment?"
+                </p>
+              )}
             </div>
-            <p className="text-sm text-muted-foreground pt-4">
-              Try asking: "What credit score do I need?" or "How much do I need for a down payment?"
-            </p>
           </div>
         </div>
       </section>
