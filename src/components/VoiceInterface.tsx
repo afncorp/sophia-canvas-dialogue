@@ -16,12 +16,48 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
 
   const handleMessage = (event: any) => {
     console.log('Received message:', event);
-    
-    // Handle different event types
-    if (event.type === 'response.audio.delta' || event.type === 'response.audio_transcript.delta') {
+
+    // Speaking indicators
+    if (
+      event.type === 'response.audio.delta' ||
+      event.type === 'response.audio_transcript.delta' ||
+      event.type === 'input_audio_buffer.speech_started'
+    ) {
       onSpeakingChange(true);
-    } else if (event.type === 'response.audio.done' || event.type === 'response.done') {
+      return;
+    }
+    if (
+      event.type === 'response.audio.done' ||
+      event.type === 'input_audio_buffer.speech_stopped' ||
+      event.type === 'response.done'
+    ) {
       onSpeakingChange(false);
+    }
+
+    // Error handling
+    if (event.type === 'conversation.item.input_audio_transcription.failed') {
+      const msg =
+        event?.error?.message?.includes('429')
+          ? 'Rate limited. Please wait a few seconds and try again.'
+          : event?.error?.message || 'Transcription failed.';
+      toast({
+        title: 'Voice not captured',
+        description: msg,
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (event.type === 'response.done' && event?.response?.status === 'failed') {
+      const code = event?.response?.status_details?.error?.code;
+      const message = event?.response?.status_details?.error?.message || 'The assistant could not respond.';
+      toast({
+        title: code === 'model_not_found' ? 'Voice model unavailable' : 'Voice response failed',
+        description: code === 'model_not_found'
+          ? 'Model not available. Please try again in a moment.'
+          : message,
+        variant: 'destructive',
+      });
     }
   };
 
