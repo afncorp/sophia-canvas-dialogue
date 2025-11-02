@@ -39,7 +39,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
+    <div className="min-h-screen bg-white">
       {/* Sophia Character - follows scroll */}
       <SophiaCharacter scrollProgress={scrollProgress} onSectionEnter={handleSectionEnter} />
 
@@ -67,7 +67,7 @@ const Index = () => {
         <div className="max-w-6xl w-full ml-80">
           <h2 className="text-4xl font-bold mb-12 text-center">What I Can Do</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-card rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
+            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Brain className="w-6 h-6 text-primary" />
               </div>
@@ -77,7 +77,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bg-card rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
+            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
@@ -87,7 +87,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bg-card rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
+            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-primary" />
               </div>
@@ -97,7 +97,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bg-card rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
+            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <MessageSquare className="w-6 h-6 text-primary" />
               </div>
@@ -124,7 +124,7 @@ const Index = () => {
             ].map((useCase, index) => (
               <div 
                 key={index} 
-                className="bg-card rounded-2xl p-6 shadow-soft border border-border/50 hover:shadow-glow hover:border-primary/30 transition-all"
+                className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-6 shadow-soft border border-border/50 hover:shadow-glow hover:border-primary/30 transition-all"
               >
                 <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
                 <p className="text-muted-foreground">{useCase.desc}</p>
