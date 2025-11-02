@@ -172,21 +172,39 @@ export class RealtimeChat {
       await this.pc.setLocalDescription(offer);
       console.log("Local description set, waiting for ICE gathering to complete...");
 
-      await new Promise<void>((resolve) => {
+      // Wait for ICE gathering to complete, but fall back after 2 seconds
+      const waitForIce = new Promise<void>((resolve) => {
         if (!this.pc) return resolve();
-        if (this.pc.iceGatheringState === "complete") {
+
+        const finish = () => {
+          this.pc?.removeEventListener("icegatheringstatechange", onStateChange);
           resolve();
-        } else {
-          const checkState = () => {
-            if (!this.pc) return resolve();
-            if (this.pc.iceGatheringState === "complete") {
-              this.pc.removeEventListener("icegatheringstatechange", checkState);
-              resolve();
-            }
-          };
-          this.pc.addEventListener("icegatheringstatechange", checkState);
-        }
+        };
+
+        const onStateChange = () => {
+          if (!this.pc) return finish();
+          console.log("ICE state:", this.pc.iceGatheringState);
+          if (this.pc.iceGatheringState === "complete") finish();
+        };
+
+        // Also resolve when the last candidate (null) is fired
+        this.pc.onicecandidate = (e) => {
+          if (!e.candidate) {
+            console.log("ICE candidate gathering finished (null candidate)");
+            finish();
+          }
+        };
+
+        this.pc.addEventListener("icegatheringstatechange", onStateChange);
+
+        // Fallback timeout: proceed with whatever we have
+        setTimeout(() => {
+          console.warn("ICE gathering timed out, proceeding with current localDescription");
+          finish();
+        }, 2000);
       });
+
+      await waitForIce;
       
       const localDescription = this.pc.localDescription;
       if (!localDescription?.sdp) {
