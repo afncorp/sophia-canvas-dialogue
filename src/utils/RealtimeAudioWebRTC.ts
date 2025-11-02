@@ -132,6 +132,31 @@ export class RealtimeChat {
           const event = JSON.parse(e.data);
           console.log("Received event:", event.type);
           this.onMessage(event);
+
+          // After session is created, update session config to ensure correct audio formats & VAD
+          if (event.type === "session.created") {
+            const update = {
+              type: "session.update",
+              session: {
+                modalities: ["audio", "text"],
+                voice: "alloy",
+                input_audio_format: "pcm16",
+                output_audio_format: "pcm16",
+                turn_detection: {
+                  type: "server_vad",
+                  threshold: 0.5,
+                  prefix_padding_ms: 300,
+                  silence_duration_ms: 1000,
+                },
+              },
+            };
+            try {
+              this.dc?.send(JSON.stringify(update));
+              console.log("Sent session.update");
+            } catch (sendErr) {
+              console.error("Failed to send session.update:", sendErr);
+            }
+          }
         } catch (err) {
           console.error("Error parsing data channel message:", err);
         }
