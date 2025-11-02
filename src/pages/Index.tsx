@@ -40,12 +40,6 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
       {/* Sophia Character - follows scroll */}
       <SophiaCharacter scrollProgress={scrollProgress} onSectionEnter={handleSectionEnter} />
-      
-      {/* Sophia's contextual messages */}
-      <SophiaMessage 
-        message={sectionMessages[currentSection] || ""} 
-        show={showMessage && currentSection !== "hero"}
-      />
 
       {/* Hero Section */}
       <section id="hero" className="min-h-screen flex items-center justify-center px-8 pt-20">
