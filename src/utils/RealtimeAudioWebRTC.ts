@@ -213,26 +213,51 @@ export class RealtimeChat {
 
       // Connect to OpenAI's Realtime API
       const baseUrl = "https://api.openai.com/v1/realtime";
-      const model = "gpt-4o-realtime-preview-2024-12-17";
+      const candidateModels = [
+        "gpt-4o-realtime-preview",
+        "gpt-4o-realtime-preview-2024-12-17",
+      ];
       
       console.log("Connecting to OpenAI with ephemeral key...");
-      const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
-        method: "POST",
-        body: localDescription.sdp,
-        headers: {
-          Authorization: `Bearer ${EPHEMERAL_KEY}`,
-          "Content-Type": "application/sdp"
-        },
-      });
-
-      if (!sdpResponse.ok) {
-        const errorText = await sdpResponse.text();
-        console.error("OpenAI API error:", sdpResponse.status, errorText);
-        throw new Error(`OpenAI connection failed: ${sdpResponse.status} - ${errorText}`);
+      let sdpResponse: Response | null = null;
+      let selectedModel = "";
+      
+      for (const model of candidateModels) {
+        try {
+          console.log("Attempting realtime connect with model:", model);
+          const resp = await fetch(`${baseUrl}?model=${model}`, {
+            method: "POST",
+            body: localDescription.sdp,
+            headers: {
+              Authorization: `Bearer ${EPHEMERAL_KEY}`,
+              "Content-Type": "application/sdp"
+            },
+          });
+          
+          if (!resp.ok) {
+            const errorText = await resp.text();
+            console.warn("Realtime connect error:", resp.status, errorText);
+            if (errorText.includes("model_not_found") || errorText.includes("does not exist")) {
+              continue;
+            }
+            throw new Error(`OpenAI connection failed: ${resp.status} - ${errorText}`);
+          }
+          
+          sdpResponse = resp;
+          selectedModel = model;
+          break;
+        } catch (e) {
+          console.warn("Realtime connect attempt failed for model:", model, e);
+          continue;
+        }
       }
-
+      
+      if (!sdpResponse) {
+        throw new Error("Failed to connect to any realtime model candidate.");
+      }
+      
       const answerSdp = await sdpResponse.text();
-      console.log("Received answer from OpenAI");
+      console.log("Received answer from OpenAI with model:", selectedModel);
       
       const answer: RTCSessionDescriptionInit = {
         type: "answer",

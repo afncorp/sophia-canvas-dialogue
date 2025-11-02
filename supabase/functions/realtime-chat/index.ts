@@ -28,7 +28,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o-realtime-preview-2024-12-17",
+        model: "gpt-4o-realtime-preview",
         voice: "alloy",
         instructions: "You are Sophia, a friendly and knowledgeable mortgage loan officer assistant. Help users understand different loan types, calculate affordability, and guide them through the mortgage process. Be warm, professional, and clear in your explanations.",
         modalities: ["text", "audio"],
