@@ -7,22 +7,22 @@ interface Message {
 }
 
 const demoConversation: Message[] = [
-  { role: "user", content: "Hi Sophia! What can you help me with?", delay: 1000 },
+  { role: "user", content: "Hi Sophia! I'm thinking about buying my first home. Can you help?", delay: 1000 },
   { 
     role: "assistant", 
-    content: "Hello! I'm Sophia, your AI assistant. I can help you with research, answer questions, provide recommendations, generate content, and so much more. What are you working on today?", 
+    content: "Hello! I'm Sophia, your mortgage loan officer assistant. Congratulations on taking this exciting step! I can help you understand loan options, calculate what you can afford, explain the pre-approval process, and guide you through every step of getting your home loan. What questions do you have?", 
     delay: 2000 
   },
-  { role: "user", content: "I need help planning a marketing campaign for a new product launch.", delay: 2500 },
+  { role: "user", content: "What's the difference between a conventional loan and an FHA loan?", delay: 2500 },
   { 
     role: "assistant", 
-    content: "Great! I can help you with that. Let's start by identifying your target audience, key messaging, and channels. I can also help you create content calendars, draft copy, and analyze competitor strategies. Would you like to start with audience research?", 
+    content: "Great question! A conventional loan typically requires a higher credit score (620+) and at least 3-5% down, but offers more flexibility. An FHA loan is government-backed, requires only 3.5% down, and accepts lower credit scores (580+), making it perfect for first-time buyers. However, FHA loans require mortgage insurance. Which sounds like a better fit for your situation?", 
     delay: 2800 
   },
-  { role: "user", content: "Yes! Can you also help me write social media posts?", delay: 2000 },
+  { role: "user", content: "I have about $15,000 saved. How much house can I afford?", delay: 2000 },
   { 
     role: "assistant", 
-    content: "Absolutely! I can create engaging social media content tailored to different platforms - from catchy Instagram captions to professional LinkedIn posts. I'll make sure each post aligns with your brand voice and campaign goals. Ready to get started?", 
+    content: "With $15,000 saved, you're off to a great start! The home price you can afford depends on your income, debts, and credit score. Generally, lenders look for a debt-to-income ratio under 43%. I can help you calculate your buying power and explore loan programs that maximize your budget. Would you like me to walk you through the numbers?", 
     delay: 2500 
   },
 ];

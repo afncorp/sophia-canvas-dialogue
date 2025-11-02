@@ -6,9 +6,9 @@ import { ChatInput } from "@/components/ChatInput";
 import { Sparkles, Brain, Zap, MessageSquare } from "lucide-react";
 
 const sectionMessages: Record<string, string> = {
-  capabilities: "Let me show you what I can do! I'm great at understanding context and providing detailed answers.",
-  "use-cases": "I can help with so many different tasks - from research to creative writing!",
-  ready: "Ready to chat? I'm here to help you with whatever you need!"
+  capabilities: "I can help you understand different loan types, calculate affordability, and guide you through the mortgage process!",
+  "use-cases": "Whether you're buying your first home or refinancing, I'm here to make the process simple and stress-free.",
+  ready: "Ready to start your home buying journey? Let's find the perfect loan for you!"
 };
 
 const Index = () => {
@@ -52,7 +52,7 @@ const Index = () => {
               Meet Sophia
             </h1>
             <p className="text-2xl text-muted-foreground max-w-2xl mx-auto">
-              Your intelligent AI assistant, ready to help with anything
+              Your mortgage loan officer assistant, here to guide you home
             </p>
           </div>
           
@@ -72,9 +72,9 @@ const Index = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Brain className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Smart Understanding</h3>
+              <h3 className="text-xl font-semibold mb-3">Loan Expertise</h3>
               <p className="text-muted-foreground">
-                I understand context, nuance, and can engage in meaningful conversations about complex topics.
+                I understand conventional, FHA, VA, and USDA loans, helping you find the best option for your situation.
               </p>
             </div>
             
@@ -82,9 +82,9 @@ const Index = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Creative Solutions</h3>
+              <h3 className="text-xl font-semibold mb-3">Affordability Calculator</h3>
               <p className="text-muted-foreground">
-                From brainstorming ideas to writing content, I help you create amazing things.
+                I'll help you calculate what you can afford based on your income, savings, and credit profile.
               </p>
             </div>
             
@@ -92,9 +92,9 @@ const Index = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Instant Answers</h3>
+              <h3 className="text-xl font-semibold mb-3">Process Guidance</h3>
               <p className="text-muted-foreground">
-                Get quick, accurate responses to your questions with detailed explanations when needed.
+                From pre-approval to closing, I'll walk you through each step of the mortgage process.
               </p>
             </div>
             
@@ -102,9 +102,9 @@ const Index = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <MessageSquare className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Natural Conversation</h3>
+              <h3 className="text-xl font-semibold mb-3">Refinance Options</h3>
               <p className="text-muted-foreground">
-                Chat with me like you would with a colleague - I'm here to listen and help.
+                Already own a home? I can help you explore refinancing to lower your rate or tap into equity.
               </p>
             </div>
           </div>
@@ -117,11 +117,11 @@ const Index = () => {
           <h2 className="text-4xl font-bold mb-12 text-center">How You Can Use Me</h2>
           <div className="space-y-6">
             {[
-              { title: "Research & Analysis", desc: "Deep dive into topics, analyze data, and get comprehensive insights" },
-              { title: "Content Creation", desc: "Write articles, social media posts, marketing copy, and more" },
-              { title: "Learning & Education", desc: "Understand complex concepts, get explanations, and explore new subjects" },
-              { title: "Planning & Strategy", desc: "Develop plans, brainstorm strategies, and organize your thoughts" },
-              { title: "Problem Solving", desc: "Work through challenges and find creative solutions together" }
+              { title: "First-Time Home Buyers", desc: "Navigate the home buying process with confidence and understand your loan options" },
+              { title: "Refinancing", desc: "Lower your monthly payment, reduce your interest rate, or access your home equity" },
+              { title: "Pre-Approval Guidance", desc: "Get pre-approved faster by understanding exactly what documents and information you need" },
+              { title: "Loan Comparison", desc: "Compare conventional, FHA, VA, and USDA loans to find your best fit" },
+              { title: "Down Payment Planning", desc: "Explore down payment assistance programs and strategies to maximize your budget" }
             ].map((useCase, index) => (
               <div 
                 key={index} 
@@ -139,15 +139,15 @@ const Index = () => {
       <section id="ready" className="min-h-screen flex items-center justify-center px-8 py-20">
         <div className="max-w-6xl w-full ml-80">
           <div className="text-center space-y-8">
-            <h2 className="text-5xl font-bold">Ready to Get Started?</h2>
+            <h2 className="text-5xl font-bold">Ready to Find Your Dream Home?</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              I'm here and ready to help. Just type your question or tell me what you need!
+              Let's explore your mortgage options together. Ask me anything about home loans!
             </p>
             <div className="pt-8">
               <ChatInput />
             </div>
             <p className="text-sm text-muted-foreground pt-4">
-              Try asking me about anything - research, writing, planning, or just chat!
+              Try asking: "What credit score do I need?" or "How much do I need for a down payment?"
             </p>
           </div>
         </div>
