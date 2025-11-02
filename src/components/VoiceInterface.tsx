@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { AudioRecorder, encodeAudioForAPI, playAudioData, clearAudioQueue } from '@/utils/RealtimeAudio';
+import { RealtimeChat } from '@/utils/RealtimeAudioWebRTC';
 import { Mic, MicOff } from 'lucide-react';
 
 interface VoiceInterfaceProps {
@@ -12,101 +12,33 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
   const { toast } = useToast();
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const wsRef = useRef<WebSocket | null>(null);
-  const recorderRef = useRef<AudioRecorder | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
+  const chatRef = useRef<RealtimeChat | null>(null);
+
+  const handleMessage = (event: any) => {
+    console.log('Received message:', event);
+    
+    // Handle different event types
+    if (event.type === 'response.audio.delta' || event.type === 'response.audio_transcript.delta') {
+      onSpeakingChange(true);
+    } else if (event.type === 'response.audio.done' || event.type === 'response.done') {
+      onSpeakingChange(false);
+    }
+  };
 
   const startConversation = async () => {
     try {
       setIsLoading(true);
-
-      // Request microphone permission
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      // Initialize audio context
-      audioContextRef.current = new AudioContext({ sampleRate: 24000 });
-
-      // Connect to WebSocket edge function
-      const wsUrl = `wss://rjoisskcpjymcxhdrtwv.supabase.co/functions/v1/realtime-chat`;
-      console.log('Connecting to:', wsUrl);
       
-      const ws = new WebSocket(wsUrl);
-      wsRef.current = ws;
-
-      ws.onopen = async () => {
-        console.log('WebSocket connected');
-        setIsConnected(true);
-        setIsLoading(false);
-        
-        toast({
-          title: "Connected",
-          description: "You can now speak with Sophia",
-        });
-
-        // Start recording audio
-        recorderRef.current = new AudioRecorder((audioData) => {
-          if (ws.readyState === WebSocket.OPEN) {
-            const encoded = encodeAudioForAPI(audioData);
-            ws.send(JSON.stringify({
-              type: 'input_audio_buffer.append',
-              audio: encoded
-            }));
-          }
-        });
-        
-        await recorderRef.current.start();
-        console.log('Audio recording started');
-      };
-
-      ws.onmessage = async (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          console.log('Received event:', data.type);
-          
-          if (data.type === 'error') {
-            console.error('Server error:', data.error);
-            toast({
-              title: "Error",
-              description: data.error,
-              variant: "destructive",
-            });
-            return;
-          }
-
-          if (data.type === 'response.audio.delta' && data.delta) {
-            onSpeakingChange(true);
-            const binaryString = atob(data.delta);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-              bytes[i] = binaryString.charCodeAt(i);
-            }
-            if (audioContextRef.current) {
-              await playAudioData(audioContextRef.current, bytes);
-            }
-          } else if (data.type === 'response.audio.done') {
-            onSpeakingChange(false);
-          }
-        } catch (error) {
-          console.error('Error processing message:', error);
-        }
-      };
-
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setIsLoading(false);
-        toast({
-          title: "Connection Error",
-          description: "Failed to connect to voice service",
-          variant: "destructive",
-        });
-      };
-
-      ws.onclose = () => {
-        console.log('WebSocket closed');
-        setIsConnected(false);
-        onSpeakingChange(false);
-      };
-
+      chatRef.current = new RealtimeChat(handleMessage);
+      await chatRef.current.init();
+      
+      setIsConnected(true);
+      setIsLoading(false);
+      
+      toast({
+        title: "Connected",
+        description: "You can now speak with Sophia",
+      });
     } catch (error) {
       console.error('Error starting conversation:', error);
       setIsLoading(false);
@@ -119,9 +51,7 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
   };
 
   const endConversation = () => {
-    recorderRef.current?.stop();
-    wsRef.current?.close();
-    clearAudioQueue();
+    chatRef.current?.disconnect();
     setIsConnected(false);
     onSpeakingChange(false);
     
@@ -133,9 +63,7 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
 
   useEffect(() => {
     return () => {
-      recorderRef.current?.stop();
-      wsRef.current?.close();
-      clearAudioQueue();
+      chatRef.current?.disconnect();
     };
   }, []);
 
