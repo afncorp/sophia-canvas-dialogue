@@ -39,7 +39,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f8f8f8' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#fafafa' }}>
       {/* Sophia Character - follows scroll */}
       <SophiaCharacter scrollProgress={scrollProgress} onSectionEnter={handleSectionEnter} />
 
