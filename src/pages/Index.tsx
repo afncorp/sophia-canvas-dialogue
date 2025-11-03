@@ -37,61 +37,61 @@ const Index = () => {
       </header>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex">
-        {/* Left 3/4 - Content Area */}
-        <div className="w-3/4 flex items-center justify-center p-8">
-        <div className="max-w-5xl w-full space-y-8">
+      <div className="flex-1 flex flex-col md:flex-row">
+        {/* Content Area - Full width on mobile, 3/4 on desktop */}
+        <div className="w-full md:w-3/4 flex items-center justify-center p-4 md:p-8">
+        <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section */}
-          <div className="text-center space-y-3">
-            <h2 className="text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
-            <p className="text-lg text-muted-foreground">
+          <div className="text-center space-y-2 md:space-y-3">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
+            <p className="text-sm md:text-lg text-muted-foreground">
               15+ years experience • NMLS #12345 • Licensed Nationwide
             </p>
             <div className="flex items-center justify-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Award key={i} className="w-5 h-5 fill-primary text-primary" />
+                  <Award key={i} className="w-4 h-4 md:w-5 md:h-5 fill-primary text-primary" />
                 ))}
               </div>
-              <span className="text-sm font-semibold">4.9/5.0 (200+ reviews)</span>
+              <span className="text-xs md:text-sm font-semibold">4.9/5.0 (200+ reviews)</span>
             </div>
           </div>
 
           {/* Compact Contact Card */}
-          <div className="bg-white rounded-2xl p-6 shadow-soft border border-border/50">
-            <div className="grid md:grid-cols-[auto_1fr] gap-6 items-start">
+          <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-soft border border-border/50">
+            <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-start">
               {/* Photo */}
               <img 
                 src={mattMainePhoto} 
                 alt="Matt Maine - Mortgage Loan Officer"
-                className="w-32 h-32 rounded-xl object-cover shadow-soft mx-auto md:mx-0"
+                className="w-24 h-24 md:w-32 md:h-32 rounded-xl object-cover shadow-soft mx-auto md:mx-0"
               />
 
               {/* Info Grid */}
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4 text-center md:text-left">
                 <div>
-                  <h3 className="text-2xl font-bold text-foreground">Matt Maine</h3>
-                  <p className="text-base text-primary font-semibold">Senior Mortgage Loan Officer</p>
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground">Matt Maine</h3>
+                  <p className="text-sm md:text-base text-primary font-semibold">Senior Mortgage Loan Officer</p>
                 </div>
 
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                   Specializing in first-time homebuyers, refinancing, and investment properties. 
                   Helped hundreds of families achieve their homeownership dreams with personalized service.
                 </p>
 
                 {/* Contact Buttons */}
-                <div className="grid grid-cols-3 gap-2">
-                  <Button size="sm" className="w-full">
-                    <Phone className="w-4 h-4 mr-1" />
-                    Call
+                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
+                  <Button size="sm" className="w-full text-xs md:text-sm h-8 md:h-9">
+                    <Phone className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+                    <span className="hidden md:inline">Call</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full">
-                    <Mail className="w-4 h-4 mr-1" />
-                    Email
+                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9">
+                    <Mail className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+                    <span className="hidden md:inline">Email</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full">
-                    <MessageSquare className="w-4 h-4 mr-1" />
-                    Text
+                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9">
+                    <MessageSquare className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+                    <span className="hidden md:inline">Text</span>
                   </Button>
                 </div>
               </div>
@@ -99,29 +99,29 @@ const Index = () => {
           </div>
 
           {/* CTA Section */}
-          <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 text-center">
-            <h3 className="text-2xl font-bold text-foreground mb-3">Ready to Get Started?</h3>
-            <p className="text-muted-foreground mb-4">Get pre-approved in minutes with our streamlined process</p>
-            <Button size="lg" className="text-lg px-8">
+          <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl md:rounded-2xl p-4 md:p-6 text-center">
+            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
+            <p className="text-sm md:text-base text-muted-foreground mb-3 md:mb-4">Get pre-approved in minutes with our streamlined process</p>
+            <Button size="lg" className="text-base md:text-lg px-6 md:px-8 w-full md:w-auto">
               Start Your Application
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
             </Button>
           </div>
 
           {/* Sophia AI Benefits */}
-          <div className="bg-white rounded-2xl p-6 shadow-soft border border-border/50">
-            <div className="grid md:grid-cols-[auto_1fr] gap-6 items-center">
+          <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-soft border border-border/50">
+            <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center">
               <img 
                 src={sophiaRobot}
                 alt="Sophia AI Assistant"
-                className="w-24 h-24 object-contain mx-auto md:mx-0"
+                className="w-20 h-20 md:w-24 md:h-24 object-contain mx-auto md:mx-0"
               />
-              <div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">Meet Sophia - Your AI Assistant</h3>
-                <p className="text-sm text-muted-foreground mb-3">
+              <div className="text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Meet Sophia - Your AI Assistant</h3>
+                <p className="text-xs md:text-sm text-muted-foreground mb-3">
                   Our AI-powered assistant is here 24/7 to help you navigate the mortgage process
                 </p>
-                <ul className="space-y-2 text-sm text-muted-foreground">
+                <ul className="space-y-2 text-xs md:text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                     <span><strong>Instant Answers:</strong> Get immediate responses to your mortgage questions</span>
@@ -145,8 +145,8 @@ const Index = () => {
         </div>
       </div>
 
-        {/* Right 1/4 - Sophia Panel */}
-        <div className="w-1/4 bg-white border-l border-border/50 flex flex-col">
+        {/* Right 1/4 - Sophia Panel - Hidden on mobile, shown as sidebar on desktop */}
+        <div className="hidden md:flex md:w-1/4 bg-white border-l border-border/50 flex-col">
         {/* Header with Sophia */}
         <div className="flex-shrink-0 p-4 border-b border-border/50">
           <div className="flex items-center gap-3">
@@ -203,17 +203,17 @@ const Index = () => {
       </div>
 
       {/* Below the Fold Content - Full Width */}
-      <div className="w-full bg-gradient-to-b from-background to-muted/20 py-16 px-8">
-        <div className="max-w-7xl mx-auto space-y-20">
+      <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto space-y-12 md:space-y-20">
           
           {/* Process Flow Comparison */}
-          <section className="space-y-8">
-            <div className="text-center space-y-3">
-              <h2 className="text-4xl font-bold text-foreground">Traditional vs AI-Enhanced Process</h2>
-              <p className="text-lg text-muted-foreground">See how our AI technology accelerates your mortgage journey</p>
+          <section className="space-y-6 md:space-y-8">
+            <div className="text-center space-y-2 md:space-y-3">
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Traditional vs AI-Enhanced Process</h2>
+              <p className="text-sm md:text-lg text-muted-foreground">See how our AI technology accelerates your mortgage journey</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               {/* Traditional */}
               <div className="bg-muted/40 rounded-2xl p-8 border-2 border-border">
                 <div className="text-center mb-6">
@@ -281,10 +281,10 @@ const Index = () => {
           </section>
 
           {/* Calculator Section */}
-          <section className="space-y-8">
-            <div className="text-center space-y-3">
-              <h2 className="text-4xl font-bold text-foreground">Calculate Your Monthly Payment</h2>
-              <p className="text-lg text-muted-foreground">Get an instant estimate of your mortgage costs</p>
+          <section className="space-y-6 md:space-y-8">
+            <div className="text-center space-y-2 md:space-y-3">
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Calculate Your Monthly Payment</h2>
+              <p className="text-sm md:text-lg text-muted-foreground">Get an instant estimate of your mortgage costs</p>
             </div>
 
             <div className="bg-white rounded-2xl p-8 shadow-soft border border-border/50 max-w-3xl mx-auto">
@@ -332,20 +332,20 @@ const Index = () => {
           </section>
 
           {/* Reviews Section */}
-          <section className="space-y-8">
-            <div className="text-center space-y-3">
-              <h2 className="text-4xl font-bold text-foreground">What Our Clients Say</h2>
+          <section className="space-y-6 md:space-y-8">
+            <div className="text-center space-y-2 md:space-y-3">
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground">What Our Clients Say</h2>
               <div className="flex items-center justify-center gap-2">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
-                    <Award key={i} className="w-6 h-6 fill-primary text-primary" />
+                    <Award key={i} className="w-4 h-4 md:w-6 md:h-6 fill-primary text-primary" />
                   ))}
                 </div>
-                <span className="text-lg font-semibold">5.0/5.0 (1,000+ reviews)</span>
+                <span className="text-sm md:text-lg font-semibold">5.0/5.0 (1,000+ reviews)</span>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4 md:gap-6">
               {[
                 {
                   name: "Anthony",
@@ -399,13 +399,13 @@ const Index = () => {
           </section>
 
           {/* Loan Programs */}
-          <section className="space-y-8 pb-8">
-            <div className="text-center space-y-3">
-              <h2 className="text-4xl font-bold text-foreground">Loan Programs We Offer</h2>
-              <p className="text-lg text-muted-foreground">Find the perfect loan program for your unique situation</p>
+          <section className="space-y-6 md:space-y-8 pb-8">
+            <div className="text-center space-y-2 md:space-y-3">
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Loan Programs We Offer</h2>
+              <p className="text-sm md:text-lg text-muted-foreground">Find the perfect loan program for your unique situation</p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {[
                 { name: "Conventional", icon: Home, desc: "Traditional financing with competitive rates" },
                 { name: "FHA Loans", icon: Users, desc: "Low down payment options for first-time buyers" },
@@ -426,15 +426,15 @@ const Index = () => {
       </div>
 
       {/* Compliance Footer - Spans Full Width */}
-      <footer className="bg-[#3a3a3a] border-t border-white/20 py-8 px-8">
+      <footer className="bg-[#3a3a3a] border-t border-white/20 py-6 md:py-8 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 mx-auto md:mx-0">
               <img 
                 src={afnLogoWhite} 
                 alt="American Financial Network Logo" 
-                className="h-16 w-auto"
+                className="h-12 md:h-16 w-auto"
               />
             </div>
 
