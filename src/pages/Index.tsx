@@ -1,169 +1,89 @@
-import { useState, useEffect } from "react";
-import { SophiaCharacter } from "@/components/SophiaCharacter";
-import { SophiaMessage } from "@/components/SophiaMessage";
 import { ConversationDemo } from "@/components/ConversationDemo";
 import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
-import { Sparkles, Brain, Zap, MessageSquare } from "lucide-react";
-
-const sectionMessages: Record<string, string> = {
-  capabilities: "I can help you understand different loan types, calculate affordability, and guide you through the mortgage process!",
-  "use-cases": "Whether you're buying your first home or refinancing, I'm here to make the process simple and stress-free.",
-  ready: "Ready to start your home buying journey? Let's find the perfect loan for you!"
-};
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users } from "lucide-react";
+import sophiaVideo from "@/assets/sophia-video.mp4";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [currentSection, setCurrentSection] = useState("");
-  const [showMessage, setShowMessage] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const { messages, isLoading, sendMessage } = useChat();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollProgress(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleSectionEnter = (section: string) => {
-    if (section !== "hero" && section !== currentSection) {
-      setCurrentSection(section);
-      setShowMessage(true);
-      setTimeout(() => setShowMessage(false), 100);
-    }
-  };
+  const quickActions = [
+    { icon: MessageSquare, label: "Loan Options" },
+    { icon: DollarSign, label: "Affordability" },
+    { icon: Zap, label: "Refinancing" },
+    { icon: CreditCard, label: "Pre-Approval" },
+    { icon: Home, label: "First-Time Buyers" },
+    { icon: Users, label: "Down Payments" },
+  ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#fafafa' }}>
-      {/* Sophia Character - follows scroll */}
-      <SophiaCharacter scrollProgress={scrollProgress} onSectionEnter={handleSectionEnter} />
+    <div className="h-screen flex" style={{ backgroundColor: '#fafafa' }}>
+      {/* Left 2/3 - Content Area */}
+      <div className="w-2/3 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h1 className="text-5xl font-bold text-foreground/80">Your Mortgage Journey Starts Here</h1>
+          <p className="text-xl text-muted-foreground">Chat with Sophia to explore your options</p>
+        </div>
+      </div>
 
-      {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center px-8 pt-20">
-        <div className="max-w-6xl w-full ml-80">
-          <div className="text-center mb-12 space-y-6">
-            <h1 className="text-6xl font-bold bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent">
-              Meet Sophia
-            </h1>
-            <p className="text-2xl text-muted-foreground max-w-2xl mx-auto">
-              Your mortgage loan officer assistant, here to guide you home
-            </p>
+      {/* Right 1/3 - Sophia Panel */}
+      <div className="w-1/3 bg-white border-l border-border/50 flex flex-col h-screen">
+        {/* Header with Sophia */}
+        <div className="flex-shrink-0 p-4 border-b border-border/50">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+              <video 
+                src={sophiaVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="font-semibold text-lg">Meet Sophia</h2>
+              <p className="text-sm text-muted-foreground">Your AI Mortgage Assistant</p>
+            </div>
           </div>
-          
-          {/* Conversation Demo */}
-          <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-3xl p-8 shadow-soft border border-border/50">
+        </div>
+
+        {/* Chat Area - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+          {messages.length === 0 ? (
             <ConversationDemo />
-          </div>
+          ) : (
+            <ChatMessages messages={messages} isLoading={isLoading} />
+          )}
         </div>
-      </section>
 
-      {/* Capabilities Section */}
-      <section id="capabilities" className="min-h-screen flex items-center justify-center px-8 py-20">
-        <div className="max-w-6xl w-full ml-80">
-          <h2 className="text-4xl font-bold mb-12 text-center">What I Can Do</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Brain className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Loan Expertise</h3>
-              <p className="text-muted-foreground">
-                I understand conventional, FHA, VA, and USDA loans, helping you find the best option for your situation.
-              </p>
-            </div>
-            
-            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Sparkles className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Affordability Calculator</h3>
-              <p className="text-muted-foreground">
-                I'll help you calculate what you can afford based on your income, savings, and credit profile.
-              </p>
-            </div>
-            
-            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Process Guidance</h3>
-              <p className="text-muted-foreground">
-                From pre-approval to closing, I'll walk you through each step of the mortgage process.
-              </p>
-            </div>
-            
-            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-border/50 hover:shadow-glow transition-all">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <MessageSquare className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Refinance Options</h3>
-              <p className="text-muted-foreground">
-                Already own a home? I can help you explore refinancing to lower your rate or tap into equity.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
-      <section id="use-cases" className="min-h-screen flex items-center justify-center px-8 py-20">
-        <div className="max-w-6xl w-full ml-80">
-          <h2 className="text-4xl font-bold mb-12 text-center">How You Can Use Me</h2>
-          <div className="space-y-6">
-            {[
-              { title: "First-Time Home Buyers", desc: "Navigate the home buying process with confidence and understand your loan options" },
-              { title: "Refinancing", desc: "Lower your monthly payment, reduce your interest rate, or access your home equity" },
-              { title: "Pre-Approval Guidance", desc: "Get pre-approved faster by understanding exactly what documents and information you need" },
-              { title: "Loan Comparison", desc: "Compare conventional, FHA, VA, and USDA loans to find your best fit" },
-              { title: "Down Payment Planning", desc: "Explore down payment assistance programs and strategies to maximize your budget" }
-            ].map((useCase, index) => (
-              <div 
-                key={index} 
-                className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-2xl p-6 shadow-soft border border-border/50 hover:shadow-glow hover:border-primary/30 transition-all"
+        {/* Input Area - Always Visible */}
+        <div className="flex-shrink-0 p-4 border-t border-border/50 space-y-3">
+          <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+          
+          {/* Quick Action Buttons */}
+          <div className="grid grid-cols-2 gap-2">
+            {quickActions.map((action) => (
+              <Button
+                key={action.label}
+                variant="outline"
+                size="sm"
+                className="justify-start text-xs h-8"
+                onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
               >
-                <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
-                <p className="text-muted-foreground">{useCase.desc}</p>
-              </div>
+                <action.icon className="w-3 h-3 mr-1.5" />
+                {action.label}
+              </Button>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Ready to Chat Section */}
-      <section id="ready" className="min-h-screen flex items-center justify-center px-8 py-20">
-        <div className="max-w-6xl w-full ml-80">
-          <div className="text-center space-y-8">
-            <h2 className="text-5xl font-bold">Ready to Find Your Dream Home?</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Let's explore your mortgage options together. Ask me anything about home loans!
-            </p>
-            
-            <div className="w-full max-w-3xl mx-auto pt-8">
-              {messages.length > 0 && (
-                <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm rounded-3xl p-8 shadow-soft border border-border/50 mb-6 max-h-[400px] overflow-y-auto">
-                  <ChatMessages messages={messages} isLoading={isLoading} />
-                </div>
-              )}
-              
-              <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-              
-              {messages.length === 0 && (
-                <p className="text-sm text-muted-foreground pt-4 text-center">
-                  Try asking: "What credit score do I need?" or "How much do I need for a down payment?"
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Voice Interface */}
-      <VoiceInterface onSpeakingChange={setIsSpeaking} />
+      <VoiceInterface onSpeakingChange={() => {}} />
     </div>
   );
 };

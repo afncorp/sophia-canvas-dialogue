@@ -7,23 +7,17 @@ interface Message {
 }
 
 const demoConversation: Message[] = [
-  { role: "user", content: "Hi Sophia! I'm thinking about buying my first home. Can you help?", delay: 1000 },
+  { role: "user", content: "Hi Sophia! I'm thinking about buying my first home. Can you help?", delay: 500 },
   { 
     role: "assistant", 
-    content: "Hello! I'm Sophia, your mortgage loan officer assistant. Congratulations on taking this exciting step! I can help you understand loan options, calculate what you can afford, explain the pre-approval process, and guide you through every step of getting your home loan. What questions do you have?", 
-    delay: 2000 
+    content: "Absolutely! I can help you understand loan options, affordability, pre-approval, and more.", 
+    delay: 800 
   },
-  { role: "user", content: "What's the difference between a conventional loan and an FHA loan?", delay: 2500 },
+  { role: "user", content: "What's the difference between an FHA and conventional loan?", delay: 1200 },
   { 
     role: "assistant", 
-    content: "Great question! A conventional loan typically requires a higher credit score (620+) and at least 3-5% down, but offers more flexibility. An FHA loan is government-backed, requires only 3.5% down, and accepts lower credit scores (580+), making it perfect for first-time buyers. However, FHA loans require mortgage insurance. Which sounds like a better fit for your situation?", 
-    delay: 2800 
-  },
-  { role: "user", content: "I have about $15,000 saved. How much house can I afford?", delay: 2000 },
-  { 
-    role: "assistant", 
-    content: "With $15,000 saved, you're off to a great start! The home price you can afford depends on your income, debts, and credit score. Generally, lenders look for a debt-to-income ratio under 43%. I can help you calculate your buying power and explore loan programs that maximize your budget. Would you like me to walk you through the numbers?", 
-    delay: 2500 
+    content: "FHA loans offer lower down payments and flexible credit, while conventional loans require higher credit but no mortgage insurance after 20% equity.", 
+    delay: 1500 
   },
 ];
 
@@ -50,17 +44,17 @@ export const ConversationDemo = () => {
   }, [currentIndex]);
 
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="space-y-3">
       {messages.map((message, index) => (
         <div
           key={index}
           className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
         >
           <div
-            className={`max-w-[80%] rounded-2xl px-6 py-4 ${
+            className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
               message.role === "user"
-                ? "bg-primary text-primary-foreground ml-12"
-                : "bg-card text-card-foreground shadow-soft mr-12"
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-foreground"
             }`}
           >
             <p className="text-sm leading-relaxed">{message.content}</p>
@@ -70,11 +64,11 @@ export const ConversationDemo = () => {
       
       {currentIndex < demoConversation.length && messages.length > 0 && (
         <div className={`flex ${demoConversation[currentIndex].role === "user" ? "justify-end" : "justify-start"}`}>
-          <div className="flex items-center space-x-2 px-6 py-4">
+          <div className="flex items-center space-x-2 px-4 py-2">
             <div className="flex space-x-1">
-              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
             </div>
           </div>
         </div>
