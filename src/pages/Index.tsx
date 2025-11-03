@@ -280,6 +280,40 @@ const Index = () => {
             </div>
           </section>
 
+          {/* AI Workflow Video Placeholder */}
+          <section className="space-y-6 md:space-y-8">
+            <div className="text-center space-y-2 md:space-y-3">
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground">See Our AI Workflow in Action</h2>
+              <p className="text-sm md:text-lg text-muted-foreground">Watch how our AI technology transforms the mortgage process</p>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-lg group cursor-pointer hover:border-primary/40 transition-all">
+                {/* Video placeholder background */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center space-y-4">
+                    {/* Play button */}
+                    <div className="w-20 h-20 md:w-24 md:h-24 bg-white/90 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xl">
+                      <div className="w-0 h-0 border-t-[12px] md:border-t-[16px] border-t-transparent border-l-[20px] md:border-l-[26px] border-l-primary border-b-[12px] md:border-b-[16px] border-b-transparent ml-1.5 md:ml-2"></div>
+                    </div>
+                    <div className="space-y-2 px-4">
+                      <p className="text-lg md:text-xl font-bold text-foreground">Traditional vs AI-Enhanced Workflow</p>
+                      <p className="text-sm md:text-base text-muted-foreground">See the comparison in under 2 minutes</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute top-4 left-4 w-16 h-16 md:w-24 md:h-24 bg-primary/10 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-4 right-4 w-20 h-20 md:w-32 md:h-32 bg-primary/10 rounded-full blur-2xl"></div>
+              </div>
+              
+              <p className="text-center text-xs md:text-sm text-muted-foreground mt-4">
+                Video coming soon - showcasing our AI-powered mortgage process
+              </p>
+            </div>
+          </section>
+
           {/* Calculator Section */}
           <section className="space-y-6 md:space-y-8">
             <div className="text-center space-y-2 md:space-y-3">
