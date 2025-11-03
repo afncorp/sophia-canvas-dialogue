@@ -3,7 +3,7 @@ import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import { Button } from "@/components/ui/button";
@@ -107,6 +107,9 @@ const Index = () => {
                     Matt's AI-powered assistant is available 24/7 to answer your questions, explain loan options, 
                     and help you get started on your mortgage journey. Chat with Sophia on the right to begin!
                   </p>
+                </div>
+                <div className="flex-shrink-0 hidden md:block">
+                  <ArrowRight className="w-20 h-20 text-primary animate-pulse" strokeWidth={3} />
                 </div>
               </div>
             </div>
