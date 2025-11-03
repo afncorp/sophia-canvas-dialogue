@@ -7,6 +7,7 @@ import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, 
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
+import logoWhite from "@/assets/logo-white.png";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -173,11 +174,19 @@ const Index = () => {
       </div>
 
       {/* Compliance Footer - Spans Full Width */}
-      <footer className="bg-muted/30 border-t border-border/50 py-6 px-8">
-        <div className="max-w-7xl mx-auto space-y-4">
+      <footer className="bg-[#1a1a2e] border-t border-border/20 py-8 px-8">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Logo Bar */}
+          <div className="flex justify-center pb-4 border-b border-white/10">
+            <img 
+              src={logoWhite} 
+              alt="Company Logo" 
+              className="h-12 w-auto"
+            />
+          </div>
           {/* Main Compliance Text */}
-          <div className="text-xs text-muted-foreground space-y-2">
-            <p className="font-semibold">
+          <div className="text-xs text-white/70 space-y-2">
+            <p className="font-semibold text-white">
               Equal Housing Opportunity | NMLS #12345 | Licensed Mortgage Loan Officer
             </p>
             <p>
@@ -189,19 +198,19 @@ const Index = () => {
               Loans made or arranged pursuant to a California Residential Mortgage Lending Act License.
             </p>
             <p>
-              Matt Maine (NMLS #12345). Company NMLS #67890. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">www.nmlsconsumeraccess.org</a>
+              Matt Maine (NMLS #12345). Company NMLS #67890. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">www.nmlsconsumeraccess.org</a>
             </p>
           </div>
 
           {/* Links and Copyright */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-border/30">
-            <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-foreground transition-colors">Licensing</a>
-              <a href="#" className="hover:text-foreground transition-colors">Disclosures</a>
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
+            <div className="flex flex-wrap gap-4 text-xs text-white/70">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Licensing</a>
+              <a href="#" className="hover:text-white transition-colors">Disclosures</a>
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/70">
               © {new Date().getFullYear()} Matt Maine Mortgage. All rights reserved.
             </p>
           </div>
