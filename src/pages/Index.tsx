@@ -174,7 +174,7 @@ const Index = () => {
       </div>
 
       {/* Compliance Footer - Spans Full Width */}
-      <footer className="bg-[#1a1a2e] border-t border-border/20 py-8 px-8">
+      <footer className="bg-gradient-to-r from-[#8b5cf6] to-[#a78bfa] border-t border-white/20 py-8 px-8">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Logo Bar */}
           <div className="flex justify-center pb-4 border-b border-white/10">
