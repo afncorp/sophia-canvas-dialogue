@@ -8,6 +8,7 @@ import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import afnLogo from "@/assets/afn-logo.png";
+import afnLogoWhite from "@/assets/afn-logo-white.png";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -431,7 +432,7 @@ const Index = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <img 
-                src={afnLogo} 
+                src={afnLogoWhite} 
                 alt="American Financial Network Logo" 
                 className="h-16 w-auto"
               />
