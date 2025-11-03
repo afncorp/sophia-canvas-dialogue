@@ -26,8 +26,11 @@ const Index = () => {
       <div className="w-2/3 flex items-center justify-center p-12">
         <div className="max-w-4xl w-full">
           <div className="text-center mb-12 space-y-4">
-            <h1 className="text-5xl font-bold text-foreground/80">Your Mortgage Journey Starts Here</h1>
-            <p className="text-xl text-muted-foreground">Expert guidance powered by AI technology</p>
+            <h1 className="text-5xl font-bold text-foreground/80">Meet Your Loan Officer, Matt Maine</h1>
+            <p className="text-xl text-muted-foreground">
+              His AI-powered assistant Sophia is here to get you started. 
+              <span className="block mt-2">Prefer a human? We're just one click away.</span>
+            </p>
           </div>
 
           {/* Loan Officer Section */}
@@ -70,9 +73,14 @@ const Index = () => {
                   complex loan scenarios has helped hundreds of families achieve their homeownership dreams.
                 </p>
 
-                <div className="pt-4">
-                  <Button size="lg" className="w-full md:w-auto">
-                    Schedule a Consultation
+                <div className="pt-4 flex flex-col sm:flex-row gap-3">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    <Phone className="w-4 h-4 mr-2" />
+                    Talk to Matt Directly
+                  </Button>
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                    <Mail className="w-4 h-4 mr-2" />
+                    Send Email
                   </Button>
                 </div>
               </div>
