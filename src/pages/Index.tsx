@@ -3,8 +3,9 @@ import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
+import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -22,10 +23,61 @@ const Index = () => {
   return (
     <div className="h-screen flex" style={{ backgroundColor: '#fafafa' }}>
       {/* Left 2/3 - Content Area */}
-      <div className="w-2/3 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <h1 className="text-5xl font-bold text-foreground/80">Your Mortgage Journey Starts Here</h1>
-          <p className="text-xl text-muted-foreground">Chat with Sophia to explore your options</p>
+      <div className="w-2/3 flex items-center justify-center p-12">
+        <div className="max-w-4xl w-full">
+          <div className="text-center mb-12 space-y-4">
+            <h1 className="text-5xl font-bold text-foreground/80">Your Mortgage Journey Starts Here</h1>
+            <p className="text-xl text-muted-foreground">Expert guidance powered by AI technology</p>
+          </div>
+
+          {/* Loan Officer Section */}
+          <div className="bg-white rounded-3xl p-8 shadow-soft border border-border/50">
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              {/* Photo */}
+              <div className="flex-shrink-0">
+                <img 
+                  src={mattMainePhoto} 
+                  alt="Matt Maine - Mortgage Loan Officer"
+                  className="w-48 h-48 rounded-2xl object-cover shadow-soft"
+                />
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 text-center md:text-left space-y-4">
+                <div>
+                  <h2 className="text-3xl font-bold text-foreground mb-1">Matt Maine</h2>
+                  <p className="text-lg text-primary font-semibold">Senior Mortgage Loan Officer</p>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 justify-center md:justify-start text-muted-foreground">
+                    <Award className="w-5 h-5" />
+                    <span>NMLS #12345 • Licensed in Multiple States</span>
+                  </div>
+                  <div className="flex items-center gap-2 justify-center md:justify-start text-muted-foreground">
+                    <Phone className="w-5 h-5" />
+                    <span>(555) 123-4567</span>
+                  </div>
+                  <div className="flex items-center gap-2 justify-center md:justify-start text-muted-foreground">
+                    <Mail className="w-5 h-5" />
+                    <span>matt.maine@example.com</span>
+                  </div>
+                </div>
+
+                <p className="text-muted-foreground leading-relaxed">
+                  With over 15 years of experience in mortgage lending, Matt specializes in helping first-time homebuyers, 
+                  refinancing, and investment properties. His commitment to personalized service and expertise in navigating 
+                  complex loan scenarios has helped hundreds of families achieve their homeownership dreams.
+                </p>
+
+                <div className="pt-4">
+                  <Button size="lg" className="w-full md:w-auto">
+                    Schedule a Consultation
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
