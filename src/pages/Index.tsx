@@ -85,6 +85,31 @@ const Index = () => {
                 </div>
               </div>
             </div>
+
+            {/* Sophia Section */}
+            <div className="mt-8 pt-8 border-t border-border/50">
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-32 h-32 rounded-2xl overflow-hidden bg-muted">
+                    <video 
+                      src={sophiaVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Meet Sophia</h3>
+                  <p className="text-muted-foreground">
+                    Matt's AI-powered assistant is available 24/7 to answer your questions, explain loan options, 
+                    and help you get started on your mortgage journey. Chat with Sophia on the right to begin!
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -92,9 +117,9 @@ const Index = () => {
       {/* Right 1/3 - Sophia Panel */}
       <div className="w-1/3 bg-white border-l border-border/50 flex flex-col h-screen">
         {/* Header with Sophia */}
-        <div className="flex-shrink-0 p-4 border-b border-border/50">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+        <div className="flex-shrink-0 p-6 border-b border-border/50">
+          <div className="flex items-center gap-4 mb-2">
+            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
               <video 
                 src={sophiaVideo}
                 autoPlay
@@ -105,7 +130,7 @@ const Index = () => {
               />
             </div>
             <div>
-              <h2 className="font-semibold text-lg">Meet Sophia</h2>
+              <h2 className="font-semibold text-xl">Meet Sophia</h2>
               <p className="text-sm text-muted-foreground">Your AI Mortgage Assistant</p>
             </div>
           </div>
