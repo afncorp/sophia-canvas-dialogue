@@ -144,6 +144,63 @@ const Index = () => {
         </div>
       </div>
 
+        {/* Right 1/4 - Sophia Panel */}
+        <div className="w-1/4 bg-white border-l border-border/50 flex flex-col">
+        {/* Header with Sophia */}
+        <div className="flex-shrink-0 p-4 border-b border-border/50">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+              <video 
+                src={sophiaVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="font-semibold text-base">Sophia</h2>
+              <p className="text-xs text-muted-foreground">AI Assistant</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Chat Area - Scrollable */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
+          {messages.length === 0 ? (
+            <ConversationDemo />
+          ) : (
+            <ChatMessages messages={messages} isLoading={isLoading} />
+          )}
+        </div>
+
+        {/* Input Area - Always Visible */}
+        <div className="flex-shrink-0 p-3 border-t border-border/50 space-y-2">
+          <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+          
+          {/* Quick Action Buttons */}
+          <div className="grid grid-cols-2 gap-1.5">
+            {quickActions.map((action) => (
+              <Button
+                key={action.label}
+                variant="outline"
+                size="sm"
+                className="justify-start text-[10px] h-7 px-2"
+                onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+              >
+                <action.icon className="w-3 h-3 mr-1" />
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+        </div>
+
+        {/* Voice Interface */}
+        <VoiceInterface onSpeakingChange={() => {}} />
+      </div>
+
       {/* Below the Fold Content - Full Width */}
       <div className="w-full bg-gradient-to-b from-background to-muted/20 py-16 px-8">
         <div className="max-w-7xl mx-auto space-y-20">
@@ -365,63 +422,6 @@ const Index = () => {
           </section>
 
         </div>
-      </div>
-
-        {/* Right 1/4 - Sophia Panel */}
-        <div className="w-1/4 bg-white border-l border-border/50 flex flex-col">
-        {/* Header with Sophia */}
-        <div className="flex-shrink-0 p-4 border-b border-border/50">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-              <video 
-                src={sophiaVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div>
-              <h2 className="font-semibold text-base">Sophia</h2>
-              <p className="text-xs text-muted-foreground">AI Assistant</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Chat Area - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
-          {messages.length === 0 ? (
-            <ConversationDemo />
-          ) : (
-            <ChatMessages messages={messages} isLoading={isLoading} />
-          )}
-        </div>
-
-        {/* Input Area - Always Visible */}
-        <div className="flex-shrink-0 p-3 border-t border-border/50 space-y-2">
-          <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-          
-          {/* Quick Action Buttons */}
-          <div className="grid grid-cols-2 gap-1.5">
-            {quickActions.map((action) => (
-              <Button
-                key={action.label}
-                variant="outline"
-                size="sm"
-                className="justify-start text-[10px] h-7 px-2"
-                onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
-              >
-                <action.icon className="w-3 h-3 mr-1" />
-                {action.label}
-              </Button>
-            ))}
-          </div>
-        </div>
-        </div>
-
-        {/* Voice Interface */}
-        <VoiceInterface onSpeakingChange={() => {}} />
       </div>
 
       {/* Compliance Footer - Spans Full Width */}
