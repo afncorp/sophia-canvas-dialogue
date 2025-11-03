@@ -22,9 +22,11 @@ const Index = () => {
   ];
 
   return (
-    <div className="h-screen flex" style={{ backgroundColor: '#fafafa' }}>
-      {/* Left 2/3 - Content Area */}
-      <div className="w-2/3 flex items-center justify-center p-12">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#fafafa' }}>
+      {/* Main Content Area */}
+      <div className="flex-1 flex">
+        {/* Left 2/3 - Content Area */}
+        <div className="w-2/3 flex items-center justify-center p-12">
         <div className="max-w-4xl w-full">
           <div className="text-center mb-12 space-y-4">
             <h1 className="text-5xl font-bold text-foreground/80">Meet Your Loan Officer, Matt Maine</h1>
@@ -113,8 +115,8 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Right 1/3 - Sophia Panel */}
-      <div className="w-1/3 bg-white border-l border-border/50 flex flex-col h-screen">
+        {/* Right 1/3 - Sophia Panel */}
+        <div className="w-1/3 bg-white border-l border-border/50 flex flex-col">
         {/* Header with Sophia */}
         <div className="flex-shrink-0 p-6 border-b border-border/50">
           <div className="flex items-center gap-4 mb-2">
@@ -164,13 +166,14 @@ const Index = () => {
             ))}
           </div>
         </div>
+        </div>
+
+        {/* Voice Interface */}
+        <VoiceInterface onSpeakingChange={() => {}} />
       </div>
 
-      {/* Voice Interface */}
-      <VoiceInterface onSpeakingChange={() => {}} />
-
       {/* Compliance Footer - Spans Full Width */}
-      <footer className="absolute bottom-0 left-0 right-0 bg-muted/30 border-t border-border/50 py-6 px-8">
+      <footer className="bg-muted/30 border-t border-border/50 py-6 px-8">
         <div className="max-w-7xl mx-auto space-y-4">
           {/* Main Compliance Text */}
           <div className="text-xs text-muted-foreground space-y-2">
