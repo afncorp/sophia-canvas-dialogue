@@ -67,7 +67,7 @@ const Index = () => {
                   </div>
                   <div className="flex items-center gap-2 justify-center md:justify-start text-muted-foreground">
                     <Mail className="w-5 h-5" />
-                    <span>matt.maine@example.com</span>
+                    <span>matt.maine@afnet.com</span>
                   </div>
                 </div>
 
@@ -198,7 +198,10 @@ const Index = () => {
               Loans made or arranged pursuant to a California Residential Mortgage Lending Act License.
             </p>
             <p>
-              Matt Maine (NMLS #12345). Company NMLS #67890. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">www.nmlsconsumeraccess.org</a>
+              Matt Maine (NMLS #12345). American Financial Network, Inc. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">www.nmlsconsumeraccess.org</a>
+            </p>
+            <p>
+              Contact: matt.maine@afnet.com | (555) 123-4567 | Licensed to serve nationwide
             </p>
           </div>
 
