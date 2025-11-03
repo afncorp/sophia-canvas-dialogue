@@ -5,6 +5,7 @@ import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
+import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import { Button } from "@/components/ui/button";
 
@@ -90,22 +91,17 @@ const Index = () => {
             <div className="mt-8 pt-8 border-t border-border/50">
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-32 h-32 rounded-2xl overflow-hidden bg-muted">
-                    <video 
-                      src={sophiaVideo}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  <img 
+                    src={sophiaRobot}
+                    alt="Sophia AI Assistant"
+                    className="w-40 h-40 object-contain"
+                  />
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Meet Sophia</h3>
-                  <p className="text-muted-foreground">
-                    Matt's AI-powered assistant is available 24/7 to answer your questions, explain loan options, 
-                    and help you get started on your mortgage journey. Chat with Sophia on the right to begin!
+                  <h3 className="text-3xl font-bold text-foreground mb-2">Hi! I am Sophia 👋</h3>
+                  <p className="text-lg text-muted-foreground">
+                    Ask me anything to get started! I'm here 24/7 to answer your mortgage questions and help you 
+                    find the perfect loan.
                   </p>
                 </div>
                 <div className="flex-shrink-0 hidden md:block">
