@@ -211,7 +211,7 @@ const Index = () => {
               <a href="#" className="hover:text-white transition-colors">Disclosures</a>
             </div>
             <p className="text-xs text-white/70">
-              © {new Date().getFullYear()} Matt Maine Mortgage. All rights reserved.
+              © {new Date().getFullYear()} American Financial Network (Team AFN). All rights reserved.
             </p>
           </div>
         </div>
