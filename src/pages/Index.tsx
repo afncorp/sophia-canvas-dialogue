@@ -175,47 +175,53 @@ const Index = () => {
 
       {/* Compliance Footer - Spans Full Width */}
       <footer className="bg-[#3a3a3a] border-t border-white/20 py-8 px-8">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* Logo Bar */}
-          <div className="flex justify-center pb-4 border-b border-white/10">
-            <img 
-              src={logoWhite} 
-              alt="Company Logo" 
-              className="h-12 w-auto"
-            />
-          </div>
-          {/* Main Compliance Text */}
-          <div className="text-xs text-white/70 space-y-2">
-            <p className="font-semibold text-white">
-              Equal Housing Opportunity | NMLS #12345 | Licensed Mortgage Loan Officer
-            </p>
-            <p>
-              This is not an offer to enter into an agreement. Not all customers will qualify. Information, rates, and programs are subject to change without prior notice. 
-              All products are subject to credit and property approval. Not all products are available in all states or for all loan amounts. Other restrictions and limitations apply.
-            </p>
-            <p>
-              Licensed by the Department of Financial Protection and Innovation under the California Residential Mortgage Lending Act. 
-              Loans made or arranged pursuant to a California Residential Mortgage Lending Act License.
-            </p>
-            <p>
-              Matt Maine (NMLS #12345). American Financial Network, Inc. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">www.nmlsconsumeraccess.org</a>
-            </p>
-            <p>
-              Contact: matt.maine@afnet.com | (555) 123-4567 | Licensed to serve nationwide
-            </p>
-          </div>
-
-          {/* Links and Copyright */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
-            <div className="flex flex-wrap gap-4 text-xs text-white/70">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Licensing</a>
-              <a href="#" className="hover:text-white transition-colors">Disclosures</a>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <img 
+                src={logoWhite} 
+                alt="Company Logo" 
+                className="h-16 w-auto"
+              />
             </div>
-            <p className="text-xs text-white/70">
-              © {new Date().getFullYear()} American Financial Network (Team AFN). All rights reserved.
-            </p>
+
+            {/* Compliance Content */}
+            <div className="flex-1 space-y-4">
+              {/* Main Compliance Text */}
+              <div className="text-xs text-white/70 space-y-2">
+                <p className="font-semibold text-white">
+                  Equal Housing Opportunity | NMLS #12345 | Licensed Mortgage Loan Officer
+                </p>
+                <p>
+                  This is not an offer to enter into an agreement. Not all customers will qualify. Information, rates, and programs are subject to change without prior notice. 
+                  All products are subject to credit and property approval. Not all products are available in all states or for all loan amounts. Other restrictions and limitations apply.
+                </p>
+                <p>
+                  Licensed by the Department of Financial Protection and Innovation under the California Residential Mortgage Lending Act. 
+                  Loans made or arranged pursuant to a California Residential Mortgage Lending Act License.
+                </p>
+                <p>
+                  Matt Maine (NMLS #12345). American Financial Network, Inc. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">www.nmlsconsumeraccess.org</a>
+                </p>
+                <p>
+                  Contact: matt.maine@afnet.com | (555) 123-4567 | Licensed to serve nationwide
+                </p>
+              </div>
+
+              {/* Links and Copyright */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
+                <div className="flex flex-wrap gap-4 text-xs text-white/70">
+                  <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                  <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                  <a href="#" className="hover:text-white transition-colors">Licensing</a>
+                  <a href="#" className="hover:text-white transition-colors">Disclosures</a>
+                </div>
+                <p className="text-xs text-white/70">
+                  © {new Date().getFullYear()} American Financial Network (Team AFN). All rights reserved.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
