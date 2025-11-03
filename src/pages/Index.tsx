@@ -7,7 +7,7 @@ import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, 
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
-import logoWhite from "@/assets/logo-white.png";
+import afnLogo from "@/assets/afn-logo.png";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -26,16 +26,12 @@ const Index = () => {
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#fafafa' }}>
       {/* Header */}
       <header className="bg-white border-b border-border/50 px-8 py-4">
-        <div className="max-w-7xl mx-auto flex items-center gap-4">
+        <div className="max-w-7xl mx-auto">
           <img 
-            src={logoWhite} 
+            src={afnLogo} 
             alt="American Financial Network Logo" 
-            className="h-12 w-auto"
+            className="h-16 w-auto"
           />
-          <div>
-            <h1 className="text-xl font-bold text-foreground">American Financial Network</h1>
-            <p className="text-sm text-muted-foreground">Team AFN</p>
-          </div>
         </div>
       </header>
 
@@ -212,8 +208,8 @@ const Index = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <img 
-                src={logoWhite} 
-                alt="Company Logo" 
+                src={afnLogo} 
+                alt="American Financial Network Logo" 
                 className="h-16 w-auto"
               />
             </div>
