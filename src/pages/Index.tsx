@@ -2,6 +2,7 @@ import { ConversationDemo } from "@/components/ConversationDemo";
 import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
+import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu } from "lucide-react";
@@ -40,6 +41,45 @@ const Index = () => {
     { icon: CreditCard, label: "Pre-Approval" },
     { icon: Home, label: "First-Time Buyers" },
     { icon: Users, label: "Down Payments" },
+  ];
+
+  const testimonials = [
+    {
+      name: "Anthony",
+      review: "They do everything they can to help you. The entire team was professional and made the process smooth.",
+      rating: 5,
+      location: "Los Angeles, CA"
+    },
+    {
+      name: "Henrry",
+      review: "Very nice people. They answered all my questions and were patient throughout the entire process.",
+      rating: 5,
+      location: "San Diego, CA"
+    },
+    {
+      name: "Cindy",
+      review: "Anthony, Jarod and their whole team walked me through this whole process, which at times was overwhelming, and kept me on track. With their knowledge, patience and support we stayed on task and got it done.",
+      rating: 5,
+      location: "Phoenix, AZ"
+    },
+    {
+      name: "Michael R.",
+      review: "The AI assistant Sophia made getting pre-approved so easy! I had answers to all my questions instantly, and the whole process was faster than I expected.",
+      rating: 5,
+      location: "Austin, TX"
+    },
+    {
+      name: "Sarah L.",
+      review: "As a first-time homebuyer, I was nervous about the process. Matt and his team made everything simple and stress-free. Highly recommend!",
+      rating: 5,
+      location: "Seattle, WA"
+    },
+    {
+      name: "David P.",
+      review: "Refinancing was a breeze with this team. The technology they use is impressive, and they saved me thousands on my monthly payment.",
+      rating: 5,
+      location: "Denver, CO"
+    },
   ];
 
   return (
@@ -582,42 +622,10 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-              {[
-                {
-                  name: "Anthony",
-                  review: "They do everything they can to help you. The entire team was professional and made the process smooth.",
-                  rating: 5,
-                  delay: "delay-[200ms]"
-                },
-                {
-                  name: "Henrry",
-                  review: "Very nice people. They answered all my questions and were patient throughout the entire process.",
-                  rating: 5,
-                  delay: "delay-[400ms]"
-                },
-                {
-                  name: "Cindy",
-                  review: "Anthony, Jarod and their whole team walked me through this whole process, which at times was overwhelming, and kept me on track. With their knowledge, patience and support we stayed on task and got it done.",
-                  rating: 5,
-                  delay: "delay-[600ms]"
-                },
-              ].map((testimonial) => (
-                <div 
-                  key={testimonial.name} 
-                  className={`bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-700 ${testimonial.delay} ${
-                    reviewsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  }`}
-                >
-                  <div className="flex mb-3">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Award key={i} className="w-4 h-4 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">"{testimonial.review}"</p>
-                  <p className="font-semibold text-foreground">- {testimonial.name}</p>
-                </div>
-              ))}
+            <div className={`transition-all duration-700 delay-200 ${
+              reviewsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
+              <TestimonialsCarousel testimonials={testimonials} />
             </div>
           </section>
 
