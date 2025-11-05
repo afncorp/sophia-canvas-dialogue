@@ -239,6 +239,9 @@ const Index = () => {
             <p className="text-sm md:text-lg text-muted-foreground">
               15+ years experience • NMLS #12345 • Licensed Nationwide
             </p>
+            <p className="text-xs md:text-sm text-muted-foreground/80 mt-1">
+              Partnered with American Financial Network • 24 years in business
+            </p>
             <div className="flex items-center justify-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -389,8 +392,8 @@ const Index = () => {
         </div>
       </div>
 
-        {/* Right 1/4 - Sophia Panel - Hidden on mobile, shown as sidebar on desktop */}
-        <div className="hidden md:flex md:w-1/4 bg-card/50 backdrop-blur-lg border-l border-primary/20 flex-col relative z-10">
+        {/* Right 1/4 - Sophia Panel - Shown on all devices */}
+        <div className="w-full md:w-1/4 bg-card/50 backdrop-blur-lg border-t md:border-t-0 md:border-l border-primary/20 flex flex-col relative z-10">
         {/* Header with Sophia */}
         <div className="flex-shrink-0 p-4 border-b border-primary/20">
           <div className="flex items-center justify-between gap-3">
@@ -488,14 +491,14 @@ const Index = () => {
               <p className="text-sm md:text-lg text-muted-foreground">See how our AI technology accelerates your mortgage journey</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 gap-3 md:gap-8">
               {/* Traditional */}
-              <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border transition-all duration-700 delay-200 ${
+              <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border transition-all duration-700 delay-200 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
-                <div className="text-center mb-6">
-                  <h3 className="text-xl md:text-2xl font-bold text-muted-foreground">Traditional Process</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground mt-1">Manual work, prone to human error</p>
+                <div className="text-center mb-4 md:mb-6">
+                  <h3 className="text-sm md:text-2xl font-bold text-muted-foreground">Traditional Process</h3>
+                  <p className="text-[10px] md:text-sm text-muted-foreground mt-1">Manual work, prone to human error</p>
                 </div>
                 <div className="space-y-4">
                   {[
@@ -505,14 +508,14 @@ const Index = () => {
                     { step: "4", label: "Manual Underwriting", time: "7-10 business days", desc: "Slow human verification" },
                     { step: "5", label: "Approval Decision", time: "Total: 3-4 weeks", desc: "If no mistakes found" },
                   ].map((item) => (
-                    <div key={item.step} className="flex items-start gap-4 p-3 bg-muted/20 rounded-lg border border-border/30">
-                      <div className="w-8 h-8 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-sm font-bold text-muted-foreground">
+                    <div key={item.step} className="flex items-start gap-2 md:gap-4 p-2 md:p-3 bg-muted/20 rounded-lg border border-border/30">
+                      <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-xs md:text-sm font-bold text-muted-foreground">
                         {item.step}
                       </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-foreground">{item.label}</p>
-                        <p className="text-xs text-muted-foreground">{item.time}</p>
-                        <p className="text-[10px] text-muted-foreground/70 mt-0.5">{item.desc}</p>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-foreground text-xs md:text-base truncate">{item.label}</p>
+                        <p className="text-[10px] md:text-xs text-muted-foreground">{item.time}</p>
+                        <p className="text-[8px] md:text-[10px] text-muted-foreground/70 mt-0.5 hidden md:block">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -520,14 +523,14 @@ const Index = () => {
               </div>
 
               {/* AI-Enhanced */}
-              <div className={`bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-6 md:p-8 border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden transition-all duration-700 delay-400 ${
+              <div className={`bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-4 md:p-8 border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden transition-all duration-700 delay-400 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
                 <div className="relative">
-                  <div className="text-center mb-6">
-                    <h3 className="text-xl md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
-                    <p className="text-xs md:text-sm text-secondary mt-1">Automated, accurate, fast</p>
+                  <div className="text-center mb-4 md:mb-6">
+                    <h3 className="text-sm md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
+                    <p className="text-[10px] md:text-sm text-secondary mt-1">Automated, accurate, fast</p>
                   </div>
                   <div className="space-y-4">
                     {[
@@ -537,17 +540,17 @@ const Index = () => {
                       { step: "4", label: "Smart Pre-Approval", time: "Same day", desc: "AI + human review for accuracy", icon: Zap },
                       { step: "5", label: "Final Approval", time: "Total: 5-7 days", desc: "Faster, more reliable", icon: Zap },
                     ].map((item) => (
-                      <div key={item.step} className="flex items-start gap-4 p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-sm font-bold text-white shadow-lg">
+                      <div key={item.step} className="flex items-start gap-2 md:gap-4 p-2 md:p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-xs md:text-sm font-bold text-white shadow-lg">
                           {item.step}
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <p className="font-semibold text-foreground">{item.label}</p>
-                            <item.icon className="w-4 h-4 text-primary" />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1 md:gap-2">
+                            <p className="font-semibold text-foreground text-xs md:text-base truncate">{item.label}</p>
+                            <item.icon className="w-3 h-3 md:w-4 md:h-4 text-primary flex-shrink-0" />
                           </div>
-                          <p className="text-xs text-secondary font-medium">{item.time}</p>
-                          <p className="text-[10px] text-muted-foreground mt-0.5">{item.desc}</p>
+                          <p className="text-[10px] md:text-xs text-secondary font-medium">{item.time}</p>
+                          <p className="text-[8px] md:text-[10px] text-muted-foreground mt-0.5 hidden md:block">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -670,19 +673,23 @@ const Index = () => {
               <p className="text-sm md:text-lg text-muted-foreground">Find the perfect loan program for your unique situation</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
               {[
                 { name: "Conventional", icon: Home, desc: "Traditional financing with competitive rates" },
                 { name: "FHA Loans", icon: Users, desc: "Low down payment options for first-time buyers" },
                 { name: "VA Loans", icon: Award, desc: "Special benefits for military veterans" },
                 { name: "Jumbo Loans", icon: DollarSign, desc: "Financing for luxury properties" },
+                { name: "Non-Agency", icon: CreditCard, desc: "Non-QM loans for investors and alternative documentation" },
               ].map((program) => (
-                <div key={program.name} className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all group">
+                <button 
+                  key={program.name} 
+                  onClick={() => sendMessage(`Tell me about ${program.name} loans and whether they're right for my situation.`)}
+                  className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all group text-left w-full"
+                >
                   <program.icon className="w-10 h-10 md:w-12 md:h-12 text-primary mb-4 group-hover:scale-110 transition-transform" />
                   <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">{program.name}</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground mb-4">{program.desc}</p>
-                  <Button variant="outline" size="sm" className="w-full border-primary/30 hover:bg-primary/10">Learn More</Button>
-                </div>
+                  <p className="text-xs md:text-sm text-muted-foreground">{program.desc}</p>
+                </button>
               ))}
             </div>
           </section>
