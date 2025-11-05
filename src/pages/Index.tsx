@@ -5,6 +5,7 @@ import VoiceInterface from "@/components/VoiceInterface";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { LiveCounters } from "@/components/LiveCounters";
 import { MortgageCalculator } from "@/components/MortgageCalculator";
+import { LoanProgramsTabs } from "@/components/LoanProgramsTabs";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
@@ -686,30 +687,7 @@ const Index = () => {
 
           {/* Loan Programs */}
           <section className="space-y-6 md:space-y-8 pb-8">
-            <div className="text-center space-y-2 md:space-y-3">
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Loan Programs We Offer</h2>
-              <p className="text-sm md:text-lg text-muted-foreground">Find the perfect loan program for your unique situation</p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
-              {[
-                { name: "Conventional", icon: Home, desc: "Traditional financing with competitive rates" },
-                { name: "FHA Loans", icon: Users, desc: "Low down payment options for first-time buyers" },
-                { name: "VA Loans", icon: Award, desc: "Special benefits for military veterans" },
-                { name: "Jumbo Loans", icon: DollarSign, desc: "Financing for luxury properties" },
-                { name: "Non-Agency", icon: CreditCard, desc: "Non-QM loans for investors and alternative documentation" },
-              ].map((program) => (
-                <button 
-                  key={program.name} 
-                  onClick={() => sendMessage(`Tell me about ${program.name} loans and whether they're right for my situation.`)}
-                  className="bg-card/40 backdrop-blur-md rounded-2xl p-6 border border-primary/30 shadow-lg hover:shadow-xl hover:shadow-primary/25 hover:border-primary/50 transition-all duration-300 group text-left w-full"
-                >
-                  <program.icon className="w-10 h-10 md:w-12 md:h-12 text-primary group-hover:text-secondary mb-4 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.5)] transition-all duration-300" />
-                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{program.name}</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors">{program.desc}</p>
-                </button>
-              ))}
-            </div>
+            <LoanProgramsTabs onAskSophia={sendMessage} />
           </section>
 
         </div>
