@@ -3,9 +3,10 @@ import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
+import { LiveCounters } from "@/components/LiveCounters";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
@@ -23,6 +24,7 @@ import {
 const Index = () => {
   const { messages, isLoading, sendMessage } = useChat();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [voiceModeActive, setVoiceModeActive] = useState(false);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -30,17 +32,16 @@ const Index = () => {
   const ctaSection = useScrollAnimation({ threshold: 0.3 });
   const sophiaSection = useScrollAnimation({ threshold: 0.3 });
   const processSection = useScrollAnimation({ threshold: 0.2 });
-  const videoSection = useScrollAnimation({ threshold: 0.2 });
-  const calculatorSection = useScrollAnimation({ threshold: 0.2 });
+  const videoCalcSection = useScrollAnimation({ threshold: 0.2 });
   const reviewsSection = useScrollAnimation({ threshold: 0.2 });
 
   const quickActions = [
-    { icon: MessageSquare, label: "Loan Options" },
-    { icon: DollarSign, label: "Affordability" },
-    { icon: Zap, label: "Refinancing" },
-    { icon: CreditCard, label: "Pre-Approval" },
-    { icon: Home, label: "First-Time Buyers" },
-    { icon: Users, label: "Down Payments" },
+    { icon: FileCheck, label: "Pre-Approval", type: "process" as const },
+    { icon: MessageSquare, label: "Loan Options", type: "info" as const },
+    { icon: DollarSign, label: "Affordability", type: "info" as const },
+    { icon: Zap, label: "Refinancing", type: "info" as const },
+    { icon: CreditCard, label: "Rates", type: "info" as const },
+    { icon: Home, label: "First-Time Buyers", type: "info" as const },
   ];
 
   const testimonials = [
@@ -204,6 +205,11 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Live Counters */}
+      <div className="bg-background/95 backdrop-blur-sm border-b border-primary/10 sticky top-[73px] md:top-[77px] z-40">
+        <LiveCounters />
+      </div>
+
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col md:flex-row relative">
         {/* Animated background gradient */}
@@ -294,18 +300,43 @@ const Index = () => {
           {/* CTA Section */}
           <div 
             ref={ctaSection.ref}
-            className={`relative overflow-hidden bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-xl md:rounded-2xl p-6 md:p-8 text-center border border-primary/30 transition-all duration-700 delay-300 ${
+            className={`relative overflow-hidden bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-xl md:rounded-2xl p-6 md:p-8 border border-primary/30 transition-all duration-700 delay-300 ${
               ctaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
-            <div className="relative">
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
-              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Get pre-approved in minutes with our streamlined AI-powered process</p>
-              <Button size="lg" className="text-base md:text-lg px-6 md:px-8 w-full md:w-auto bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
-                Start Your Application
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
-              </Button>
+            <div className="relative space-y-4 md:space-y-6">
+              <div className="text-center">
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
+                <p className="text-sm md:text-base text-muted-foreground">Choose how you'd like to begin your mortgage journey</p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-3 md:gap-4 max-w-2xl mx-auto">
+                <Button 
+                  size="lg" 
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30 group"
+                  onClick={() => sendMessage("I'd like to get pre-approved. Can you help me start the process?")}
+                >
+                  <FileCheck className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  <div className="text-left">
+                    <div className="font-bold">Get Pre-Approved</div>
+                    <div className="text-xs opacity-90">Start with Sophia</div>
+                  </div>
+                </Button>
+                
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 border-primary/30 hover:bg-primary/10 group"
+                  onClick={() => sendMessage("I'd like a loan officer to contact me about my options.")}
+                >
+                  <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  <div className="text-left">
+                    <div className="font-bold">Request Contact</div>
+                    <div className="text-xs opacity-70">We'll reach out</div>
+                  </div>
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -326,26 +357,29 @@ const Index = () => {
                 />
               </div>
               <div className="text-center md:text-left">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Meet Sophia - Your AI Assistant</h3>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Meet Sophia</h3>
+                <p className="text-sm md:text-base text-primary font-semibold mb-2 italic">
+                  "I'm not like other boring chatbots – I can actually help you get approved."
+                </p>
                 <p className="text-xs md:text-sm text-muted-foreground mb-3">
-                  Our AI-powered assistant is here 24/7 to help you navigate the mortgage process
+                  AI-powered assistant available 24/7 to navigate your mortgage journey
                 </p>
                 <ul className="space-y-2 text-xs md:text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Instant Answers:</strong> Get immediate responses to your mortgage questions</span>
+                    <span><strong className="text-foreground">Instant Answers:</strong> Get immediate responses, not waiting for business hours</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Smart Recommendations:</strong> AI analyzes your situation to suggest the best loan options</span>
+                    <span><strong className="text-foreground">Smart Analysis:</strong> AI reviews your situation for the best loan options</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Faster Processing:</strong> Automated document analysis cuts approval time by 60%</span>
+                    <span><strong className="text-foreground">60% Faster:</strong> Automated processing cuts approval time dramatically</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Always Available:</strong> Unlike traditional lenders, Sophia never sleeps</span>
+                    <span><strong className="text-foreground">Voice or Text:</strong> Chat or talk – whichever you prefer</span>
                   </li>
                 </ul>
               </div>
@@ -358,22 +392,38 @@ const Index = () => {
         <div className="hidden md:flex md:w-1/4 bg-card/50 backdrop-blur-lg border-l border-primary/20 flex-col relative z-10">
         {/* Header with Sophia */}
         <div className="flex-shrink-0 p-4 border-b border-primary/20">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
-              <video 
-                src={sophiaVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              />
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
+                <video 
+                  src={sophiaVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h2 className="font-semibold text-base text-foreground">Sophia</h2>
+                <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-semibold text-base text-foreground">Sophia</h2>
-              <p className="text-xs text-muted-foreground">AI Assistant</p>
-            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary text-primary-foreground' : 'border-primary/30 hover:bg-primary/10'}`}
+              onClick={() => setVoiceModeActive(!voiceModeActive)}
+              title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
+            >
+              <Mic className="w-4 h-4" />
+            </Button>
           </div>
+          {voiceModeActive && (
+            <div className="mt-3 p-2 bg-primary/10 rounded-lg text-center">
+              <p className="text-xs text-primary font-medium">🎙️ Voice mode active - Speak naturally</p>
+            </div>
+          )}
         </div>
 
         {/* Chat Area - Scrollable */}
@@ -390,17 +440,27 @@ const Index = () => {
           <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
           
           {/* Quick Action Buttons */}
-          <div className="grid grid-cols-2 gap-1.5">
+          <div className="grid grid-cols-2 gap-2">
             {quickActions.map((action) => (
               <Button
                 key={action.label}
-                variant="outline"
+                variant={action.type === 'process' ? 'default' : 'outline'}
                 size="sm"
-                className="justify-start text-[10px] h-7 px-2 border-primary/20 hover:bg-primary/10"
-                onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                className={`justify-start text-xs h-8 px-2.5 ${
+                  action.type === 'process' 
+                    ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
+                    : 'border-primary/20 hover:bg-primary/10'
+                }`}
+                onClick={() => {
+                  if (action.label === 'Pre-Approval') {
+                    sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps?");
+                  } else {
+                    sendMessage(`Tell me about ${action.label.toLowerCase()}`);
+                  }
+                }}
               >
-                <action.icon className="w-3 h-3 mr-1" />
-                {action.label}
+                <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                <span className="truncate">{action.label}</span>
               </Button>
             ))}
           </div>
@@ -434,15 +494,15 @@ const Index = () => {
               }`}>
                 <div className="text-center mb-6">
                   <h3 className="text-xl md:text-2xl font-bold text-muted-foreground">Traditional Process</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground mt-1">The old way</p>
+                  <p className="text-xs md:text-sm text-muted-foreground mt-1">Manual work, prone to human error</p>
                 </div>
                 <div className="space-y-4">
                   {[
-                    { step: "1", label: "Initial Consultation", time: "1-2 days wait" },
-                    { step: "2", label: "Document Collection", time: "3-5 days" },
-                    { step: "3", label: "Manual Review", time: "5-7 business days" },
-                    { step: "4", label: "Underwriting", time: "7-10 business days" },
-                    { step: "5", label: "Approval Decision", time: "Total: 3-4 weeks" },
+                    { step: "1", label: "Wait for Office Hours", time: "1-2 days wait", desc: "Call during business hours" },
+                    { step: "2", label: "Long Paper Application", time: "30-45 minutes", desc: "Fill out extensive forms" },
+                    { step: "3", label: "Manual Document Review", time: "3-5 days", desc: "Human processing, potential errors" },
+                    { step: "4", label: "Manual Underwriting", time: "7-10 business days", desc: "Slow human verification" },
+                    { step: "5", label: "Approval Decision", time: "Total: 3-4 weeks", desc: "If no mistakes found" },
                   ].map((item) => (
                     <div key={item.step} className="flex items-start gap-4 p-3 bg-muted/20 rounded-lg border border-border/30">
                       <div className="w-8 h-8 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-sm font-bold text-muted-foreground">
@@ -451,6 +511,7 @@ const Index = () => {
                       <div className="flex-1">
                         <p className="font-semibold text-foreground">{item.label}</p>
                         <p className="text-xs text-muted-foreground">{item.time}</p>
+                        <p className="text-[10px] text-muted-foreground/70 mt-0.5">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -465,15 +526,15 @@ const Index = () => {
                 <div className="relative">
                   <div className="text-center mb-6">
                     <h3 className="text-xl md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
-                    <p className="text-xs md:text-sm text-secondary mt-1">The modern way</p>
+                    <p className="text-xs md:text-sm text-secondary mt-1">Automated, accurate, fast</p>
                   </div>
                   <div className="space-y-4">
                     {[
-                      { step: "1", label: "Chat with Sophia", time: "Instant response", icon: Zap },
-                      { step: "2", label: "Smart Document Upload", time: "Minutes", icon: Zap },
-                      { step: "3", label: "AI Analysis & Verification", time: "Real-time", icon: Zap },
-                      { step: "4", label: "Automated Pre-Approval", time: "Same day", icon: Zap },
-                      { step: "5", label: "Final Approval", time: "Total: 5-7 days", icon: Zap },
+                      { step: "1", label: "Chat with Sophia 24/7", time: "Instant response", desc: "Available anytime, anywhere", icon: Zap },
+                      { step: "2", label: "Easy Online/Phone Application", time: "5-10 minutes", desc: "Simple process guided by AI", icon: Zap },
+                      { step: "3", label: "AI Document Analysis", time: "Real-time", desc: "Automated verification, zero errors", icon: Zap },
+                      { step: "4", label: "Smart Pre-Approval", time: "Same day", desc: "AI + human review for accuracy", icon: Zap },
+                      { step: "5", label: "Final Approval", time: "Total: 5-7 days", desc: "Faster, more reliable", icon: Zap },
                     ].map((item) => (
                       <div key={item.step} className="flex items-start gap-4 p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-sm font-bold text-white shadow-lg">
@@ -485,6 +546,7 @@ const Index = () => {
                             <item.icon className="w-4 h-4 text-primary" />
                           </div>
                           <p className="text-xs text-secondary font-medium">{item.time}</p>
+                          <p className="text-[10px] text-muted-foreground mt-0.5">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -503,101 +565,91 @@ const Index = () => {
             </div>
           </section>
 
-          {/* AI Workflow Video Placeholder */}
+          {/* Video & Calculator Section - Side by Side */}
           <section 
-            ref={videoSection.ref}
+            ref={videoCalcSection.ref}
             className="space-y-6 md:space-y-8"
           >
             <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
-              videoSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              videoCalcSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground">See Our AI Workflow in Action</h2>
-              <p className="text-sm md:text-lg text-muted-foreground">Watch how our AI technology transforms the mortgage process</p>
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Experience & Calculate</h2>
+              <p className="text-sm md:text-lg text-muted-foreground">See how we work and estimate your payment</p>
             </div>
 
-            <div className={`max-w-4xl mx-auto transition-all duration-700 delay-200 ${
-              videoSection.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-            }`}>
-              <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
-                {/* Video placeholder background */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center space-y-4 z-10 relative">
-                    {/* Play button */}
-                    <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-2xl shadow-primary/50 animate-glow-pulse">
-                      <div className="w-0 h-0 border-t-[12px] md:border-t-[16px] border-t-transparent border-l-[20px] md:border-l-[26px] border-l-white border-b-[12px] md:border-b-[16px] border-b-transparent ml-1.5 md:ml-2"></div>
-                    </div>
-                    <div className="space-y-2 px-4">
-                      <p className="text-lg md:text-xl font-bold text-foreground">Traditional vs AI-Enhanced Workflow</p>
-                      <p className="text-sm md:text-base text-muted-foreground">See the comparison in under 2 minutes</p>
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+              {/* Video Section */}
+              <div className={`transition-all duration-700 delay-200 ${
+                videoCalcSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+              }`}>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">AI Workflow Demo</h3>
+                <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center space-y-3 z-10 relative px-4">
+                      <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-2xl shadow-primary/50 animate-glow-pulse">
+                        <div className="w-0 h-0 border-t-[10px] md:border-t-[12px] border-t-transparent border-l-[16px] md:border-l-[20px] border-l-white border-b-[10px] md:border-b-[12px] border-b-transparent ml-1 md:ml-1.5"></div>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm md:text-base font-bold text-foreground">See the AI Difference</p>
+                        <p className="text-xs md:text-sm text-muted-foreground">2 minute demo</p>
+                      </div>
                     </div>
                   </div>
+                  
+                  <div className="absolute top-2 left-2 w-12 h-12 md:w-16 md:h-16 bg-primary/30 rounded-full blur-xl animate-float"></div>
+                  <div className="absolute bottom-2 right-2 w-16 h-16 md:w-20 md:h-20 bg-secondary/30 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
                 </div>
-                
-                {/* Animated decorative elements */}
-                <div className="absolute top-4 left-4 w-16 h-16 md:w-24 md:h-24 bg-primary/30 rounded-full blur-2xl animate-float"></div>
-                <div className="absolute bottom-4 right-4 w-20 h-20 md:w-32 md:h-32 bg-secondary/30 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-24 h-24 md:w-40 md:h-40 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
+                <p className="text-center text-xs text-muted-foreground mt-3">
+                  Video coming soon
+                </p>
               </div>
-              
-              <p className="text-center text-xs md:text-sm text-muted-foreground mt-4">
-                Video coming soon - showcasing our AI-powered mortgage process
-              </p>
-            </div>
-          </section>
 
-          {/* Calculator Section */}
-          <section 
-            ref={calculatorSection.ref}
-            className="space-y-6 md:space-y-8"
-          >
-            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
-              calculatorSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}>
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Calculate Your Monthly Payment</h2>
-              <p className="text-sm md:text-lg text-muted-foreground">Get an instant estimate of your mortgage costs</p>
-            </div>
-
-            <div className={`bg-card/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg max-w-3xl mx-auto transition-all duration-700 delay-200 ${
-              calculatorSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}>
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Home Price</label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-                      <input type="number" placeholder="500,000" className="w-full pl-8 pr-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
+              {/* Calculator Section */}
+              <div className={`transition-all duration-700 delay-400 ${
+                videoCalcSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+              }`}>
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">Payment Calculator</h3>
+                <div className="bg-card/50 backdrop-blur-lg rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg">
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-foreground">Home Price</label>
+                        <div className="relative">
+                          <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
+                          <input type="number" placeholder="500,000" className="w-full pl-6 pr-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-foreground">Down Payment</label>
+                        <div className="relative">
+                          <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
+                          <input type="number" placeholder="100,000" className="w-full pl-6 pr-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-foreground">Interest Rate</label>
+                        <div className="relative">
+                          <input type="number" step="0.01" placeholder="6.5" className="w-full px-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
+                          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-foreground">Loan Term</label>
+                        <select className="w-full px-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                          <option>30 Years</option>
+                          <option>20 Years</option>
+                          <option>15 Years</option>
+                          <option>10 Years</option>
+                        </select>
+                      </div>
+                    </div>
+                    <Button size="sm" className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">Calculate</Button>
+                    <div className="p-4 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl border-2 border-primary/30 text-center">
+                      <p className="text-xs text-muted-foreground mb-1">Est. Monthly Payment</p>
+                      <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">$2,528</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">P&I only</p>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Down Payment</label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-                      <input type="number" placeholder="100,000" className="w-full pl-8 pr-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Interest Rate</label>
-                    <div className="relative">
-                      <input type="number" step="0.01" placeholder="6.5" className="w-full px-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">%</span>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Loan Term</label>
-                    <select className="w-full px-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
-                      <option>30 Years</option>
-                      <option>20 Years</option>
-                      <option>15 Years</option>
-                      <option>10 Years</option>
-                    </select>
-                  </div>
-                </div>
-                <Button size="lg" className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">Calculate Payment</Button>
-                <div className="p-6 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl border-2 border-primary/30 text-center">
-                  <p className="text-sm text-muted-foreground mb-2">Estimated Monthly Payment</p>
-                  <p className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">$2,528</p>
-                  <p className="text-xs text-muted-foreground mt-2">Principal & Interest only. Excludes taxes and insurance.</p>
                 </div>
               </div>
             </div>
