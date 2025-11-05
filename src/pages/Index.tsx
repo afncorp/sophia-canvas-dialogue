@@ -767,6 +767,18 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Sample Website Disclaimer */}
+      <div className="bg-gradient-to-r from-destructive/20 to-destructive/10 border-t border-destructive/30 py-4 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-center text-sm md:text-base font-bold text-destructive-foreground">
+            ⚠️ SAMPLE WEBSITE - NOT FOR OFFICIAL MORTGAGE USE - NOT FOR USE BY CONSUMERS ⚠️
+          </p>
+          <p className="text-center text-xs text-destructive-foreground/80 mt-1">
+            This is a demonstration website for development purposes only.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
