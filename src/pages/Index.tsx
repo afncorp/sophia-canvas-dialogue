@@ -4,6 +4,7 @@ import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { LiveCounters } from "@/components/LiveCounters";
+import { MortgageCalculator } from "@/components/MortgageCalculator";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
@@ -609,48 +610,7 @@ const Index = () => {
                 videoCalcSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}>
                 <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">Payment Calculator</h3>
-                <div className="bg-card/50 backdrop-blur-lg rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg">
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-foreground">Home Price</label>
-                        <div className="relative">
-                          <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                          <input type="number" placeholder="500,000" className="w-full pl-6 pr-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
-                        </div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-foreground">Down Payment</label>
-                        <div className="relative">
-                          <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                          <input type="number" placeholder="100,000" className="w-full pl-6 pr-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
-                        </div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-foreground">Interest Rate</label>
-                        <div className="relative">
-                          <input type="number" step="0.01" placeholder="6.5" className="w-full px-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
-                          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
-                        </div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-foreground">Loan Term</label>
-                        <select className="w-full px-2 py-2 text-sm bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
-                          <option>30 Years</option>
-                          <option>20 Years</option>
-                          <option>15 Years</option>
-                          <option>10 Years</option>
-                        </select>
-                      </div>
-                    </div>
-                    <Button size="sm" className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">Calculate</Button>
-                    <div className="p-4 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl border-2 border-primary/30 text-center">
-                      <p className="text-xs text-muted-foreground mb-1">Est. Monthly Payment</p>
-                      <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">$2,528</p>
-                      <p className="text-[10px] text-muted-foreground mt-1">P&I only</p>
-                    </div>
-                  </div>
-                </div>
+                <MortgageCalculator />
               </div>
             </div>
           </section>
