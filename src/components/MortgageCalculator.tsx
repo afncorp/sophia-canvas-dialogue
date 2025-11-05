@@ -61,11 +61,11 @@ export const MortgageCalculator = () => {
   const ltvRatio = ((homePrice - downPayment) / homePrice) * 100;
 
   return (
-    <div className="bg-card/50 backdrop-blur-lg rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg">
+    <div className="bg-card/40 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all duration-300">
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-4">
-          <TabsTrigger value="overview">Payment Breakdown</TabsTrigger>
-          <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/30 backdrop-blur-sm">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/20 data-[state=active]:to-secondary/20 data-[state=active]:text-foreground">Payment Breakdown</TabsTrigger>
+          <TabsTrigger value="details" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/20 data-[state=active]:to-secondary/20 data-[state=active]:text-foreground">Details</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
@@ -122,30 +122,33 @@ export const MortgageCalculator = () => {
               </div>
             </div>
 
-            <div className="p-4 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl border-2 border-primary/30">
-              <p className="text-xs text-muted-foreground mb-1">Est. Total Monthly Payment</p>
-              <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                {formatCurrency(totalPayment)}
-              </p>
-              <div className="mt-3 space-y-1.5 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Principal & Interest</span>
-                  <span className="font-medium text-foreground">{formatCurrency(monthlyPayment)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Property Tax</span>
-                  <span className="font-medium text-foreground">{formatCurrency(propertyTax)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Home Insurance</span>
-                  <span className="font-medium text-foreground">{formatCurrency(homeInsurance)}</span>
-                </div>
-                {pmi > 0 && (
+            <div className="p-4 bg-gradient-to-br from-primary/15 to-secondary/15 rounded-xl border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
+              <div className="relative">
+                <p className="text-xs text-muted-foreground mb-1">Est. Total Monthly Payment</p>
+                <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                  {formatCurrency(totalPayment)}
+                </p>
+                <div className="mt-3 space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">PMI</span>
-                    <span className="font-medium text-foreground">{formatCurrency(pmi)}</span>
+                    <span className="text-muted-foreground">Principal & Interest</span>
+                    <span className="font-medium text-foreground">{formatCurrency(monthlyPayment)}</span>
                   </div>
-                )}
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Property Tax</span>
+                    <span className="font-medium text-foreground">{formatCurrency(propertyTax)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Home Insurance</span>
+                    <span className="font-medium text-foreground">{formatCurrency(homeInsurance)}</span>
+                  </div>
+                  {pmi > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">PMI</span>
+                      <span className="font-medium text-foreground">{formatCurrency(pmi)}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -176,7 +179,7 @@ export const MortgageCalculator = () => {
             <div className="pt-3 border-t border-border">
               <h4 className="text-sm font-semibold text-foreground mb-2">Monthly Payment Breakdown</h4>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between p-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded">
+                <div className="flex justify-between p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded border border-primary/20">
                   <span className="text-muted-foreground">Principal & Interest</span>
                   <span className="font-medium text-foreground">{formatCurrency(monthlyPayment)}</span>
                 </div>
@@ -195,13 +198,15 @@ export const MortgageCalculator = () => {
                   </div>
                 )}
                 {pmi === 0 && (
-                  <div className="p-2 bg-green-500/10 rounded text-green-600 dark:text-green-400 text-xs">
-                    ✓ No PMI required (LTV &lt; 80%)
+                  <div className="p-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded border border-primary/20 text-primary text-xs flex items-center gap-2">
+                    <span className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center text-xs">✓</span>
+                    <span>No PMI required (LTV &lt; 80%)</span>
                   </div>
                 )}
-                <div className="flex justify-between p-3 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg border-2 border-primary/30 mt-2">
-                  <span className="font-semibold text-foreground">Total Monthly Payment</span>
-                  <span className="font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <div className="flex justify-between p-3 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg border-2 border-primary/40 shadow-lg shadow-primary/20 mt-2 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
+                  <span className="font-semibold text-foreground relative z-10">Total Monthly Payment</span>
+                  <span className="font-bold text-lg bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent relative z-10">
                     {formatCurrency(totalPayment)}
                   </span>
                 </div>

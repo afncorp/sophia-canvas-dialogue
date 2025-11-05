@@ -42,13 +42,13 @@ export const TestimonialsCarousel = ({ testimonials }: TestimonialsCarouselProps
               key={`${testimonial.name}-${index}`}
               className="flex-[0_0_100%] md:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)] min-w-0"
             >
-              <div className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all h-full">
+              <div className="bg-card/40 backdrop-blur-md rounded-2xl p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/40 hover:scale-[1.02] transition-all duration-300 h-full group">
                 <div className="flex mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Award key={i} className="w-4 h-4 fill-primary text-primary" />
+                    <Award key={i} className="w-4 h-4 fill-primary text-primary group-hover:fill-secondary group-hover:text-secondary transition-colors" />
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed min-h-[80px]">
+                <p className="text-sm text-muted-foreground group-hover:text-foreground/80 mb-4 leading-relaxed min-h-[80px] transition-colors">
                   "{testimonial.review}"
                 </p>
                 <div>
@@ -69,7 +69,7 @@ export const TestimonialsCarousel = ({ testimonials }: TestimonialsCarouselProps
           variant="outline"
           size="icon"
           onClick={scrollPrev}
-          className="w-10 h-10 rounded-full border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-all"
+          className="w-10 h-10 rounded-full border-primary/40 hover:bg-gradient-to-r hover:from-primary/20 hover:to-secondary/20 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300"
         >
           <ChevronLeft className="w-5 h-5" />
         </Button>
@@ -77,7 +77,7 @@ export const TestimonialsCarousel = ({ testimonials }: TestimonialsCarouselProps
           {testimonials.slice(0, Math.min(testimonials.length, 5)).map((_, index) => (
             <button
               key={index}
-              className="w-2 h-2 rounded-full bg-primary/30 hover:bg-primary/60 transition-all"
+              className="w-2 h-2 rounded-full bg-gradient-to-r from-primary/30 to-secondary/30 hover:from-primary hover:to-secondary hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
               onClick={() => emblaApi?.scrollTo(index)}
             />
           ))}
@@ -86,7 +86,7 @@ export const TestimonialsCarousel = ({ testimonials }: TestimonialsCarouselProps
           variant="outline"
           size="icon"
           onClick={scrollNext}
-          className="w-10 h-10 rounded-full border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-all"
+          className="w-10 h-10 rounded-full border-primary/40 hover:bg-gradient-to-r hover:from-primary/20 hover:to-secondary/20 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300"
         >
           <ChevronRight className="w-5 h-5" />
         </Button>

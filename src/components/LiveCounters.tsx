@@ -79,25 +79,25 @@ export const LiveCounters = () => {
   if (visibleCounters.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 py-3 md:py-4">
+    <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 py-3 md:py-4 px-4">
       {visibleCounters.map((counter, index) => (
         <div 
           key={counter.label}
-          className="flex items-center gap-2 px-3 md:px-4 py-2 bg-card/30 backdrop-blur-sm rounded-full border border-primary/20 animate-fade-in"
+          className="group flex items-center gap-2 px-3 md:px-4 py-2 bg-card/40 backdrop-blur-md rounded-full border border-primary/30 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 animate-fade-in"
           style={{ animationDelay: `${index * 100}ms` }}
         >
-          <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-primary/20 flex items-center justify-center">
-            <counter.icon className="w-3 h-3 md:w-4 md:h-4 text-primary" />
+          <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center group-hover:from-primary/30 group-hover:to-secondary/30 transition-all">
+            <counter.icon className="w-3 h-3 md:w-4 md:h-4 text-primary group-hover:scale-110 transition-transform" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-base md:text-lg font-bold text-foreground tabular-nums">
+            <span className="text-base md:text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tabular-nums">
               {counter.value.toLocaleString()}{counter.suffix}
             </span>
             <span className="text-[10px] md:text-xs text-muted-foreground whitespace-nowrap">
               {counter.label}
             </span>
           </div>
-          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse ml-1"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/50 animate-pulse ml-1"></div>
         </div>
       ))}
     </div>

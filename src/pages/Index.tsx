@@ -214,25 +214,28 @@ const Index = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col md:flex-row relative">
         {/* Animated grid background */}
-        <div className="fixed inset-0 pointer-events-none animated-grid opacity-40"></div>
+        <div className="fixed inset-0 pointer-events-none animated-grid opacity-30 z-0"></div>
         
-        {/* Animated background gradient blobs */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        {/* Animated background gradient blobs and particles */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          {/* Floating gradient blobs */}
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary/15 to-transparent rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-secondary/12 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-1/4 left-1/2 w-[550px] h-[550px] bg-gradient-to-br from-accent/10 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
           
-          {/* Particle effects */}
-          <div className="absolute top-1/4 left-1/3 w-2 h-2 bg-primary rounded-full animate-particle-float" style={{ animationDelay: '0s' }}></div>
-          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-secondary rounded-full animate-particle-float" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-1/3 left-2/3 w-2 h-2 bg-accent rounded-full animate-particle-float" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-2/3 left-1/4 w-1 h-1 bg-primary/60 rounded-full animate-particle-drift" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-secondary/60 rounded-full animate-particle-drift" style={{ animationDelay: '1.5s' }}></div>
-          <div className="absolute bottom-1/2 right-2/3 w-1 h-1 bg-accent/60 rounded-full animate-particle-float" style={{ animationDelay: '3s' }}></div>
+          {/* Particle effects - primary colored */}
+          <div className="absolute top-1/4 left-1/3 w-2 h-2 bg-gradient-to-br from-primary to-secondary rounded-full shadow-lg shadow-primary/50 animate-particle-float" style={{ animationDelay: '0s' }}></div>
+          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-gradient-to-br from-secondary to-accent rounded-full shadow-lg shadow-secondary/50 animate-particle-float" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-1/3 left-2/3 w-2 h-2 bg-gradient-to-br from-accent to-primary rounded-full shadow-lg shadow-accent/50 animate-particle-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-2/3 left-1/4 w-1 h-1 bg-primary/80 rounded-full shadow-md shadow-primary/40 animate-particle-drift" style={{ animationDelay: '0.5s' }}></div>
+          <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-secondary/80 rounded-full shadow-md shadow-secondary/40 animate-particle-drift" style={{ animationDelay: '1.5s' }}></div>
+          <div className="absolute bottom-1/2 right-2/3 w-1 h-1 bg-accent/80 rounded-full shadow-md shadow-accent/40 animate-particle-float" style={{ animationDelay: '3s' }}></div>
           
-          {/* Additional tech lines */}
-          <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/10 to-transparent"></div>
-          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary/10 to-transparent"></div>
+          {/* Subtle tech lines with gradient */}
+          <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/15 to-transparent"></div>
+          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary/15 to-transparent"></div>
+          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-accent/10 to-transparent" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         </div>
 
         {/* Content Area - Full width on mobile, 3/4 on desktop */}
@@ -270,7 +273,7 @@ const Index = () => {
           {/* Compact Contact Card */}
           <div 
             ref={contactCard.ref}
-            className={`bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-700 delay-200 ${
+            className={`bg-card/40 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/40 transition-all duration-700 delay-200 ${
               contactCard.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
@@ -319,11 +322,11 @@ const Index = () => {
           {/* CTA Section */}
           <div 
             ref={ctaSection.ref}
-            className={`relative overflow-hidden bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-xl md:rounded-2xl p-6 md:p-8 border border-primary/30 transition-all duration-700 delay-300 ${
+            className={`relative overflow-hidden bg-gradient-to-r from-primary/15 via-secondary/15 to-accent/15 rounded-xl md:rounded-2xl p-6 md:p-8 border border-primary/40 shadow-xl shadow-primary/20 transition-all duration-700 delay-300 ${
               ctaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
             <div className="relative space-y-4 md:space-y-6">
               <div className="text-center">
                 <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
@@ -333,7 +336,7 @@ const Index = () => {
               <div className="grid md:grid-cols-2 gap-3 md:gap-4 max-w-2xl mx-auto">
                 <Button 
                   size="lg" 
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30 group"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 bg-gradient-to-r from-primary via-secondary to-primary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group"
                   onClick={() => sendMessage("I'd like to get pre-approved. Can you help me start the process?")}
                 >
                   <FileCheck className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
@@ -346,7 +349,7 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 border-primary/30 hover:bg-primary/10 group"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
                   onClick={() => sendMessage("I'd like a loan officer to contact me about my options.")}
                 >
                   <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
@@ -362,17 +365,17 @@ const Index = () => {
           {/* Sophia AI Benefits */}
           <div 
             ref={sophiaSection.ref}
-            className={`bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg transition-all duration-700 delay-400 ${
+            className={`bg-card/40 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/40 transition-all duration-700 delay-400 ${
               sophiaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
             <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center">
               <div className="relative mx-auto md:mx-0">
-                <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl animate-glow-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl animate-glow-pulse"></div>
                 <img 
                   src={sophiaRobot}
                   alt="Sophia AI Assistant"
-                  className="relative w-20 h-20 md:w-24 md:h-24 object-contain"
+                  className="relative w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
                 />
               </div>
               <div className="text-center md:text-left">
@@ -508,7 +511,7 @@ const Index = () => {
 
             <div className="grid grid-cols-2 gap-3 md:gap-8">
               {/* Traditional */}
-              <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border transition-all duration-700 delay-200 ${
+              <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border/50 hover:border-border transition-all duration-700 delay-200 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
                 <div className="text-center mb-4 md:mb-6">
@@ -538,10 +541,10 @@ const Index = () => {
               </div>
 
               {/* AI-Enhanced */}
-              <div className={`bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-4 md:p-8 border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden transition-all duration-700 delay-400 ${
+              <div className={`bg-gradient-to-br from-primary/15 via-secondary/12 to-accent/15 rounded-2xl p-4 md:p-8 border-2 border-primary/50 shadow-xl shadow-primary/25 relative overflow-hidden transition-all duration-700 delay-400 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/5"></div>
                 <div className="relative">
                   <div className="text-center mb-4 md:mb-6">
                     <h3 className="text-sm md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
@@ -660,22 +663,22 @@ const Index = () => {
           </section>
 
           {/* Trust Badges */}
-          <section className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg">
+          <section className="bg-card/40 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-primary/30 shadow-xl shadow-primary/10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-              <div className="space-y-2">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">200+</div>
+              <div className="space-y-2 group">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform">200+</div>
                 <p className="text-xs md:text-sm text-muted-foreground">Branches Nationwide</p>
               </div>
-              <div className="space-y-2">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">1,000+</div>
+              <div className="space-y-2 group">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform">1,000+</div>
                 <p className="text-xs md:text-sm text-muted-foreground">5-Star Reviews</p>
               </div>
-              <div className="space-y-2">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">15+</div>
-                <p className="text-xs md:text-sm text-muted-foreground">Years Experience</p>
+              <div className="space-y-2 group">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform">24</div>
+                <p className="text-xs md:text-sm text-muted-foreground">Years in Business</p>
               </div>
-              <div className="space-y-2">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">24/7</div>
+              <div className="space-y-2 group">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform">24/7</div>
                 <p className="text-xs md:text-sm text-muted-foreground">AI Support</p>
               </div>
             </div>
@@ -699,11 +702,11 @@ const Index = () => {
                 <button 
                   key={program.name} 
                   onClick={() => sendMessage(`Tell me about ${program.name} loans and whether they're right for my situation.`)}
-                  className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all group text-left w-full"
+                  className="bg-card/40 backdrop-blur-md rounded-2xl p-6 border border-primary/30 shadow-lg hover:shadow-xl hover:shadow-primary/25 hover:border-primary/50 transition-all duration-300 group text-left w-full"
                 >
-                  <program.icon className="w-10 h-10 md:w-12 md:h-12 text-primary mb-4 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">{program.name}</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground">{program.desc}</p>
+                  <program.icon className="w-10 h-10 md:w-12 md:h-12 text-primary group-hover:text-secondary mb-4 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.5)] transition-all duration-300" />
+                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{program.name}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors">{program.desc}</p>
                 </button>
               ))}
             </div>
