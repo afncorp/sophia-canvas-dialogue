@@ -3,6 +3,7 @@ import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
@@ -21,6 +22,16 @@ import {
 const Index = () => {
   const { messages, isLoading, sendMessage } = useChat();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Scroll animation hooks for different sections
+  const heroSection = useScrollAnimation({ threshold: 0.2 });
+  const contactCard = useScrollAnimation({ threshold: 0.2 });
+  const ctaSection = useScrollAnimation({ threshold: 0.3 });
+  const sophiaSection = useScrollAnimation({ threshold: 0.3 });
+  const processSection = useScrollAnimation({ threshold: 0.2 });
+  const videoSection = useScrollAnimation({ threshold: 0.2 });
+  const calculatorSection = useScrollAnimation({ threshold: 0.2 });
+  const reviewsSection = useScrollAnimation({ threshold: 0.2 });
 
   const quickActions = [
     { icon: MessageSquare, label: "Loan Options" },
@@ -166,7 +177,12 @@ const Index = () => {
         <div className="w-full md:w-3/4 flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section */}
-          <div className="text-center space-y-2 md:space-y-3 animate-slide-up">
+          <div 
+            ref={heroSection.ref}
+            className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+              heroSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
             <div className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/30 rounded-full mb-4">
               <span className="text-xs md:text-sm font-semibold text-primary animate-glow-pulse">
                 AI-Powered Mortgage Technology
@@ -187,7 +203,12 @@ const Index = () => {
           </div>
 
           {/* Compact Contact Card */}
-          <div className="bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all">
+          <div 
+            ref={contactCard.ref}
+            className={`bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-700 delay-200 ${
+              contactCard.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
             <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-start">
               {/* Photo */}
               <div className="relative mx-auto md:mx-0">
@@ -231,7 +252,12 @@ const Index = () => {
           </div>
 
           {/* CTA Section */}
-          <div className="relative overflow-hidden bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-xl md:rounded-2xl p-6 md:p-8 text-center border border-primary/30">
+          <div 
+            ref={ctaSection.ref}
+            className={`relative overflow-hidden bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-xl md:rounded-2xl p-6 md:p-8 text-center border border-primary/30 transition-all duration-700 delay-300 ${
+              ctaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
             <div className="relative">
               <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
@@ -244,7 +270,12 @@ const Index = () => {
           </div>
 
           {/* Sophia AI Benefits */}
-          <div className="bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg">
+          <div 
+            ref={sophiaSection.ref}
+            className={`bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg transition-all duration-700 delay-400 ${
+              sophiaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
             <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center">
               <div className="relative mx-auto md:mx-0">
                 <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl animate-glow-pulse"></div>
@@ -345,15 +376,22 @@ const Index = () => {
         <div className="max-w-7xl mx-auto space-y-12 md:space-y-20">
           
           {/* Process Flow Comparison */}
-          <section className="space-y-6 md:space-y-8">
-            <div className="text-center space-y-2 md:space-y-3">
+          <section 
+            ref={processSection.ref}
+            className="space-y-6 md:space-y-8"
+          >
+            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+              processSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-2xl md:text-4xl font-bold text-foreground">Traditional vs AI-Enhanced Process</h2>
               <p className="text-sm md:text-lg text-muted-foreground">See how our AI technology accelerates your mortgage journey</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               {/* Traditional */}
-              <div className="bg-card/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border">
+              <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border transition-all duration-700 delay-200 ${
+                processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+              }`}>
                 <div className="text-center mb-6">
                   <h3 className="text-xl md:text-2xl font-bold text-muted-foreground">Traditional Process</h3>
                   <p className="text-xs md:text-sm text-muted-foreground mt-1">The old way</p>
@@ -380,7 +418,9 @@ const Index = () => {
               </div>
 
               {/* AI-Enhanced */}
-              <div className="bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-6 md:p-8 border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden">
+              <div className={`bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-6 md:p-8 border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden transition-all duration-700 delay-400 ${
+                processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+              }`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
                 <div className="relative">
                   <div className="text-center mb-6">
@@ -413,7 +453,9 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="text-center">
+            <div className={`text-center transition-all duration-700 delay-600 ${
+              processSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-lg shadow-primary/20">
                 <Zap className="w-5 h-5 md:w-6 md:h-6 text-primary animate-glow-pulse" />
                 <p className="text-base md:text-lg font-bold text-foreground">60% Faster Approval Time with AI</p>
@@ -422,13 +464,20 @@ const Index = () => {
           </section>
 
           {/* AI Workflow Video Placeholder */}
-          <section className="space-y-6 md:space-y-8">
-            <div className="text-center space-y-2 md:space-y-3">
+          <section 
+            ref={videoSection.ref}
+            className="space-y-6 md:space-y-8"
+          >
+            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+              videoSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-2xl md:text-4xl font-bold text-foreground">See Our AI Workflow in Action</h2>
               <p className="text-sm md:text-lg text-muted-foreground">Watch how our AI technology transforms the mortgage process</p>
             </div>
 
-            <div className="max-w-4xl mx-auto">
+            <div className={`max-w-4xl mx-auto transition-all duration-700 delay-200 ${
+              videoSection.isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+            }`}>
               <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
                 {/* Video placeholder background */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -457,13 +506,20 @@ const Index = () => {
           </section>
 
           {/* Calculator Section */}
-          <section className="space-y-6 md:space-y-8">
-            <div className="text-center space-y-2 md:space-y-3">
+          <section 
+            ref={calculatorSection.ref}
+            className="space-y-6 md:space-y-8"
+          >
+            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+              calculatorSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-2xl md:text-4xl font-bold text-foreground">Calculate Your Monthly Payment</h2>
               <p className="text-sm md:text-lg text-muted-foreground">Get an instant estimate of your mortgage costs</p>
             </div>
 
-            <div className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg max-w-3xl mx-auto">
+            <div className={`bg-card/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg max-w-3xl mx-auto transition-all duration-700 delay-200 ${
+              calculatorSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <div className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -508,8 +564,13 @@ const Index = () => {
           </section>
 
           {/* Reviews Section */}
-          <section className="space-y-6 md:space-y-8">
-            <div className="text-center space-y-2 md:space-y-3">
+          <section 
+            ref={reviewsSection.ref}
+            className="space-y-6 md:space-y-8"
+          >
+            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+              reviewsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-2xl md:text-4xl font-bold text-foreground">What Our Clients Say</h2>
               <div className="flex items-center justify-center gap-2">
                 <div className="flex">
@@ -527,19 +588,27 @@ const Index = () => {
                   name: "Anthony",
                   review: "They do everything they can to help you. The entire team was professional and made the process smooth.",
                   rating: 5,
+                  delay: "delay-[200ms]"
                 },
                 {
                   name: "Henrry",
                   review: "Very nice people. They answered all my questions and were patient throughout the entire process.",
                   rating: 5,
+                  delay: "delay-[400ms]"
                 },
                 {
                   name: "Cindy",
                   review: "Anthony, Jarod and their whole team walked me through this whole process, which at times was overwhelming, and kept me on track. With their knowledge, patience and support we stayed on task and got it done.",
                   rating: 5,
+                  delay: "delay-[600ms]"
                 },
               ].map((testimonial) => (
-                <div key={testimonial.name} className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all">
+                <div 
+                  key={testimonial.name} 
+                  className={`bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-700 ${testimonial.delay} ${
+                    reviewsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                  }`}
+                >
                   <div className="flex mb-3">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Award key={i} className="w-4 h-4 fill-primary text-primary" />
