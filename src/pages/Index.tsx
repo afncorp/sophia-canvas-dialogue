@@ -32,17 +32,23 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#fafafa' }}>
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="bg-white border-b border-border/50 sticky top-0 z-50">
+      <header className="bg-card/50 backdrop-blur-lg border-b border-primary/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between py-3 md:py-4">
-            {/* Logo */}
-            <img 
-              src={afnLogo} 
-              alt="American Financial Network Logo" 
-              className="h-12 md:h-14 w-auto"
-            />
+            {/* Logo + Company Name */}
+            <div className="flex items-center gap-3 md:gap-4">
+              <img 
+                src={afnLogoWhite} 
+                alt="AFN Logo" 
+                className="h-10 md:h-12 w-auto"
+              />
+              <div className="hidden md:block">
+                <div className="text-base font-bold text-foreground">American Financial Network</div>
+                <div className="text-xs text-muted-foreground">Licensed Nationwide • NMLS #6606</div>
+              </div>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
@@ -54,50 +60,50 @@ const Index = () => {
               </a>
               
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors outline-none">
                   Resources <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Mortgage Calculator</DropdownMenuItem>
-                  <DropdownMenuItem>Learning Center</DropdownMenuItem>
-                  <DropdownMenuItem>Blog</DropdownMenuItem>
-                  <DropdownMenuItem>FAQs</DropdownMenuItem>
+                <DropdownMenuContent className="bg-card border-border z-50">
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Mortgage Calculator</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Learning Center</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Blog</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">FAQs</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors outline-none">
                   Company <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>About Us</DropdownMenuItem>
-                  <DropdownMenuItem>Our Team</DropdownMenuItem>
-                  <DropdownMenuItem>Careers</DropdownMenuItem>
-                  <DropdownMenuItem>Contact</DropdownMenuItem>
+                <DropdownMenuContent className="bg-card border-border z-50">
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">About Us</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Our Team</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Careers</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Contact</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors outline-none">
                   Account <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Sign In</DropdownMenuItem>
-                  <DropdownMenuItem>Create Account</DropdownMenuItem>
-                  <DropdownMenuItem>Track Application</DropdownMenuItem>
+                <DropdownMenuContent className="bg-card border-border z-50">
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Sign In</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Create Account</DropdownMenuItem>
+                  <DropdownMenuItem className="text-foreground hover:bg-muted">Track Application</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </nav>
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="border-primary/30 hover:bg-primary/10">
                 Free Quote
               </Button>
-              <Button size="sm" className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90">
+              <Button size="sm" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
                 Apply Now
               </Button>
-              <Button variant="ghost" size="icon" className="w-9 h-9">
+              <Button variant="ghost" size="icon" className="w-9 h-9 hover:bg-primary/10">
                 <Search className="w-4 h-4" />
               </Button>
             </div>
@@ -106,7 +112,7 @@ const Index = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="lg:hidden hover:bg-primary/10"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <Menu className="w-6 h-6" />
@@ -115,7 +121,7 @@ const Index = () => {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-border/50 py-4 space-y-4">
+            <div className="lg:hidden border-t border-primary/20 py-4 space-y-4 bg-card/50 backdrop-blur-lg">
               <a href="#locations" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
                 Locations
               </a>
@@ -139,8 +145,8 @@ const Index = () => {
                 </div>
               </div>
               <div className="pt-4 space-y-2">
-                <Button className="w-full" variant="outline">Free Quote</Button>
-                <Button className="w-full bg-[#1e3a8a] hover:bg-[#1e3a8a]/90">Apply Now</Button>
+                <Button className="w-full border-primary/30" variant="outline">Free Quote</Button>
+                <Button className="w-full bg-gradient-to-r from-primary to-secondary">Apply Now</Button>
               </div>
             </div>
           )}
@@ -148,12 +154,24 @@ const Index = () => {
       </header>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col md:flex-row">
+      <div className="flex-1 flex flex-col md:flex-row relative">
+        {/* Animated background gradient */}
+        <div className="fixed inset-0 pointer-events-none opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        </div>
+
         {/* Content Area - Full width on mobile, 3/4 on desktop */}
-        <div className="w-full md:w-3/4 flex items-center justify-center p-4 md:p-8">
+        <div className="w-full md:w-3/4 flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section */}
-          <div className="text-center space-y-2 md:space-y-3">
+          <div className="text-center space-y-2 md:space-y-3 animate-slide-up">
+            <div className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/30 rounded-full mb-4">
+              <span className="text-xs md:text-sm font-semibold text-primary animate-glow-pulse">
+                AI-Powered Mortgage Technology
+              </span>
+            </div>
             <h2 className="text-2xl md:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
             <p className="text-sm md:text-lg text-muted-foreground">
               15+ years experience • NMLS #12345 • Licensed Nationwide
@@ -164,19 +182,22 @@ const Index = () => {
                   <Award key={i} className="w-4 h-4 md:w-5 md:h-5 fill-primary text-primary" />
                 ))}
               </div>
-              <span className="text-xs md:text-sm font-semibold">4.9/5.0 (200+ reviews)</span>
+              <span className="text-xs md:text-sm font-semibold text-foreground">4.9/5.0 (200+ reviews)</span>
             </div>
           </div>
 
           {/* Compact Contact Card */}
-          <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-soft border border-border/50">
+          <div className="bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all">
             <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-start">
               {/* Photo */}
-              <img 
-                src={mattMainePhoto} 
-                alt="Matt Maine - Mortgage Loan Officer"
-                className="w-24 h-24 md:w-32 md:h-32 rounded-xl object-cover shadow-soft mx-auto md:mx-0"
-              />
+              <div className="relative mx-auto md:mx-0">
+                <div className="absolute inset-0 bg-primary/20 rounded-xl blur-xl"></div>
+                <img 
+                  src={mattMainePhoto} 
+                  alt="Matt Maine - Mortgage Loan Officer"
+                  className="relative w-24 h-24 md:w-32 md:h-32 rounded-xl object-cover border-2 border-primary/30"
+                />
+              </div>
 
               {/* Info Grid */}
               <div className="space-y-3 md:space-y-4 text-center md:text-left">
@@ -192,15 +213,15 @@ const Index = () => {
 
                 {/* Contact Buttons */}
                 <div className="grid grid-cols-3 gap-1.5 md:gap-2">
-                  <Button size="sm" className="w-full text-xs md:text-sm h-8 md:h-9">
+                  <Button size="sm" className="w-full text-xs md:text-sm h-8 md:h-9 bg-primary hover:bg-primary/90">
                     <Phone className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
                     <span className="hidden md:inline">Call</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9">
+                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
                     <Mail className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
                     <span className="hidden md:inline">Email</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9">
+                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
                     <MessageSquare className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
                     <span className="hidden md:inline">Text</span>
                   </Button>
@@ -210,23 +231,29 @@ const Index = () => {
           </div>
 
           {/* CTA Section */}
-          <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl md:rounded-2xl p-4 md:p-6 text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
-            <p className="text-sm md:text-base text-muted-foreground mb-3 md:mb-4">Get pre-approved in minutes with our streamlined process</p>
-            <Button size="lg" className="text-base md:text-lg px-6 md:px-8 w-full md:w-auto">
-              Start Your Application
-              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
-            </Button>
+          <div className="relative overflow-hidden bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-xl md:rounded-2xl p-6 md:p-8 text-center border border-primary/30">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
+            <div className="relative">
+              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Get pre-approved in minutes with our streamlined AI-powered process</p>
+              <Button size="lg" className="text-base md:text-lg px-6 md:px-8 w-full md:w-auto bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
+                Start Your Application
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
+              </Button>
+            </div>
           </div>
 
           {/* Sophia AI Benefits */}
-          <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-soft border border-border/50">
+          <div className="bg-card/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/20 shadow-lg">
             <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center">
-              <img 
-                src={sophiaRobot}
-                alt="Sophia AI Assistant"
-                className="w-20 h-20 md:w-24 md:h-24 object-contain mx-auto md:mx-0"
-              />
+              <div className="relative mx-auto md:mx-0">
+                <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl animate-glow-pulse"></div>
+                <img 
+                  src={sophiaRobot}
+                  alt="Sophia AI Assistant"
+                  className="relative w-20 h-20 md:w-24 md:h-24 object-contain"
+                />
+              </div>
               <div className="text-center md:text-left">
                 <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Meet Sophia - Your AI Assistant</h3>
                 <p className="text-xs md:text-sm text-muted-foreground mb-3">
@@ -235,19 +262,19 @@ const Index = () => {
                 <ul className="space-y-2 text-xs md:text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong>Instant Answers:</strong> Get immediate responses to your mortgage questions</span>
+                    <span><strong className="text-foreground">Instant Answers:</strong> Get immediate responses to your mortgage questions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Zap className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Smart Recommendations:</strong> AI analyzes your situation to suggest the best loan options</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Zap className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                    <span><strong className="text-foreground">Faster Processing:</strong> Automated document analysis cuts approval time by 60%</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong>Smart Recommendations:</strong> AI analyzes your situation to suggest the best loan options</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong>Faster Processing:</strong> Automated document analysis cuts approval time by 60%</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong>Always Available:</strong> Unlike traditional lenders, Sophia never sleeps</span>
+                    <span><strong className="text-foreground">Always Available:</strong> Unlike traditional lenders, Sophia never sleeps</span>
                   </li>
                 </ul>
               </div>
@@ -257,11 +284,11 @@ const Index = () => {
       </div>
 
         {/* Right 1/4 - Sophia Panel - Hidden on mobile, shown as sidebar on desktop */}
-        <div className="hidden md:flex md:w-1/4 bg-white border-l border-border/50 flex-col">
+        <div className="hidden md:flex md:w-1/4 bg-card/50 backdrop-blur-lg border-l border-primary/20 flex-col relative z-10">
         {/* Header with Sophia */}
-        <div className="flex-shrink-0 p-4 border-b border-border/50">
+        <div className="flex-shrink-0 p-4 border-b border-primary/20">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
               <video 
                 src={sophiaVideo}
                 autoPlay
@@ -272,7 +299,7 @@ const Index = () => {
               />
             </div>
             <div>
-              <h2 className="font-semibold text-base">Sophia</h2>
+              <h2 className="font-semibold text-base text-foreground">Sophia</h2>
               <p className="text-xs text-muted-foreground">AI Assistant</p>
             </div>
           </div>
@@ -288,7 +315,7 @@ const Index = () => {
         </div>
 
         {/* Input Area - Always Visible */}
-        <div className="flex-shrink-0 p-3 border-t border-border/50 space-y-2">
+        <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
           <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
           
           {/* Quick Action Buttons */}
@@ -298,7 +325,7 @@ const Index = () => {
                 key={action.label}
                 variant="outline"
                 size="sm"
-                className="justify-start text-[10px] h-7 px-2"
+                className="justify-start text-[10px] h-7 px-2 border-primary/20 hover:bg-primary/10"
                 onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
               >
                 <action.icon className="w-3 h-3 mr-1" />
@@ -326,10 +353,10 @@ const Index = () => {
 
             <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               {/* Traditional */}
-              <div className="bg-muted/40 rounded-2xl p-8 border-2 border-border">
+              <div className="bg-card/30 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-muted-foreground">Traditional Process</h3>
-                  <p className="text-sm text-muted-foreground mt-1">The old way</p>
+                  <h3 className="text-xl md:text-2xl font-bold text-muted-foreground">Traditional Process</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground mt-1">The old way</p>
                 </div>
                 <div className="space-y-4">
                   {[
@@ -339,8 +366,8 @@ const Index = () => {
                     { step: "4", label: "Underwriting", time: "7-10 business days" },
                     { step: "5", label: "Approval Decision", time: "Total: 3-4 weeks" },
                   ].map((item) => (
-                    <div key={item.step} className="flex items-start gap-4 p-3 bg-background/50 rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                    <div key={item.step} className="flex items-start gap-4 p-3 bg-muted/20 rounded-lg border border-border/30">
+                      <div className="w-8 h-8 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-sm font-bold text-muted-foreground">
                         {item.step}
                       </div>
                       <div className="flex-1">
@@ -353,40 +380,43 @@ const Index = () => {
               </div>
 
               {/* AI-Enhanced */}
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border-2 border-primary/30 shadow-lg">
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-primary">AI-Enhanced Process</h3>
-                  <p className="text-sm text-primary/80 mt-1">The modern way</p>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { step: "1", label: "Chat with Sophia", time: "Instant response", icon: Zap },
-                    { step: "2", label: "Smart Document Upload", time: "Minutes", icon: Zap },
-                    { step: "3", label: "AI Analysis & Verification", time: "Real-time", icon: Zap },
-                    { step: "4", label: "Automated Pre-Approval", time: "Same day", icon: Zap },
-                    { step: "5", label: "Final Approval", time: "Total: 5-7 days", icon: Zap },
-                  ].map((item) => (
-                    <div key={item.step} className="flex items-start gap-4 p-3 bg-white/80 rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-sm font-bold text-white">
-                        {item.step}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-semibold text-foreground">{item.label}</p>
-                          <item.icon className="w-4 h-4 text-primary" />
+              <div className="bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-6 md:p-8 border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
+                <div className="relative">
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
+                    <p className="text-xs md:text-sm text-secondary mt-1">The modern way</p>
+                  </div>
+                  <div className="space-y-4">
+                    {[
+                      { step: "1", label: "Chat with Sophia", time: "Instant response", icon: Zap },
+                      { step: "2", label: "Smart Document Upload", time: "Minutes", icon: Zap },
+                      { step: "3", label: "AI Analysis & Verification", time: "Real-time", icon: Zap },
+                      { step: "4", label: "Automated Pre-Approval", time: "Same day", icon: Zap },
+                      { step: "5", label: "Final Approval", time: "Total: 5-7 days", icon: Zap },
+                    ].map((item) => (
+                      <div key={item.step} className="flex items-start gap-4 p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-sm font-bold text-white shadow-lg">
+                          {item.step}
                         </div>
-                        <p className="text-xs text-primary font-medium">{item.time}</p>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-semibold text-foreground">{item.label}</p>
+                            <item.icon className="w-4 h-4 text-primary" />
+                          </div>
+                          <p className="text-xs text-secondary font-medium">{item.time}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="text-center">
-              <div className="inline-flex items-center gap-3 bg-primary/10 rounded-full px-8 py-4">
-                <Zap className="w-6 h-6 text-primary" />
-                <p className="text-lg font-bold text-foreground">60% Faster Approval Time with AI</p>
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-lg shadow-primary/20">
+                <Zap className="w-5 h-5 md:w-6 md:h-6 text-primary animate-glow-pulse" />
+                <p className="text-base md:text-lg font-bold text-foreground">60% Faster Approval Time with AI</p>
               </div>
             </div>
           </section>
@@ -399,13 +429,13 @@ const Index = () => {
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-lg group cursor-pointer hover:border-primary/40 transition-all">
+              <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
                 {/* Video placeholder background */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center space-y-4">
+                  <div className="text-center space-y-4 z-10 relative">
                     {/* Play button */}
-                    <div className="w-20 h-20 md:w-24 md:h-24 bg-white/90 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xl">
-                      <div className="w-0 h-0 border-t-[12px] md:border-t-[16px] border-t-transparent border-l-[20px] md:border-l-[26px] border-l-primary border-b-[12px] md:border-b-[16px] border-b-transparent ml-1.5 md:ml-2"></div>
+                    <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-2xl shadow-primary/50 animate-glow-pulse">
+                      <div className="w-0 h-0 border-t-[12px] md:border-t-[16px] border-t-transparent border-l-[20px] md:border-l-[26px] border-l-white border-b-[12px] md:border-b-[16px] border-b-transparent ml-1.5 md:ml-2"></div>
                     </div>
                     <div className="space-y-2 px-4">
                       <p className="text-lg md:text-xl font-bold text-foreground">Traditional vs AI-Enhanced Workflow</p>
@@ -414,9 +444,10 @@ const Index = () => {
                   </div>
                 </div>
                 
-                {/* Decorative elements */}
-                <div className="absolute top-4 left-4 w-16 h-16 md:w-24 md:h-24 bg-primary/10 rounded-full blur-2xl"></div>
-                <div className="absolute bottom-4 right-4 w-20 h-20 md:w-32 md:h-32 bg-primary/10 rounded-full blur-2xl"></div>
+                {/* Animated decorative elements */}
+                <div className="absolute top-4 left-4 w-16 h-16 md:w-24 md:h-24 bg-primary/30 rounded-full blur-2xl animate-float"></div>
+                <div className="absolute bottom-4 right-4 w-20 h-20 md:w-32 md:h-32 bg-secondary/30 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute top-1/2 left-1/2 w-24 h-24 md:w-40 md:h-40 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
               </div>
               
               <p className="text-center text-xs md:text-sm text-muted-foreground mt-4">
@@ -432,33 +463,33 @@ const Index = () => {
               <p className="text-sm md:text-lg text-muted-foreground">Get an instant estimate of your mortgage costs</p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-soft border border-border/50 max-w-3xl mx-auto">
+            <div className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg max-w-3xl mx-auto">
               <div className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Home Price</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-                      <input type="number" placeholder="500,000" className="w-full pl-8 pr-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                      <input type="number" placeholder="500,000" className="w-full pl-8 pr-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Down Payment</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-                      <input type="number" placeholder="100,000" className="w-full pl-8 pr-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                      <input type="number" placeholder="100,000" className="w-full pl-8 pr-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Interest Rate</label>
                     <div className="relative">
-                      <input type="number" step="0.01" placeholder="6.5" className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                      <input type="number" step="0.01" placeholder="6.5" className="w-full px-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" />
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">%</span>
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Loan Term</label>
-                    <select className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <select className="w-full px-4 py-3 bg-muted/20 border border-border text-foreground rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                       <option>30 Years</option>
                       <option>20 Years</option>
                       <option>15 Years</option>
@@ -466,10 +497,10 @@ const Index = () => {
                     </select>
                   </div>
                 </div>
-                <Button size="lg" className="w-full">Calculate Payment</Button>
-                <div className="p-6 bg-primary/5 rounded-xl border-2 border-primary/20 text-center">
+                <Button size="lg" className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90">Calculate Payment</Button>
+                <div className="p-6 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl border-2 border-primary/30 text-center">
                   <p className="text-sm text-muted-foreground mb-2">Estimated Monthly Payment</p>
-                  <p className="text-4xl font-bold text-primary">$2,528</p>
+                  <p className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">$2,528</p>
                   <p className="text-xs text-muted-foreground mt-2">Principal & Interest only. Excludes taxes and insurance.</p>
                 </div>
               </div>
@@ -508,7 +539,7 @@ const Index = () => {
                   rating: 5,
                 },
               ].map((testimonial) => (
-                <div key={testimonial.name} className="bg-white rounded-2xl p-6 shadow-soft border border-border/50">
+                <div key={testimonial.name} className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all">
                   <div className="flex mb-3">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Award key={i} className="w-4 h-4 fill-primary text-primary" />
