@@ -3,16 +3,24 @@ import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { useChat } from "@/hooks/useChat";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import afnLogo from "@/assets/afn-logo.png";
 import afnLogoWhite from "@/assets/afn-logo-white.png";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Index = () => {
   const { messages, isLoading, sendMessage } = useChat();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const quickActions = [
     { icon: MessageSquare, label: "Loan Options" },
@@ -26,13 +34,116 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#fafafa' }}>
       {/* Header */}
-      <header className="bg-white border-b border-border/50 px-8 py-4">
-        <div className="max-w-7xl mx-auto">
-          <img 
-            src={afnLogo} 
-            alt="American Financial Network Logo" 
-            className="h-16 w-auto"
-          />
+      <header className="bg-white border-b border-border/50 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between py-3 md:py-4">
+            {/* Logo */}
+            <img 
+              src={afnLogo} 
+              alt="American Financial Network Logo" 
+              className="h-12 md:h-14 w-auto"
+            />
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+              <a href="#locations" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Locations
+              </a>
+              <a href="#testimonials" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Testimonials
+              </a>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                  Resources <ChevronDown className="w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Mortgage Calculator</DropdownMenuItem>
+                  <DropdownMenuItem>Learning Center</DropdownMenuItem>
+                  <DropdownMenuItem>Blog</DropdownMenuItem>
+                  <DropdownMenuItem>FAQs</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                  Company <ChevronDown className="w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>About Us</DropdownMenuItem>
+                  <DropdownMenuItem>Our Team</DropdownMenuItem>
+                  <DropdownMenuItem>Careers</DropdownMenuItem>
+                  <DropdownMenuItem>Contact</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                  Account <ChevronDown className="w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Sign In</DropdownMenuItem>
+                  <DropdownMenuItem>Create Account</DropdownMenuItem>
+                  <DropdownMenuItem>Track Application</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </nav>
+
+            {/* Desktop Action Buttons */}
+            <div className="hidden lg:flex items-center gap-3">
+              <Button variant="outline" size="sm">
+                Free Quote
+              </Button>
+              <Button size="sm" className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90">
+                Apply Now
+              </Button>
+              <Button variant="ghost" size="icon" className="w-9 h-9">
+                <Search className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <Menu className="w-6 h-6" />
+            </Button>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden border-t border-border/50 py-4 space-y-4">
+              <a href="#locations" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Locations
+              </a>
+              <a href="#testimonials" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Testimonials
+              </a>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-muted-foreground">Resources</p>
+                <div className="pl-4 space-y-2">
+                  <a href="#calculator" className="block py-1 text-sm text-foreground hover:text-primary">Mortgage Calculator</a>
+                  <a href="#learning" className="block py-1 text-sm text-foreground hover:text-primary">Learning Center</a>
+                  <a href="#blog" className="block py-1 text-sm text-foreground hover:text-primary">Blog</a>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-muted-foreground">Company</p>
+                <div className="pl-4 space-y-2">
+                  <a href="#about" className="block py-1 text-sm text-foreground hover:text-primary">About Us</a>
+                  <a href="#team" className="block py-1 text-sm text-foreground hover:text-primary">Our Team</a>
+                  <a href="#contact" className="block py-1 text-sm text-foreground hover:text-primary">Contact</a>
+                </div>
+              </div>
+              <div className="pt-4 space-y-2">
+                <Button className="w-full" variant="outline">Free Quote</Button>
+                <Button className="w-full bg-[#1e3a8a] hover:bg-[#1e3a8a]/90">Apply Now</Button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
