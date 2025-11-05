@@ -68,3 +68,84 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* Animated Grid Background */
+  .animated-grid {
+    background-image: 
+      linear-gradient(to right, hsl(260 85% 65% / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(260 85% 65% / 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: grid-move 20s linear infinite;
+  }
+
+  @keyframes grid-move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 40px 40px;
+    }
+  }
+
+  /* Particle effects */
+  @keyframes particle-float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translate(20px, -20px) scale(1.2);
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes particle-drift {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate(100px, -100px) rotate(360deg);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      opacity: 0.4;
+      box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+    }
+  }
+
+  .animate-particle-float {
+    animation: particle-float 8s ease-in-out infinite;
+  }
+
+  .animate-particle-drift {
+    animation: particle-drift 15s linear infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  /* Floating animation with delays */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    33% {
+      transform: translateY(-20px) translateX(10px);
+    }
+    66% {
+      transform: translateY(10px) translateX(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+}

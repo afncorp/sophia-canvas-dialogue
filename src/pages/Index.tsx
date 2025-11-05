@@ -213,11 +213,26 @@ const Index = () => {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col md:flex-row relative">
-        {/* Animated background gradient */}
-        <div className="fixed inset-0 pointer-events-none opacity-30">
+        {/* Animated grid background */}
+        <div className="fixed inset-0 pointer-events-none animated-grid opacity-40"></div>
+        
+        {/* Animated background gradient blobs */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
           <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+          
+          {/* Particle effects */}
+          <div className="absolute top-1/4 left-1/3 w-2 h-2 bg-primary rounded-full animate-particle-float" style={{ animationDelay: '0s' }}></div>
+          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-secondary rounded-full animate-particle-float" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-1/3 left-2/3 w-2 h-2 bg-accent rounded-full animate-particle-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-2/3 left-1/4 w-1 h-1 bg-primary/60 rounded-full animate-particle-drift" style={{ animationDelay: '0.5s' }}></div>
+          <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-secondary/60 rounded-full animate-particle-drift" style={{ animationDelay: '1.5s' }}></div>
+          <div className="absolute bottom-1/2 right-2/3 w-1 h-1 bg-accent/60 rounded-full animate-particle-float" style={{ animationDelay: '3s' }}></div>
+          
+          {/* Additional tech lines */}
+          <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/10 to-transparent"></div>
+          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary/10 to-transparent"></div>
         </div>
 
         {/* Content Area - Full width on mobile, 3/4 on desktop */}
