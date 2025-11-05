@@ -630,23 +630,23 @@ const Index = () => {
           </section>
 
           {/* Trust Badges */}
-          <section className="bg-white rounded-2xl p-8 shadow-soft border border-border/50">
-            <div className="grid md:grid-cols-4 gap-8 text-center">
+          <section className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-primary/20 shadow-lg">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-primary">200+</div>
-                <p className="text-sm text-muted-foreground">Branches Nationwide</p>
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">200+</div>
+                <p className="text-xs md:text-sm text-muted-foreground">Branches Nationwide</p>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-primary">1,000+</div>
-                <p className="text-sm text-muted-foreground">5-Star Reviews</p>
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">1,000+</div>
+                <p className="text-xs md:text-sm text-muted-foreground">5-Star Reviews</p>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-primary">15+</div>
-                <p className="text-sm text-muted-foreground">Years Experience</p>
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">15+</div>
+                <p className="text-xs md:text-sm text-muted-foreground">Years Experience</p>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-primary">24/7</div>
-                <p className="text-sm text-muted-foreground">AI Support</p>
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">24/7</div>
+                <p className="text-xs md:text-sm text-muted-foreground">AI Support</p>
               </div>
             </div>
           </section>
@@ -665,11 +665,11 @@ const Index = () => {
                 { name: "VA Loans", icon: Award, desc: "Special benefits for military veterans" },
                 { name: "Jumbo Loans", icon: DollarSign, desc: "Financing for luxury properties" },
               ].map((program) => (
-                <div key={program.name} className="bg-white rounded-2xl p-6 shadow-soft border border-border/50 hover:border-primary/50 transition-colors">
-                  <program.icon className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-bold text-foreground mb-2">{program.name}</h3>
-                  <p className="text-sm text-muted-foreground">{program.desc}</p>
-                  <Button variant="outline" size="sm" className="w-full mt-4">Learn More</Button>
+                <div key={program.name} className="bg-card/50 backdrop-blur-lg rounded-2xl p-6 border border-primary/20 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all group">
+                  <program.icon className="w-10 h-10 md:w-12 md:h-12 text-primary mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">{program.name}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground mb-4">{program.desc}</p>
+                  <Button variant="outline" size="sm" className="w-full border-primary/30 hover:bg-primary/10">Learn More</Button>
                 </div>
               ))}
             </div>
