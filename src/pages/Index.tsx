@@ -694,23 +694,29 @@ const Index = () => {
       </div>
 
       {/* Compliance Footer - Spans Full Width */}
-      <footer className="bg-[#3a3a3a] border-t border-white/20 py-6 md:py-8 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
+      <footer className="relative bg-gradient-to-b from-background via-card/50 to-background border-t border-primary/20 py-6 md:py-8 px-4 md:px-8 overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             {/* Logo */}
             <div className="flex-shrink-0 mx-auto md:mx-0">
-              <img 
-                src={afnLogoWhite} 
-                alt="American Financial Network Logo" 
-                className="h-12 md:h-16 w-auto"
-              />
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/10 rounded-lg blur-xl"></div>
+                <img 
+                  src={afnLogoWhite} 
+                  alt="American Financial Network Logo" 
+                  className="h-12 md:h-16 w-auto relative drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]"
+                />
+              </div>
             </div>
 
             {/* Compliance Content */}
             <div className="flex-1 space-y-4">
               {/* Main Compliance Text */}
-              <div className="text-xs text-white/70 space-y-2">
-                <p className="font-semibold text-white">
+              <div className="text-xs text-muted-foreground space-y-2">
+                <p className="font-semibold text-foreground">
                   Equal Housing Opportunity | NMLS #12345 | Licensed Mortgage Loan Officer
                 </p>
                 <p>
@@ -722,7 +728,7 @@ const Index = () => {
                   Loans made or arranged pursuant to a California Residential Mortgage Lending Act License.
                 </p>
                 <p>
-                  Matt Maine (NMLS #12345). American Financial Network, Inc. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">www.nmlsconsumeraccess.org</a>
+                  Matt Maine (NMLS #12345). American Financial Network, Inc. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary transition-colors underline decoration-primary/50 hover:decoration-secondary">www.nmlsconsumeraccess.org</a>
                 </p>
                 <p>
                   Contact: matt.maine@afnet.com | (555) 123-4567 | Licensed to serve nationwide
@@ -730,14 +736,26 @@ const Index = () => {
               </div>
 
               {/* Links and Copyright */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
-                <div className="flex flex-wrap gap-4 text-xs text-white/70">
-                  <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                  <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                  <a href="#" className="hover:text-white transition-colors">Licensing</a>
-                  <a href="#" className="hover:text-white transition-colors">Disclosures</a>
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-primary/20">
+                <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
+                  <a href="#" className="hover:text-primary transition-colors relative group">
+                    Privacy Policy
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                  <a href="#" className="hover:text-primary transition-colors relative group">
+                    Terms of Service
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                  <a href="#" className="hover:text-primary transition-colors relative group">
+                    Licensing
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                  <a href="#" className="hover:text-primary transition-colors relative group">
+                    Disclosures
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </a>
                 </div>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-muted-foreground">
                   © {new Date().getFullYear()} American Financial Network (Team AFN). All rights reserved.
                 </p>
               </div>
@@ -747,12 +765,15 @@ const Index = () => {
       </footer>
 
       {/* Sample Website Disclaimer */}
-      <div className="bg-gradient-to-r from-destructive/20 to-destructive/10 border-t border-destructive/30 py-4 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-center text-sm md:text-base font-bold text-destructive-foreground">
-            ⚠️ SAMPLE WEBSITE - NOT FOR OFFICIAL MORTGAGE USE - NOT FOR USE BY CONSUMERS ⚠️
+      <div className="relative bg-gradient-to-r from-destructive/15 via-destructive/20 to-destructive/15 border-t border-destructive/40 py-4 px-4 md:px-8 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-destructive/10 to-transparent pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <p className="text-center text-sm md:text-base font-bold text-foreground flex items-center justify-center gap-2">
+            <span className="text-destructive">⚠️</span>
+            SAMPLE WEBSITE - NOT FOR OFFICIAL MORTGAGE USE - NOT FOR USE BY CONSUMERS
+            <span className="text-destructive">⚠️</span>
           </p>
-          <p className="text-center text-xs text-destructive-foreground/80 mt-1">
+          <p className="text-center text-xs text-muted-foreground mt-1">
             This is a demonstration website for development purposes only.
           </p>
         </div>
