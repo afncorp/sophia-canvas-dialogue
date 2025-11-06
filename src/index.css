@@ -8,54 +8,101 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark tech theme as default */
-    --background: 220 25% 8%;
-    --foreground: 0 0% 98%;
+    /* Command Suite inspired theme - Bronze/Copper with tech accents */
+    --background: 220 15% 10%;
+    --foreground: 40 8% 95%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 12% 15%;
+    --card-foreground: 40 8% 95%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 40 8% 95%;
 
-    --primary: 260 85% 65%;
-    --primary-foreground: 0 0% 100%;
+    /* Bronze/Copper primary - inspired by Command Suite icons */
+    --primary: 35 45% 60%;
+    --primary-foreground: 220 15% 10%;
+    --primary-glow: 35 55% 70%;
 
-    --secondary: 200 80% 55%;
-    --secondary-foreground: 0 0% 100%;
+    /* Metallic silver secondary */
+    --secondary: 0 0% 70%;
+    --secondary-foreground: 220 15% 10%;
 
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 10% 65%;
+    --muted: 220 12% 20%;
+    --muted-foreground: 40 5% 65%;
 
-    --accent: 180 75% 60%;
-    --accent-foreground: 220 25% 10%;
+    /* Subtle blue-purple accent for tech feel */
+    --accent: 240 30% 55%;
+    --accent-foreground: 40 8% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 20%;
-    --input: 220 20% 18%;
-    --ring: 260 85% 65%;
+    --border: 220 12% 22%;
+    --input: 220 12% 18%;
+    --ring: 35 45% 60%;
 
     --radius: 1rem;
 
-    /* Tech-forward gradients and effects */
-    --gradient-primary: linear-gradient(135deg, hsl(260 85% 65%), hsl(200 80% 55%));
-    --gradient-tech: linear-gradient(180deg, hsl(220 25% 8%), hsl(220 25% 12%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(260 85% 65% / 0.15), transparent 70%);
-    --shadow-neon: 0 0 40px hsl(260 85% 65% / 0.5), 0 0 80px hsl(260 85% 65% / 0.3);
-    --shadow-soft: 0 10px 40px -10px hsl(260 85% 65% / 0.4);
-    --shadow-card: 0 4px 20px hsl(220 20% 5% / 0.5);
+    /* Bronze-tech gradients and effects */
+    --gradient-primary: linear-gradient(135deg, hsl(35 45% 60%), hsl(35 55% 70%));
+    --gradient-tech: linear-gradient(180deg, hsl(220 15% 10%), hsl(220 12% 15%));
+    --gradient-accent: linear-gradient(135deg, hsl(35 45% 60%), hsl(240 30% 55%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(35 45% 60% / 0.15), transparent 70%);
+    --shadow-bronze: 0 0 40px hsl(35 45% 60% / 0.3), 0 0 80px hsl(35 45% 60% / 0.15);
+    --shadow-soft: 0 10px 40px -10px hsl(35 45% 60% / 0.25);
+    --shadow-card: 0 4px 20px hsl(220 15% 5% / 0.6);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: 220 25% 10%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 260 85% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 220 20% 20%;
-    --sidebar-ring: 260 85% 65%;
+    --sidebar-background: 220 15% 12%;
+    --sidebar-foreground: 40 8% 95%;
+    --sidebar-primary: 35 45% 60%;
+    --sidebar-primary-foreground: 220 15% 10%;
+    --sidebar-accent: 220 12% 18%;
+    --sidebar-accent-foreground: 40 8% 95%;
+    --sidebar-border: 220 12% 22%;
+    --sidebar-ring: 35 45% 60%;
+  }
+
+  /* Traditional Skin - Conservative, clean for Boomers */
+  [data-theme="traditional"] {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 220 20% 30%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 220 20% 40%;
+
+    --secondary: 35 30% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 210 30% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --border: 220 10% 85%;
+    --input: 220 10% 90%;
+    --ring: 220 20% 30%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(220 20% 30%), hsl(220 25% 40%));
+    --gradient-tech: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    --gradient-accent: linear-gradient(135deg, hsl(220 20% 30%), hsl(210 30% 50%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(220 20% 30% / 0.08), transparent 70%);
+    --shadow-bronze: 0 2px 10px hsl(220 10% 20% / 0.1);
+    --shadow-soft: 0 4px 20px -5px hsl(220 10% 20% / 0.15);
+    --shadow-card: 0 2px 15px hsl(220 10% 20% / 0.08);
+  }
+
+  /* Modern Skin - High-tech aesthetic for younger users (default) */
+  [data-theme="modern"] {
+    /* Uses root values - same as default */
   }
 }
 
@@ -73,10 +120,16 @@ All colors MUST be HSL.
   /* Animated Grid Background */
   .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(260 85% 65% / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(260 85% 65% / 0.05) 1px, transparent 1px);
+      linear-gradient(to right, hsl(35 45% 60% / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(35 45% 60% / 0.04) 1px, transparent 1px);
     background-size: 40px 40px;
     animation: grid-move 20s linear infinite;
+  }
+
+  [data-theme="traditional"] .animated-grid {
+    background-image: 
+      linear-gradient(to right, hsl(220 10% 85% / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(220 10% 85% / 0.5) 1px, transparent 1px);
   }
 
   @keyframes grid-move {

@@ -6,6 +6,7 @@ import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { LiveCounters } from "@/components/LiveCounters";
 import { MortgageCalculator } from "@/components/MortgageCalculator";
 import { LoanProgramsTabs } from "@/components/LoanProgramsTabs";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
@@ -151,10 +152,11 @@ const Index = () => {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center gap-3">
+              <ThemeToggle />
               <Button variant="outline" size="sm" className="border-primary/30 hover:bg-primary/10">
                 Login
               </Button>
-              <Button size="sm" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
+              <Button size="sm" className="bg-gradient-to-r from-primary via-primary-glow to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
                 Apply Now
               </Button>
               <Button variant="ghost" size="icon" className="w-9 h-9 hover:bg-primary/10">
