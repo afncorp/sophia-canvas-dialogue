@@ -152,7 +152,7 @@ const Index = () => {
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <Button variant="outline" size="sm" className="border-primary/30 hover:bg-primary/10">
-                Free Quote
+                Login
               </Button>
               <Button size="sm" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
                 Apply Now
@@ -213,7 +213,7 @@ const Index = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col md:flex-row relative">
+      <div className="flex-1 flex flex-col lg:flex-row relative">
         {/* Animated grid background */}
         <div className="fixed inset-0 pointer-events-none animated-grid opacity-30 z-0"></div>
         
@@ -239,8 +239,8 @@ const Index = () => {
           <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         </div>
 
-        {/* Content Area - Full width on mobile, 3/4 on desktop */}
-        <div className="w-full md:w-3/4 flex items-center justify-center p-4 md:p-8 relative z-10">
+        {/* Content Area - Full width on mobile, adjusts for fixed sidebar on desktop */}
+        <div className="w-full lg:mr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section */}
           <div 
@@ -411,83 +411,164 @@ const Index = () => {
         </div>
       </div>
 
-        {/* Right 1/4 - Sophia Panel - Shown on all devices */}
-        <div className="w-full md:w-1/4 bg-card/50 backdrop-blur-lg border-t md:border-t-0 md:border-l border-primary/20 flex flex-col relative z-10">
-        {/* Header with Sophia */}
-        <div className="flex-shrink-0 p-4 border-b border-primary/20">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
-                <video 
-                  src={sophiaVideo}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
+        {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
+        <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
+          <div className="h-full flex flex-col">
+            {/* Header with Sophia */}
+            <div className="flex-shrink-0 p-4 border-b border-primary/20">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
+                    <video 
+                      src={sophiaVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-base text-foreground">Sophia</h2>
+                    <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary text-primary-foreground' : 'border-primary/30 hover:bg-primary/10'}`}
+                  onClick={() => setVoiceModeActive(!voiceModeActive)}
+                  title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
+                >
+                  <Mic className="w-4 h-4" />
+                </Button>
               </div>
-              <div>
-                <h2 className="font-semibold text-base text-foreground">Sophia</h2>
-                <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
+              {voiceModeActive && (
+                <div className="mt-3 p-2 bg-primary/10 rounded-lg text-center">
+                  <p className="text-xs text-primary font-medium">🎙️ Voice mode active - Speak naturally</p>
+                </div>
+              )}
+            </div>
+
+            {/* Chat Area - Scrollable */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
+              {messages.length === 0 ? (
+                <ConversationDemo />
+              ) : (
+                <ChatMessages messages={messages} isLoading={isLoading} />
+              )}
+            </div>
+
+            {/* Input Area - Always Visible */}
+            <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+              <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+              
+              {/* Quick Action Buttons */}
+              <div className="grid grid-cols-2 gap-2">
+                {quickActions.map((action) => (
+                  <Button
+                    key={action.label}
+                    variant={action.type === 'process' ? 'default' : 'outline'}
+                    size="sm"
+                    className={`justify-start text-xs h-8 px-2.5 ${
+                      action.type === 'process' 
+                        ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
+                        : 'border-primary/20 hover:bg-primary/10'
+                    }`}
+                    onClick={() => {
+                      if (action.label === 'Pre-Approval') {
+                        sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps?");
+                      } else {
+                        sendMessage(`Tell me about ${action.label.toLowerCase()}`);
+                      }
+                    }}
+                  >
+                    <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                    <span className="truncate">{action.label}</span>
+                  </Button>
+                ))}
               </div>
             </div>
-            <Button
-              variant="outline"
-              size="icon"
-              className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary text-primary-foreground' : 'border-primary/30 hover:bg-primary/10'}`}
-              onClick={() => setVoiceModeActive(!voiceModeActive)}
-              title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
-            >
-              <Mic className="w-4 h-4" />
-            </Button>
           </div>
-          {voiceModeActive && (
-            <div className="mt-3 p-2 bg-primary/10 rounded-lg text-center">
-              <p className="text-xs text-primary font-medium">🎙️ Voice mode active - Speak naturally</p>
-            </div>
-          )}
         </div>
 
-        {/* Chat Area - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
-          {messages.length === 0 ? (
-            <ConversationDemo />
-          ) : (
-            <ChatMessages messages={messages} isLoading={isLoading} />
-          )}
-        </div>
-
-        {/* Input Area - Always Visible */}
-        <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
-          <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-          
-          {/* Quick Action Buttons */}
-          <div className="grid grid-cols-2 gap-2">
-            {quickActions.map((action) => (
+        {/* Mobile Sophia Panel - Shows below content on mobile */}
+        <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
+          {/* Header with Sophia */}
+          <div className="flex-shrink-0 p-4 border-b border-primary/20">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
+                  <video 
+                    src={sophiaVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h2 className="font-semibold text-base text-foreground">Sophia</h2>
+                  <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
+                </div>
+              </div>
               <Button
-                key={action.label}
-                variant={action.type === 'process' ? 'default' : 'outline'}
-                size="sm"
-                className={`justify-start text-xs h-8 px-2.5 ${
-                  action.type === 'process' 
-                    ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                    : 'border-primary/20 hover:bg-primary/10'
-                }`}
-                onClick={() => {
-                  if (action.label === 'Pre-Approval') {
-                    sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps?");
-                  } else {
-                    sendMessage(`Tell me about ${action.label.toLowerCase()}`);
-                  }
-                }}
+                variant="outline"
+                size="icon"
+                className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary text-primary-foreground' : 'border-primary/30 hover:bg-primary/10'}`}
+                onClick={() => setVoiceModeActive(!voiceModeActive)}
+                title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
               >
-                <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                <span className="truncate">{action.label}</span>
+                <Mic className="w-4 h-4" />
               </Button>
-            ))}
+            </div>
+            {voiceModeActive && (
+              <div className="mt-3 p-2 bg-primary/10 rounded-lg text-center">
+                <p className="text-xs text-primary font-medium">🎙️ Voice mode active - Speak naturally</p>
+              </div>
+            )}
           </div>
-        </div>
+
+          {/* Chat Area - Scrollable */}
+          <div className="overflow-y-auto p-3 space-y-3 max-h-[500px]">
+            {messages.length === 0 ? (
+              <ConversationDemo />
+            ) : (
+              <ChatMessages messages={messages} isLoading={isLoading} />
+            )}
+          </div>
+
+          {/* Input Area - Always Visible */}
+          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+            <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+            
+            {/* Quick Action Buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              {quickActions.map((action) => (
+                <Button
+                  key={action.label}
+                  variant={action.type === 'process' ? 'default' : 'outline'}
+                  size="sm"
+                  className={`justify-start text-xs h-8 px-2.5 ${
+                    action.type === 'process' 
+                      ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
+                      : 'border-primary/20 hover:bg-primary/10'
+                  }`}
+                  onClick={() => {
+                    if (action.label === 'Pre-Approval') {
+                      sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps?");
+                    } else {
+                      sendMessage(`Tell me about ${action.label.toLowerCase()}`);
+                    }
+                  }}
+                >
+                  <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                  <span className="truncate">{action.label}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Voice Interface */}
