@@ -7,6 +7,8 @@ import { LiveCounters } from "@/components/LiveCounters";
 import { MortgageCalculator } from "@/components/MortgageCalculator";
 import { LoanProgramsTabs } from "@/components/LoanProgramsTabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { SophiaContextualBubble } from "@/components/SophiaContextualBubble";
+import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
@@ -28,15 +30,51 @@ const Index = () => {
   const { messages, isLoading, sendMessage } = useChat();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
+  const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
   const contactCard = useScrollAnimation({ threshold: 0.2 });
   const ctaSection = useScrollAnimation({ threshold: 0.3 });
-  const sophiaSection = useScrollAnimation({ threshold: 0.3 });
   const processSection = useScrollAnimation({ threshold: 0.2 });
   const videoCalcSection = useScrollAnimation({ threshold: 0.2 });
   const reviewsSection = useScrollAnimation({ threshold: 0.2 });
+
+  // Scroll to chat function
+  const scrollToChat = () => {
+    const chatElement = document.getElementById('sophia-chat');
+    if (chatElement) {
+      chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // Handle Free Quote submission
+  const handleFreeQuoteSubmit = (data: Record<string, string>) => {
+    const message = `I'd like a free quote. Here's my information:\n` +
+      `Name: ${data.name}\n` +
+      `Email: ${data.email}\n` +
+      `Phone: ${data.phone}\n` +
+      `Loan Type: ${data.loanType}\n` +
+      `Property Value: ${data.propertyValue}\n\n` +
+      `Please have a loan officer contact me.`;
+    
+    sendMessage(message);
+    setShowFreeQuoteForm(false);
+  };
+
+  const freeQuoteFields: FormField[] = [
+    { id: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'John Doe' },
+    { id: 'email', label: 'Email', type: 'email', required: true, placeholder: 'john@example.com' },
+    { id: 'phone', label: 'Phone', type: 'tel', required: true, placeholder: '(555) 123-4567' },
+    { 
+      id: 'loanType', 
+      label: 'Loan Type', 
+      type: 'select', 
+      required: true,
+      options: ['Purchase', 'Refinance', 'Cash-Out Refinance', 'Not Sure']
+    },
+    { id: 'propertyValue', label: 'Estimated Property Value', type: 'text', placeholder: '$500,000' },
+  ];
 
   const quickActions = [
     { icon: FileCheck, label: "Pre-Approval", type: "process" as const },
@@ -363,51 +401,14 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-          </div>
 
-          {/* Sophia AI Benefits */}
-          <div 
-            ref={sophiaSection.ref}
-            className={`bg-card/40 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/40 transition-all duration-700 delay-400 ${
-              sophiaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center">
-              <div className="relative mx-auto md:mx-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl animate-glow-pulse"></div>
-                <img 
-                  src={sophiaRobot}
-                  alt="Sophia AI Assistant"
-                  className="relative w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
-                />
-              </div>
-              <div className="text-center md:text-left">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">Meet Sophia</h3>
-                <p className="text-sm md:text-base text-primary font-semibold mb-2 italic">
-                  "I'm not like other boring chatbots – I can actually help you get approved."
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mb-3">
-                  AI-powered assistant available 24/7 to navigate your mortgage journey
-                </p>
-                <ul className="space-y-2 text-xs md:text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Instant Answers:</strong> Get immediate responses, not waiting for business hours</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Smart Analysis:</strong> AI reviews your situation for the best loan options</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">60% Faster:</strong> Automated processing cuts approval time dramatically</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span><strong className="text-foreground">Voice or Text:</strong> Chat or talk – whichever you prefer</span>
-                  </li>
-                </ul>
-              </div>
+            {/* Contextual Sophia Bubble */}
+            <div className="pt-4">
+              <SophiaContextualBubble
+                message="Hi! I can help you get a free quote in just a few minutes. I'll collect your information and make sure a loan officer follows up with you."
+                onClick={scrollToChat}
+                position="right"
+              />
             </div>
           </div>
         </div>
@@ -416,11 +417,13 @@ const Index = () => {
         {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
         <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
           <div className="h-full flex flex-col">
-            {/* Header with Sophia */}
-            <div className="flex-shrink-0 p-4 border-b border-primary/20">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
+            {/* Enhanced Header with Sophia Introduction */}
+            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5">
+              <div className="flex items-start gap-4 mb-4">
+                {/* Larger Sophia Avatar */}
+                <div className="relative flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-xl animate-glow-pulse"></div>
+                  <div className="relative w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg shadow-primary/20">
                     <video 
                       src={sophiaVideo}
                       autoPlay
@@ -430,34 +433,60 @@ const Index = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div>
-                    <h2 className="font-semibold text-base text-foreground">Sophia</h2>
-                    <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
+                    <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
                   </div>
                 </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary text-primary-foreground' : 'border-primary/30 hover:bg-primary/10'}`}
-                  onClick={() => setVoiceModeActive(!voiceModeActive)}
-                  title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
-                >
-                  <Mic className="w-4 h-4" />
-                </Button>
+                
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h2 className="font-bold text-xl text-foreground">Sophia</h2>
+                      <p className="text-xs text-primary font-semibold">AI Mortgage Assistant</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary text-primary-foreground' : 'border-primary/30 hover:bg-primary/10'}`}
+                      onClick={() => setVoiceModeActive(!voiceModeActive)}
+                      title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
+                    >
+                      <Mic className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground italic leading-relaxed">
+                    "I'm not like other chatbots – I can actually help you get approved. Available 24/7 to guide your mortgage journey."
+                  </p>
+                </div>
               </div>
+
               {voiceModeActive && (
-                <div className="mt-3 p-2 bg-primary/10 rounded-lg text-center">
+                <div className="p-3 bg-primary/10 rounded-lg text-center border border-primary/20">
                   <p className="text-xs text-primary font-medium">🎙️ Voice mode active - Speak naturally</p>
                 </div>
               )}
             </div>
 
             {/* Chat Area - Scrollable */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
+            <div id="sophia-chat" className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
               {messages.length === 0 ? (
                 <ConversationDemo />
               ) : (
-                <ChatMessages messages={messages} isLoading={isLoading} />
+                <>
+                  <ChatMessages messages={messages} isLoading={isLoading} />
+                  
+                  {/* Show form if requested */}
+                  {showFreeQuoteForm && (
+                    <div className="animate-fade-in">
+                      <ChatFormField
+                        fields={freeQuoteFields}
+                        onSubmit={handleFreeQuoteSubmit}
+                        onCancel={() => setShowFreeQuoteForm(false)}
+                        submitLabel="Get Free Quote"
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
@@ -770,7 +799,19 @@ const Index = () => {
 
           {/* Loan Programs */}
           <section className="space-y-6 md:space-y-8 pb-8">
-            <LoanProgramsTabs onAskSophia={sendMessage} />
+            {/* Contextual Sophia Bubble for Loan Programs */}
+            <div className="mb-6">
+              <SophiaContextualBubble
+                message="Not sure which loan program is right for you? Let's chat! I can help you understand your options and find the perfect fit for your situation."
+                onClick={scrollToChat}
+                position="left"
+              />
+            </div>
+            
+            <LoanProgramsTabs onAskSophia={(message) => {
+              sendMessage(message);
+              scrollToChat();
+            }} />
           </section>
 
         </div>
