@@ -56,6 +56,11 @@ const Index = () => {
   const videoCalcSection = useScrollAnimation({ threshold: 0.2 });
   const reviewsSection = useScrollAnimation({ threshold: 0.2 });
 
+  // Handle speaking state from voice interface
+  const handleSpeakingChange = (speaking: boolean) => {
+    setVoiceModeActive(speaking);
+  };
+
   // Scroll to chat function with smooth opening
   const scrollToChat = () => {
     // First, ensure Sophia panel is open
@@ -587,24 +592,27 @@ const Index = () => {
               )}
             </div>
 
-            {/* Input Area - Quick Topics Only */}
-            <div className="flex-shrink-0 p-3 border-t border-primary/20">
-              <p className="text-xs text-muted-foreground mb-3 text-center font-medium">Choose a topic to get started:</p>
-              <div className="grid grid-cols-2 gap-2">
-                {quickActions.map((action) => (
-                  <Button
-                    key={action.label}
-                    variant="outline"
-                    size="sm"
-                    className="justify-start text-xs h-10 px-3 border-primary/20 hover:bg-primary/10"
-                    onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
-                  >
-                    <action.icon className="w-4 h-4 mr-2 flex-shrink-0" />
-                    <span className="truncate">{action.label}</span>
-                  </Button>
-                ))}
-              </div>
+          {/* Input Area - Quick Topics & Voice */}
+          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs text-muted-foreground font-medium">Choose a topic:</p>
+              <VoiceInterface onSpeakingChange={handleSpeakingChange} />
             </div>
+            <div className="grid grid-cols-2 gap-2">
+              {quickActions.map((action) => (
+                <Button
+                  key={action.label}
+                  variant="outline"
+                  size="sm"
+                  className="justify-start text-xs h-10 px-3 border-primary/20 hover:bg-primary/10"
+                  onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                >
+                  <action.icon className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate">{action.label}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
           </div>
         </div>
 
@@ -687,9 +695,12 @@ const Index = () => {
             )}
           </div>
 
-          {/* Input Area - Quick Topics Only */}
-          <div className="flex-shrink-0 p-3 border-t border-primary/20">
-            <p className="text-xs text-muted-foreground mb-3 text-center font-medium">Choose a topic to get started:</p>
+          {/* Input Area - Quick Topics & Voice */}
+          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs text-muted-foreground font-medium">Choose a topic:</p>
+              <VoiceInterface onSpeakingChange={handleSpeakingChange} />
+            </div>
             <div className="grid grid-cols-2 gap-2">
               {quickActions.map((action) => (
                 <Button
@@ -705,11 +716,6 @@ const Index = () => {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Voice Interface - Hidden on mobile, only shown on desktop when panel is closed */}
-        <div className="hidden lg:block">
-          {!isSophiaPanelOpen && <VoiceInterface onSpeakingChange={() => {}} />}
         </div>
 
         {/* Floating Sophia Toggle Button - Shows when panel is hidden */}

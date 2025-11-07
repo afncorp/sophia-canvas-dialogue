@@ -129,27 +129,30 @@ const VoiceInterface: React.FC<VoiceInterfaceProps> = ({ onSpeakingChange }) => 
   }, []);
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div className="flex items-center gap-2">
       {isConnected && cooldown > 0 && (
-        <div className="mb-2 text-sm">Cooling down: {cooldown}s</div>
+        <span className="text-xs text-muted-foreground">{cooldown}s</span>
       )}
       {!isConnected ? (
         <Button 
           onClick={startConversation}
           disabled={isLoading}
-          size="lg"
-          className="rounded-full w-16 h-16 shadow-lg"
+          size="sm"
+          variant="outline"
+          className="h-9 px-3 border-primary/20 hover:bg-primary/10"
         >
-          <Mic className="h-6 w-6" />
+          <Mic className="h-4 w-4 mr-1.5" />
+          <span className="text-xs">Voice</span>
         </Button>
       ) : (
         <Button 
           onClick={endConversation}
-          size="lg"
+          size="sm"
           variant="destructive"
-          className="rounded-full w-16 h-16 shadow-lg animate-pulse"
+          className="h-9 px-3 animate-pulse"
         >
-          <MicOff className="h-6 w-6" />
+          <MicOff className="h-4 w-4 mr-1.5" />
+          <span className="text-xs">End</span>
         </Button>
       )}
     </div>
