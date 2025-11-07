@@ -452,7 +452,7 @@ const Index = () => {
         {!showSophiaChat && (
           <button
             onClick={() => setShowSophiaChat(true)}
-            className="fixed bottom-6 right-6 z-50 group"
+            className="fixed top-20 right-6 z-50 group"
           >
             <div className="relative">
               <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 group-hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 group-hover:scale-110">
