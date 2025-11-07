@@ -31,6 +31,7 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
+  const [showSophiaChat, setShowSophiaChat] = useState(true);
   const [chatPosition, setChatPosition] = useState({ x: window.innerWidth - 420, y: 80 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -45,6 +46,7 @@ const Index = () => {
 
   // Scroll to chat function
   const scrollToChat = () => {
+    setShowSophiaChat(true);
     const chatElement = document.getElementById('sophia-chat');
     if (chatElement) {
       chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -483,21 +485,43 @@ const Index = () => {
         </div>
       </div>
 
-        {/* Floating Sophia Panel - Upper Right Corner on Desktop, Bottom on Mobile */}
-        <div 
-          className="hidden lg:block fixed w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50"
-          style={{ 
-            left: `${chatPosition.x}px`, 
-            top: `${chatPosition.y}px`,
-            cursor: isDragging ? 'grabbing' : 'default'
-          }}
-        >
-          <div className="h-full flex flex-col max-h-[600px]">
-            {/* Compact Header - Draggable */}
-            <div 
-              className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent cursor-grab active:cursor-grabbing"
-              onMouseDown={handleDragStart}
-            >
+        {/* Floating Sophia Icon - Shows when chat is hidden */}
+        {!showSophiaChat && (
+          <button
+            onClick={() => setShowSophiaChat(true)}
+            className="fixed w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 hover:scale-110 z-50 group"
+            style={{ left: `${chatPosition.x}px`, top: `${chatPosition.y}px` }}
+          >
+            <video 
+              src={sophiaVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
+              <MessageSquare className="w-4 h-4 text-primary-foreground" />
+            </div>
+          </button>
+        )}
+
+        {/* Floating Sophia Panel - Draggable */}
+        {showSophiaChat && (
+          <div 
+            className="hidden lg:block fixed w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50"
+            style={{ 
+              left: `${chatPosition.x}px`, 
+              top: `${chatPosition.y}px`,
+              cursor: isDragging ? 'grabbing' : 'default'
+            }}
+          >
+            <div className="h-full flex flex-col max-h-[600px]">
+              {/* Compact Header - Draggable */}
+              <div 
+                className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent cursor-grab active:cursor-grabbing"
+                onMouseDown={handleDragStart}
+              >
                 <div className="p-3 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="relative">
@@ -529,6 +553,15 @@ const Index = () => {
                       title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
                     >
                       <Mic className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="w-9 h-9 hover:bg-primary/10"
+                      onClick={() => setShowSophiaChat(false)}
+                      title="Hide chat"
+                    >
+                      <X className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
@@ -601,7 +634,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
         <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
@@ -713,6 +746,7 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </div>
 
       {/* Below the Fold Content - Full Width */}
       <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
