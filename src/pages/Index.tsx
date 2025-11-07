@@ -18,7 +18,7 @@ import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import afnLogo from "@/assets/afn-logo.png";
 import afnLogoWhite from "@/assets/afn-logo-white.png";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +32,19 @@ const Index = () => {
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
   const [isSophiaPanelOpen, setIsSophiaPanelOpen] = useState(true);
+  const [showSophiaTooltip, setShowSophiaTooltip] = useState(false);
+
+  // Show tooltip to draw attention to Sophia when panel is closed
+  useEffect(() => {
+    if (!isSophiaPanelOpen) {
+      const timer = setTimeout(() => {
+        setShowSophiaTooltip(true);
+        // Auto-hide tooltip after 5 seconds
+        setTimeout(() => setShowSophiaTooltip(false), 5000);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSophiaPanelOpen]);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -453,13 +466,18 @@ const Index = () => {
 
         {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
         <div 
-          className={`hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30 transition-transform duration-300 ease-in-out ${
-            isSophiaPanelOpen ? 'translate-x-0' : 'translate-x-full'
+          className={`hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-gradient-to-br from-card/60 to-card/40 backdrop-blur-xl border-l-2 border-primary/30 shadow-2xl shadow-primary/20 z-30 transition-all duration-300 ease-in-out ${
+            isSophiaPanelOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
           }`}
         >
+          {/* Decorative gradient border accent */}
+          <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary via-secondary to-accent"></div>
+          
           <div className="h-full flex flex-col">
             {/* Enhanced Header with Sophia Introduction */}
-            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 relative">
+            <div className="flex-shrink-0 p-6 border-b-2 border-primary/30 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 relative">
+              {/* Decorative top accent line */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
               {/* Close button - absolute positioned */}
               <Button
                 variant="ghost"
@@ -472,10 +490,10 @@ const Index = () => {
               </Button>
 
               <div className="flex items-start gap-4 mb-4">
-                {/* Larger Sophia Avatar */}
+                {/* Larger Sophia Avatar with enhanced glow */}
                 <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-xl animate-glow-pulse"></div>
-                  <div className="relative w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg shadow-primary/20">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-secondary/40 rounded-full blur-2xl animate-glow-pulse"></div>
+                  <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-secondary/20 flex items-center justify-center overflow-hidden ring-4 ring-primary/50 shadow-2xl shadow-primary/30">
                     <video 
                       src={sophiaVideo}
                       autoPlay
@@ -485,16 +503,26 @@ const Index = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
-                    <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
+                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-xl shadow-primary/50 animate-glow-pulse ring-2 ring-primary-foreground/30">
+                    <div className="w-3 h-3 bg-primary-foreground rounded-full"></div>
                   </div>
                 </div>
                 
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <h2 className="font-bold text-xl text-foreground">Sophia</h2>
-                      <p className="text-xs text-primary font-semibold">AI Mortgage Assistant</p>
+                    <div className="flex items-center gap-2">
+                      <div>
+                        <h2 className="font-bold text-2xl text-foreground flex items-center gap-2">
+                          Sophia
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground animate-glow-pulse">
+                            AI
+                          </span>
+                        </h2>
+                        <p className="text-xs text-primary font-semibold flex items-center gap-1">
+                          <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                          Online Now • Ready to Help
+                        </p>
+                      </div>
                     </div>
                     <Button
                       variant="outline"
@@ -570,12 +598,15 @@ const Index = () => {
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
         <div 
-          className={`lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10 transition-transform duration-300 ease-in-out ${
-            isSophiaPanelOpen ? 'translate-y-0' : 'translate-y-full'
+          className={`lg:hidden w-full bg-gradient-to-br from-card/60 to-card/40 backdrop-blur-xl border-t-2 border-primary/30 shadow-2xl shadow-primary/20 relative z-10 transition-all duration-300 ease-in-out ${
+            isSophiaPanelOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
           }`}
         >
+          {/* Decorative gradient top accent */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+          
           {/* Header with Sophia */}
-          <div className="flex-shrink-0 p-4 border-b border-primary/20 relative">
+          <div className="flex-shrink-0 p-4 border-b-2 border-primary/30 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 relative">
             {/* Close button - absolute positioned */}
             <Button
               variant="ghost"
@@ -588,19 +619,30 @@ const Index = () => {
             </Button>
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
-                  <video 
-                    src={sophiaVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-lg animate-glow-pulse"></div>
+                  <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/40 shadow-lg shadow-primary/20">
+                    <video 
+                      src={sophiaVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
                 <div>
-                  <h2 className="font-semibold text-base text-foreground">Sophia</h2>
-                  <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
+                  <h2 className="font-semibold text-base text-foreground flex items-center gap-2">
+                    Sophia
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground">
+                      AI
+                    </span>
+                  </h2>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    {voiceModeActive ? 'Voice Mode Active' : 'Online Now'}
+                  </p>
                 </div>
               </div>
               <Button
@@ -659,14 +701,41 @@ const Index = () => {
 
         {/* Floating Sophia Toggle Button - Shows when panel is hidden */}
         {!isSophiaPanelOpen && (
-          <Button
-            size="lg"
-            className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all hover:scale-110 animate-bounce"
-            onClick={() => setIsSophiaPanelOpen(true)}
-            title="Open Sophia Chat"
-          >
-            <MessageSquare className="w-6 h-6" />
-          </Button>
+          <div className="fixed bottom-6 right-6 z-40">
+            {/* Tooltip */}
+            {showSophiaTooltip && (
+              <div className="absolute bottom-full right-0 mb-4 animate-fade-in">
+                <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-4 py-2 rounded-lg shadow-xl relative">
+                  <p className="text-sm font-medium whitespace-nowrap">👋 Need help? Chat with me!</p>
+                  <div className="absolute top-full right-8 -mt-1">
+                    <div className="border-8 border-transparent border-t-primary"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Floating Button with enhanced visuals */}
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-xl opacity-50 animate-glow-pulse"></div>
+              
+              {/* Button */}
+              <Button
+                size="lg"
+                className="relative w-16 h-16 rounded-full shadow-2xl shadow-primary/50 hover:shadow-primary/70 transition-all hover:scale-110 bg-gradient-to-r from-primary via-primary-glow to-secondary border-2 border-primary-foreground/20 animate-bounce"
+                onClick={() => {
+                  setIsSophiaPanelOpen(true);
+                  setShowSophiaTooltip(false);
+                }}
+                title="Chat with Sophia - Your AI Mortgage Assistant"
+              >
+                <MessageSquare className="w-7 h-7" />
+              </Button>
+              
+              {/* Pulse ring */}
+              <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-75"></div>
+            </div>
+          </div>
         )}
       </div>
 
