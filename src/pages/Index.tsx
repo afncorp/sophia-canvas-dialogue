@@ -434,12 +434,12 @@ const Index = () => {
         >
           <div className="h-full flex flex-col">
             {/* Enhanced Header with Sophia Introduction */}
-            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 relative">
-              {/* Close button - absolute positioned */}
+            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 relative group">
+              {/* Close button - appears on hover */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-2 right-2 w-8 h-8 z-10"
+                className="absolute top-2 right-2 w-8 h-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 onClick={() => setIsSophiaPanelOpen(false)}
                 title="Hide Sophia"
               >
@@ -550,12 +550,12 @@ const Index = () => {
           }`}
         >
           {/* Header with Sophia */}
-          <div className="flex-shrink-0 p-4 border-b border-primary/20 relative">
-            {/* Close button - absolute positioned */}
+          <div className="flex-shrink-0 p-4 border-b border-primary/20 relative group">
+            {/* Close button - appears on hover */}
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-2 right-2 w-8 h-8 z-10"
+              className="absolute top-2 right-2 w-8 h-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               onClick={() => setIsSophiaPanelOpen(false)}
               title="Hide Sophia"
             >
