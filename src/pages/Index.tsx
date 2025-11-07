@@ -11,7 +11,7 @@ import { SophiaContextualBubble } from "@/components/SophiaContextualBubble";
 import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck, X } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
@@ -31,6 +31,7 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
+  const [isSophiaPanelOpen, setIsSophiaPanelOpen] = useState(true);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -426,10 +427,25 @@ const Index = () => {
       </div>
 
         {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
-        <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
+        <div 
+          className={`hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30 transition-transform duration-300 ease-in-out ${
+            isSophiaPanelOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
           <div className="h-full flex flex-col">
             {/* Enhanced Header with Sophia Introduction */}
-            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5">
+            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 relative">
+              {/* Close button - absolute positioned */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 w-8 h-8 z-10"
+                onClick={() => setIsSophiaPanelOpen(false)}
+                title="Hide Sophia"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+
               <div className="flex items-start gap-4 mb-4">
                 {/* Larger Sophia Avatar */}
                 <div className="relative flex-shrink-0">
@@ -528,9 +544,23 @@ const Index = () => {
         </div>
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
-        <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
+        <div 
+          className={`lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10 transition-transform duration-300 ease-in-out ${
+            isSophiaPanelOpen ? 'translate-y-0' : 'translate-y-full'
+          }`}
+        >
           {/* Header with Sophia */}
-          <div className="flex-shrink-0 p-4 border-b border-primary/20">
+          <div className="flex-shrink-0 p-4 border-b border-primary/20 relative">
+            {/* Close button - absolute positioned */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-2 right-2 w-8 h-8 z-10"
+              onClick={() => setIsSophiaPanelOpen(false)}
+              title="Hide Sophia"
+            >
+              <X className="w-4 h-4" />
+            </Button>
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
@@ -601,6 +631,18 @@ const Index = () => {
 
         {/* Voice Interface */}
         <VoiceInterface onSpeakingChange={() => {}} />
+
+        {/* Floating Sophia Toggle Button - Shows when panel is hidden */}
+        {!isSophiaPanelOpen && (
+          <Button
+            size="lg"
+            className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all hover:scale-110 animate-bounce"
+            onClick={() => setIsSophiaPanelOpen(true)}
+            title="Open Sophia Chat"
+          >
+            <MessageSquare className="w-6 h-6" />
+          </Button>
+        )}
       </div>
 
       {/* Below the Fold Content - Full Width */}
