@@ -11,7 +11,7 @@ import { ScrollingSophiaBubble } from "@/components/ScrollingSophiaBubble";
 import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck, X } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
@@ -31,6 +31,7 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
+  const [showSophiaChat, setShowSophiaChat] = useState(false);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -42,6 +43,7 @@ const Index = () => {
 
   // Scroll to chat function
   const scrollToChat = () => {
+    setShowSophiaChat(true);
     const chatElement = document.getElementById('sophia-chat');
     if (chatElement) {
       chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -446,43 +448,79 @@ const Index = () => {
         </div>
       </div>
 
+        {/* Floating Sophia Icon - Shows when chat is closed */}
+        {!showSophiaChat && (
+          <button
+            onClick={() => setShowSophiaChat(true)}
+            className="fixed bottom-6 right-6 z-50 group"
+          >
+            <div className="relative">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 group-hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 group-hover:scale-110">
+                <video 
+                  src={sophiaVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
+                <MessageSquare className="w-3 h-3 text-primary-foreground" />
+              </div>
+            </div>
+          </button>
+        )}
+
         {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
-        <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
-          <div className="h-full flex flex-col">
-            {/* Compact Header */}
-            <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
-              <div className="p-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg">
-                      <video 
-                        src={sophiaVideo}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
+        {showSophiaChat && (
+          <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
+            <div className="h-full flex flex-col">
+              {/* Compact Header */}
+              <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
+                <div className="p-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg">
+                        <video 
+                          src={sophiaVideo}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
+                        <div className="w-1 h-1 bg-primary-foreground rounded-full animate-pulse"></div>
+                      </div>
                     </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
-                      <div className="w-1 h-1 bg-primary-foreground rounded-full animate-pulse"></div>
+                    <div>
+                      <h2 className="font-bold text-sm text-foreground">Sophia AI</h2>
+                      <p className="text-[10px] text-muted-foreground">Your Mortgage Assistant</p>
                     </div>
                   </div>
-                  <div>
-                    <h2 className="font-bold text-sm text-foreground">Sophia AI</h2>
-                    <p className="text-[10px] text-muted-foreground">Your Mortgage Assistant</p>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary/20 text-primary' : 'hover:bg-primary/10'}`}
+                      onClick={() => setVoiceModeActive(!voiceModeActive)}
+                      title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
+                    >
+                      <Mic className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="w-9 h-9 hover:bg-primary/10"
+                      onClick={() => setShowSophiaChat(false)}
+                      title="Close chat"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary/20 text-primary' : 'hover:bg-primary/10'}`}
-                  onClick={() => setVoiceModeActive(!voiceModeActive)}
-                  title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
-                >
-                  <Mic className="w-4 h-4" />
-                </Button>
-              </div>
 
               {voiceModeActive && (
                 <div className="mx-3 mb-3 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 shadow-lg shadow-primary/10 animate-fade-in">
@@ -551,10 +589,11 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
-        <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
+        {showSophiaChat && (
+          <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
           {/* Collapsible Header with Sophia */}
           <div className="flex-shrink-0">
             <button 
@@ -662,7 +701,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Voice Interface */}
         <VoiceInterface onSpeakingChange={() => {}} />
