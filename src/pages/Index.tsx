@@ -589,13 +589,21 @@ const Index = () => {
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
         <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
-          {/* Header with Sophia */}
-          <div className="flex-shrink-0 border-b border-primary/20">
-            <div className="p-4 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent">
-              <div className="flex items-center justify-between gap-3 mb-3">
-                <div className="flex items-center gap-3">
+          {/* Collapsible Header with Sophia */}
+          <div className="flex-shrink-0">
+            <button 
+              onClick={() => {
+                const chatArea = document.getElementById('mobile-chat-area');
+                if (chatArea) {
+                  chatArea.classList.toggle('hidden');
+                }
+              }}
+              className="w-full p-3 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border-b border-primary/20 hover:from-primary/15 transition-all"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
                   <div className="relative">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/40 shadow-xl shadow-primary/20">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/40 shadow-lg shadow-primary/20">
                       <video 
                         src={sophiaVideo}
                         autoPlay
@@ -605,89 +613,83 @@ const Index = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg ring-2 ring-background">
+                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
                       <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-pulse"></div>
                     </div>
                   </div>
-                  <div>
-                    <h2 className="font-bold text-lg text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Sophia</h2>
-                    <p className="text-xs text-primary font-semibold">AI Mortgage Assistant</p>
+                  <div className="text-left">
+                    <h2 className="font-bold text-base text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Sophia AI</h2>
+                    <p className="text-[10px] text-muted-foreground">Tap to chat • 24/7 Available</p>
                   </div>
                 </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className={`w-10 h-10 transition-all flex-shrink-0 ${voiceModeActive ? 'bg-primary text-primary-foreground shadow-lg' : 'border-primary/30 hover:bg-primary/10'}`}
-                  onClick={() => setVoiceModeActive(!voiceModeActive)}
-                  title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
-                >
-                  <Mic className="w-4 h-4" />
-                </Button>
+                <ChevronDown className="w-5 h-5 text-muted-foreground transition-transform" id="mobile-chat-chevron" />
               </div>
+            </button>
 
+            <div id="mobile-chat-area" className="hidden">
               {/* Key Features - Mobile Compact */}
-              <div className="grid grid-cols-3 gap-1.5">
-                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 border border-primary/20 text-center">
-                  <p className="text-lg">🌐</p>
-                  <p className="text-[9px] font-semibold text-foreground">24/7</p>
+              <div className="grid grid-cols-3 gap-1.5 p-3 bg-muted/10">
+                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-1.5 border border-primary/20 text-center">
+                  <p className="text-base">🌐</p>
+                  <p className="text-[8px] font-semibold text-foreground">24/7</p>
                 </div>
-                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 border border-primary/20 text-center">
-                  <p className="text-lg">⚡</p>
-                  <p className="text-[9px] font-semibold text-foreground">Instant</p>
+                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-1.5 border border-primary/20 text-center">
+                  <p className="text-base">⚡</p>
+                  <p className="text-[8px] font-semibold text-foreground">Instant</p>
                 </div>
-                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 border border-primary/20 text-center">
-                  <p className="text-lg">🎯</p>
-                  <p className="text-[9px] font-semibold text-foreground">Personal</p>
+                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-1.5 border border-primary/20 text-center">
+                  <p className="text-base">🎯</p>
+                  <p className="text-[8px] font-semibold text-foreground">Personal</p>
                 </div>
               </div>
-            </div>
 
-            {voiceModeActive && (
-              <div className="mx-3 mb-3 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 animate-fade-in">
-                <p className="text-xs text-primary font-semibold">🎙️ Voice Active</p>
+              {voiceModeActive && (
+                <div className="mx-3 mb-2 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 animate-fade-in">
+                  <p className="text-xs text-primary font-semibold">🎙️ Voice Active</p>
+                </div>
+              )}
+
+              {/* Chat Area - Scrollable with improved mobile height */}
+              <div className="overflow-y-auto p-3 space-y-3" style={{ maxHeight: 'calc(100vh - 400px)', minHeight: '300px' }}>
+                {messages.length === 0 ? (
+                  <ConversationDemo />
+                ) : (
+                  <ChatMessages messages={messages} isLoading={isLoading} />
+                )}
               </div>
-            )}
-          </div>
 
-          {/* Chat Area - Scrollable */}
-          <div className="overflow-y-auto p-3 space-y-3 max-h-[500px]">
-            {messages.length === 0 ? (
-              <ConversationDemo />
-            ) : (
-              <ChatMessages messages={messages} isLoading={isLoading} />
-            )}
-          </div>
-
-          {/* Input Area - Always Visible */}
-          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
-            <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-            
-            {/* Quick Action Buttons */}
-            <div className="grid grid-cols-2 gap-2">
-              {quickActions.map((action) => (
-                <Button
-                  key={action.label}
-                  variant={action.type === 'process' ? 'default' : 'outline'}
-                  size="sm"
-                  className={`justify-start text-xs h-8 px-2.5 ${
-                    action.type === 'process' 
-                      ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                      : 'border-primary/20 hover:bg-primary/10'
-                  }`}
-                    onClick={() => {
-                      if (action.label === 'Pre-Approval') {
-                        sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps and collect my information?");
-                      } else if (action.label === 'Check Rates') {
-                        sendMessage("What are the current mortgage rates? Can you show me rates for different loan types?");
-                      } else {
-                        sendMessage(`Tell me about ${action.label.toLowerCase()}`);
-                      }
-                    }}
-                >
-                  <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                  <span className="truncate">{action.label}</span>
-                </Button>
-              ))}
+              {/* Input Area - Always Visible */}
+              <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+                <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+                
+                {/* Quick Action Buttons */}
+                <div className="grid grid-cols-2 gap-2">
+                  {quickActions.map((action) => (
+                    <Button
+                      key={action.label}
+                      variant={action.type === 'process' ? 'default' : 'outline'}
+                      size="sm"
+                      className={`justify-start text-xs h-8 px-2.5 ${
+                        action.type === 'process' 
+                          ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
+                          : 'border-primary/20 hover:bg-primary/10'
+                      }`}
+                      onClick={() => {
+                        if (action.label === 'Pre-Approval') {
+                          sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps and collect my information?");
+                        } else if (action.label === 'Check Rates') {
+                          sendMessage("What are the current mortgage rates? Can you show me rates for different loan types?");
+                        } else {
+                          sendMessage(`Tell me about ${action.label.toLowerCase()}`);
+                        }
+                      }}
+                    >
+                      <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                      <span className="truncate">{action.label}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -721,7 +723,7 @@ const Index = () => {
               <p className="text-sm md:text-lg text-muted-foreground">See how our AI technology accelerates your mortgage journey</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 md:gap-8">
+            <div className="grid sm:grid-cols-2 gap-3 md:gap-8">
               {/* Traditional */}
               <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border/50 hover:border-border transition-all duration-700 delay-200 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
