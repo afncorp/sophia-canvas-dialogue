@@ -282,86 +282,111 @@ const Index = () => {
         {/* Content Area - Full width on mobile, adjusts for fixed sidebar on desktop */}
         <div className="w-full lg:mr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
+          {/* Hero Section - Matt Maine Profile */}
+          <div 
+            ref={heroSection.ref}
+            className={`transition-all duration-700 ${
+              heroSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-primary/30 shadow-2xl shadow-primary/15 relative overflow-hidden">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl"></div>
+              
+              <div className="relative grid md:grid-cols-[auto_1fr] gap-6 md:gap-8 items-center">
+                {/* Photo */}
+                <div className="relative mx-auto md:mx-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl blur-2xl animate-glow-pulse"></div>
+                  <img 
+                    src={mattMainePhoto} 
+                    alt="Matt Maine - Mortgage Loan Officer"
+                    className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-2 border-primary/40 shadow-xl"
+                  />
+                </div>
+
+                {/* Info */}
+                <div className="space-y-4 text-center md:text-left">
+                  <div>
+                    <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-2">Matt Maine</h1>
+                    <p className="text-base md:text-xl text-primary font-semibold mb-1">Senior Mortgage Loan Officer</p>
+                    <p className="text-xs md:text-sm text-muted-foreground">
+                      15+ years experience • NMLS #12345 • Licensed Nationwide
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                    <div className="flex items-center gap-2">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Award key={i} className="w-4 h-4 md:w-5 md:h-5 fill-primary text-primary" />
+                        ))}
+                      </div>
+                      <span className="text-sm md:text-base font-semibold text-foreground">4.9/5.0</span>
+                    </div>
+                    <span className="text-xs md:text-sm text-muted-foreground">(200+ reviews)</span>
+                  </div>
+
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                    Specializing in first-time homebuyers, refinancing, and investment properties. 
+                    Helped hundreds of families achieve their homeownership dreams with personalized service.
+                  </p>
+
+                  {/* Contact Buttons */}
+                  <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                    <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/30">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call Now
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10">
+                      <Mail className="w-4 h-4 mr-2" />
+                      Email
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10">
+                      <MessageSquare className="w-4 h-4 mr-2" />
+                      Text
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Company Badge */}
+            <div className="flex justify-center mt-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-card/60 backdrop-blur-sm rounded-full border border-primary/20">
+                <span className="text-xs md:text-sm text-muted-foreground">Partnered with</span>
+                <span className="text-xs md:text-sm font-bold text-foreground">American Financial Network</span>
+                <span className="text-xs text-muted-foreground">• 24 years in business</span>
+              </div>
+            </div>
+          </div>
+
+          {/* AI-Powered Badge - Prominent placement */}
+          <div 
+            className={`flex justify-center transition-all duration-700 delay-200 ${
+              heroSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <div className="relative px-6 py-3 bg-gradient-to-r from-primary/20 via-secondary/15 to-accent/20 border-2 border-primary/50 rounded-full backdrop-blur-md">
+                <div className="flex items-center gap-3">
+                  <Zap className="w-5 h-5 md:w-6 md:h-6 text-primary animate-glow-pulse" />
+                  <span className="text-sm md:text-base font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                    AI-Powered Mortgage Technology
+                  </span>
+                  <Zap className="w-5 h-5 md:w-6 md:h-6 text-secondary animate-glow-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Sophia Bubble - Hero Section */}
-          <div className="hidden lg:block mb-6">
+          <div className="hidden lg:block">
             <ScrollingSophiaBubble
               message="Hi! I'm Sophia, your AI mortgage assistant. I can help you get pre-approved, explain loan programs, and answer any questions instantly. Want to get started?"
               section="hero"
               onChatClick={scrollToChat}
             />
-          </div>
-
-          {/* Hero Section */}
-          <div 
-            ref={heroSection.ref}
-            className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
-              heroSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
-            <p className="text-sm md:text-lg text-muted-foreground">
-              15+ years experience • NMLS #12345 • Licensed Nationwide
-            </p>
-            <p className="text-xs md:text-sm text-muted-foreground/80 mt-1">
-              Partnered with American Financial Network • 24 years in business
-            </p>
-            <div className="flex items-center justify-center gap-2">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Award key={i} className="w-4 h-4 md:w-5 md:h-5 fill-primary text-primary" />
-                ))}
-              </div>
-              <span className="text-xs md:text-sm font-semibold text-foreground">4.9/5.0 (200+ reviews)</span>
-            </div>
-          </div>
-
-          {/* Compact Contact Card */}
-          <div 
-            ref={contactCard.ref}
-            className={`bg-card/40 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/40 transition-all duration-700 delay-200 ${
-              contactCard.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <div className="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-start">
-              {/* Photo */}
-              <div className="relative mx-auto md:mx-0">
-                <div className="absolute inset-0 bg-primary/20 rounded-xl blur-xl"></div>
-                <img 
-                  src={mattMainePhoto} 
-                  alt="Matt Maine - Mortgage Loan Officer"
-                  className="relative w-24 h-24 md:w-32 md:h-32 rounded-xl object-cover border-2 border-primary/30"
-                />
-              </div>
-
-              {/* Info Grid */}
-              <div className="space-y-3 md:space-y-4 text-center md:text-left">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground">Matt Maine</h3>
-                  <p className="text-sm md:text-base text-primary font-semibold">Senior Mortgage Loan Officer</p>
-                </div>
-
-                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                  Specializing in first-time homebuyers, refinancing, and investment properties. 
-                  Helped hundreds of families achieve their homeownership dreams with personalized service.
-                </p>
-
-                {/* Contact Buttons */}
-                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
-                  <Button size="sm" className="w-full text-xs md:text-sm h-8 md:h-9 bg-primary hover:bg-primary/90">
-                    <Phone className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
-                    <span className="hidden md:inline">Call</span>
-                  </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
-                    <Mail className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
-                    <span className="hidden md:inline">Email</span>
-                  </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
-                    <MessageSquare className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
-                    <span className="hidden md:inline">Text</span>
-                  </Button>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* CTA Section - Streamlined */}
