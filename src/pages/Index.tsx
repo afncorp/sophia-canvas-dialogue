@@ -18,7 +18,7 @@ import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import afnLogo from "@/assets/afn-logo.png";
 import afnLogoWhite from "@/assets/afn-logo-white.png";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,6 +31,9 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
+  const [chatPosition, setChatPosition] = useState({ x: window.innerWidth - 420, y: 80 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -47,6 +50,40 @@ const Index = () => {
       chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  // Drag handlers for floating chat
+  const handleDragStart = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragOffset({
+      x: e.clientX - chatPosition.x,
+      y: e.clientY - chatPosition.y
+    });
+  };
+
+  const handleDragMove = useCallback((e: MouseEvent) => {
+    if (isDragging) {
+      setChatPosition({
+        x: e.clientX - dragOffset.x,
+        y: e.clientY - dragOffset.y
+      });
+    }
+  }, [isDragging, dragOffset]);
+
+  const handleDragEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Add event listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleDragMove);
+      window.addEventListener('mouseup', handleDragEnd);
+      return () => {
+        window.removeEventListener('mousemove', handleDragMove);
+        window.removeEventListener('mouseup', handleDragEnd);
+      };
+    }
+  }, [isDragging, handleDragMove, handleDragEnd]);
 
   // Handle Free Quote submission
   const handleFreeQuoteSubmit = (data: Record<string, string>) => {
@@ -447,10 +484,20 @@ const Index = () => {
       </div>
 
         {/* Floating Sophia Panel - Upper Right Corner on Desktop, Bottom on Mobile */}
-        <div className="hidden lg:block fixed top-20 right-6 w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50">
+        <div 
+          className="hidden lg:block fixed w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50"
+          style={{ 
+            left: `${chatPosition.x}px`, 
+            top: `${chatPosition.y}px`,
+            cursor: isDragging ? 'grabbing' : 'default'
+          }}
+        >
           <div className="h-full flex flex-col max-h-[600px]">
-              {/* Compact Header */}
-              <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
+            {/* Compact Header - Draggable */}
+            <div 
+              className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent cursor-grab active:cursor-grabbing"
+              onMouseDown={handleDragStart}
+            >
                 <div className="p-3 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="relative">
