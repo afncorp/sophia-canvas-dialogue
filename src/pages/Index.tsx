@@ -279,8 +279,8 @@ const Index = () => {
           <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         </div>
 
-        {/* Content Area - Full width on mobile, adjusts for fixed sidebar on desktop */}
-        <div className="w-full lg:mr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
+        {/* Content Area - Full width */}
+        <div className="w-full flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section - Matt Maine Profile */}
           <div 
@@ -472,10 +472,10 @@ const Index = () => {
           </button>
         )}
 
-        {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
+        {/* Floating Sophia Panel - Upper Right Corner on Desktop, Bottom on Mobile */}
         {showSophiaChat && (
-          <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
-            <div className="h-full flex flex-col">
+          <div className="hidden lg:block fixed top-20 right-6 w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50">
+            <div className="h-full flex flex-col max-h-[600px]">
               {/* Compact Header */}
               <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
                 <div className="p-3 flex items-center justify-between">
