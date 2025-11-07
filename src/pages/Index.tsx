@@ -587,27 +587,22 @@ const Index = () => {
               )}
             </div>
 
-            {/* Input Area - Always Visible */}
-            <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
-              <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-              
-              {/* Quick Topic Buttons */}
-              <div className="border-t border-primary/10 pt-2">
-                <p className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wide font-semibold">Quick Topics</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {quickActions.map((action) => (
-                    <Button
-                      key={action.label}
-                      variant="outline"
-                      size="sm"
-                      className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
-                      onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
-                    >
-                      <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                      <span className="truncate">{action.label}</span>
-                    </Button>
-                  ))}
-                </div>
+            {/* Input Area - Quick Topics Only */}
+            <div className="flex-shrink-0 p-3 border-t border-primary/20">
+              <p className="text-xs text-muted-foreground mb-3 text-center font-medium">Choose a topic to get started:</p>
+              <div className="grid grid-cols-2 gap-2">
+                {quickActions.map((action) => (
+                  <Button
+                    key={action.label}
+                    variant="outline"
+                    size="sm"
+                    className="justify-start text-xs h-10 px-3 border-primary/20 hover:bg-primary/10"
+                    onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                  >
+                    <action.icon className="w-4 h-4 mr-2 flex-shrink-0" />
+                    <span className="truncate">{action.label}</span>
+                  </Button>
+                ))}
               </div>
             </div>
           </div>
@@ -692,27 +687,22 @@ const Index = () => {
             )}
           </div>
 
-          {/* Input Area - Always Visible */}
-          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
-            <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-            
-            {/* Quick Topic Buttons */}
-            <div className="border-t border-primary/10 pt-2">
-              <p className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wide font-semibold">Quick Topics</p>
-              <div className="grid grid-cols-2 gap-2">
-                {quickActions.map((action) => (
-                  <Button
-                    key={action.label}
-                    variant="outline"
-                    size="sm"
-                    className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
-                    onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
-                  >
-                    <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                    <span className="truncate">{action.label}</span>
-                  </Button>
-                ))}
-              </div>
+          {/* Input Area - Quick Topics Only */}
+          <div className="flex-shrink-0 p-3 border-t border-primary/20">
+            <p className="text-xs text-muted-foreground mb-3 text-center font-medium">Choose a topic to get started:</p>
+            <div className="grid grid-cols-2 gap-2">
+              {quickActions.map((action) => (
+                <Button
+                  key={action.label}
+                  variant="outline"
+                  size="sm"
+                  className="justify-start text-xs h-10 px-3 border-primary/20 hover:bg-primary/10"
+                  onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                >
+                  <action.icon className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate">{action.label}</span>
+                </Button>
+              ))}
             </div>
           </div>
         </div>
