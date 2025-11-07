@@ -7,7 +7,7 @@ import { LiveCounters } from "@/components/LiveCounters";
 import { MortgageCalculator } from "@/components/MortgageCalculator";
 import { LoanProgramsTabs } from "@/components/LoanProgramsTabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { SophiaContextualBubble } from "@/components/SophiaContextualBubble";
+import { ScrollingSophiaBubble } from "@/components/ScrollingSophiaBubble";
 import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -282,6 +282,15 @@ const Index = () => {
         {/* Content Area - Full width on mobile, adjusts for fixed sidebar on desktop */}
         <div className="w-full lg:mr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
+          {/* Sophia Bubble - Hero Section */}
+          <div className="hidden lg:block mb-6">
+            <ScrollingSophiaBubble
+              message="Hi! I'm Sophia, your AI mortgage assistant. I can help you get pre-approved, explain loan programs, and answer any questions instantly. Want to get started?"
+              section="hero"
+              onChatClick={scrollToChat}
+            />
+          </div>
+
           {/* Hero Section */}
           <div 
             ref={heroSection.ref}
@@ -289,11 +298,6 @@ const Index = () => {
               heroSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/30 rounded-full mb-4">
-              <span className="text-xs md:text-sm font-semibold text-primary animate-glow-pulse">
-                AI-Powered Mortgage Technology
-              </span>
-            </div>
             <h2 className="text-2xl md:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
             <p className="text-sm md:text-lg text-muted-foreground">
               15+ years experience • NMLS #12345 • Licensed Nationwide
@@ -671,6 +675,15 @@ const Index = () => {
       <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto space-y-12 md:space-y-20">
           
+          {/* Sophia Bubble - Process Section */}
+          <div className="hidden lg:block mb-6 max-w-5xl mx-auto">
+            <ScrollingSophiaBubble
+              message="Curious how AI makes mortgages faster? Let me walk you through the traditional process vs. our AI-enhanced approach. The difference is remarkable!"
+              section="process"
+              onChatClick={scrollToChat}
+            />
+          </div>
+
           {/* Process Flow Comparison */}
           <section 
             ref={processSection.ref}
@@ -760,6 +773,15 @@ const Index = () => {
               </div>
             </div>
           </section>
+
+          {/* Sophia Bubble - Calculator Section */}
+          <div className="hidden lg:block mb-6 max-w-5xl mx-auto">
+            <ScrollingSophiaBubble
+              message="Want to know what your monthly payment could be? Try our calculator below, and if you have questions about rates or programs, just ask me!"
+              section="calculator"
+              onChatClick={scrollToChat}
+            />
+          </div>
 
           {/* Video & Calculator Section - Side by Side */}
           <section 
@@ -860,12 +882,12 @@ const Index = () => {
 
           {/* Loan Programs */}
           <section className="space-y-6 md:space-y-8 pb-8">
-            {/* Contextual Sophia Bubble for Loan Programs */}
-            <div className="mb-6">
-              <SophiaContextualBubble
+            {/* Sophia Bubble - Loan Programs */}
+            <div className="hidden lg:block mb-6 max-w-5xl mx-auto">
+              <ScrollingSophiaBubble
                 message="Not sure which loan program is right for you? Let's chat! I can help you understand your options and find the perfect fit for your situation."
-                onClick={scrollToChat}
-                position="left"
+                section="programs"
+                onChatClick={scrollToChat}
               />
             </div>
             
