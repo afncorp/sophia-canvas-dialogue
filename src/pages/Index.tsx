@@ -41,12 +41,37 @@ const Index = () => {
   const videoCalcSection = useScrollAnimation({ threshold: 0.2 });
   const reviewsSection = useScrollAnimation({ threshold: 0.2 });
 
-  // Scroll to chat function
+  // Scroll to chat function with smooth opening
   const scrollToChat = () => {
-    const chatElement = document.getElementById('sophia-chat');
-    if (chatElement) {
-      chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // First, ensure Sophia panel is open
+    setIsSophiaPanelOpen(true);
+    
+    // Wait for panel to open, then handle scrolling/focusing
+    setTimeout(() => {
+      const chatElement = document.getElementById('sophia-chat');
+      
+      // On mobile, scroll to the chat panel
+      if (window.innerWidth < 1024) {
+        if (chatElement) {
+          chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        // On desktop, add a subtle pulse effect to draw attention
+        const desktopPanel = document.querySelector('.lg\\:block.fixed.right-0') as HTMLElement;
+        if (desktopPanel) {
+          desktopPanel.classList.add('animate-pulse-once');
+          setTimeout(() => {
+            desktopPanel.classList.remove('animate-pulse-once');
+          }, 1000);
+        }
+      }
+      
+      // Focus the chat input
+      const chatInput = document.querySelector('input[placeholder*="Ask"]') as HTMLInputElement;
+      if (chatInput) {
+        chatInput.focus();
+      }
+    }, 350); // Wait for slide animation to complete
   };
 
   // Handle Free Quote submission
