@@ -252,7 +252,7 @@ const Index = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:flex-row relative">
+      <div className="flex-1 flex flex-col relative">
         {/* Animated grid background */}
         <div className="fixed inset-0 pointer-events-none animated-grid opacity-30 z-0"></div>
         
@@ -279,7 +279,7 @@ const Index = () => {
         </div>
 
         {/* Content Area - Full width on mobile, adjusts for fixed sidebar on desktop */}
-        <div className="w-full lg:mr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
+        <div className="w-full lg:pr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section */}
           <div 
@@ -646,7 +646,7 @@ const Index = () => {
       </div>
 
       {/* Below the Fold Content - Full Width */}
-      <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
+      <div className="w-full lg:pr-[33.333333%] bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto space-y-12 md:space-y-20">
           
           {/* Process Flow Comparison */}
