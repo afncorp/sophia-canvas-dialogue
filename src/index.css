@@ -63,57 +63,57 @@ All colors MUST be HSL.
     --sidebar-ring: 330 85% 65%;
   }
 
-  /* Traditional Theme - Conservative silver/bronze, light background */
+  /* Traditional Theme - Command Suite silver/bronze, dark charcoal background */
   [data-theme="traditional"] {
-    --background: 0 0% 100%;
-    --foreground: 220 15% 15%;
+    --background: 0 0% 17%;
+    --foreground: 0 0% 90%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 220 15% 15%;
+    --card: 0 0% 20%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover: 0 0% 17%;
+    --popover-foreground: 0 0% 90%;
 
-    /* Navy blue primary for trust */
-    --primary: 220 30% 35%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 220 30% 45%;
+    /* Silver primary - cool metallic gray */
+    --primary: 210 8% 60%;
+    --primary-foreground: 0 0% 15%;
+    --primary-glow: 210 10% 70%;
 
     /* Bronze secondary from Command Suite */
-    --secondary: 35 35% 50%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 35 45% 60%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 220 10% 95%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 60%;
 
-    /* Subtle blue accent */
-    --accent: 210 35% 50%;
-    --accent-foreground: 0 0% 100%;
+    /* Bronze accent */
+    --accent: 35 40% 55%;
+    --accent-foreground: 0 0% 15%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 88%;
-    --input: 220 10% 92%;
-    --ring: 220 30% 35%;
+    --border: 0 0% 28%;
+    --input: 0 0% 25%;
+    --ring: 210 8% 60%;
 
-    /* Conservative gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 30% 35%), hsl(220 30% 45%));
-    --gradient-tech: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
-    --gradient-accent: linear-gradient(135deg, hsl(220 30% 35%), hsl(35 35% 50%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(220 30% 35% / 0.05), transparent 70%);
-    --shadow-bronze: 0 2px 10px hsl(220 10% 20% / 0.08);
-    --shadow-soft: 0 4px 20px -5px hsl(220 10% 20% / 0.12);
-    --shadow-card: 0 2px 15px hsl(220 10% 20% / 0.06);
+    /* Tech-forward gradients with silver/bronze */
+    --gradient-primary: linear-gradient(135deg, hsl(210 8% 60%), hsl(210 10% 70%));
+    --gradient-tech: linear-gradient(180deg, hsl(0 0% 17%), hsl(0 0% 20%));
+    --gradient-accent: linear-gradient(135deg, hsl(210 8% 60%), hsl(35 45% 60%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(210 8% 60% / 0.15), transparent 70%);
+    --shadow-bronze: 0 0 30px hsl(35 45% 60% / 0.25), 0 0 60px hsl(35 45% 60% / 0.12);
+    --shadow-soft: 0 8px 30px -8px hsl(210 8% 60% / 0.2);
+    --shadow-card: 0 4px 20px hsl(0 0% 10% / 0.4);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 15% 15%;
-    --sidebar-primary: 220 30% 35%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 10% 95%;
-    --sidebar-accent-foreground: 220 15% 15%;
-    --sidebar-border: 220 10% 88%;
-    --sidebar-ring: 220 30% 35%;
+    --sidebar-background: 0 0% 17%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 210 8% 60%;
+    --sidebar-primary-foreground: 0 0% 15%;
+    --sidebar-accent: 0 0% 25%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 28%;
+    --sidebar-ring: 210 8% 60%;
   }
 
   /* Modern Theme - Vibrant futuristic look (default, same as root) */
@@ -188,8 +188,8 @@ All colors MUST be HSL.
 
   [data-theme="traditional"] .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(220 10% 85% / 0.5) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(220 10% 85% / 0.5) 1px, transparent 1px);
+      linear-gradient(to right, hsl(210 8% 60% / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(210 8% 60% / 0.08) 1px, transparent 1px);
   }
 
   [data-theme="modern"] .animated-grid {
@@ -236,6 +236,22 @@ All colors MUST be HSL.
     50% {
       opacity: 0.8;
       box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+    }
+  }
+
+  /* Traditional theme uses softer glow */
+  [data-theme="traditional"] .animate-glow-pulse {
+    animation: glow-pulse-soft 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse-soft {
+    0%, 100% {
+      opacity: 0.6;
+      box-shadow: 0 0 15px currentColor;
+    }
+    50% {
+      opacity: 0.9;
+      box-shadow: 0 0 25px currentColor;
     }
   }
 
