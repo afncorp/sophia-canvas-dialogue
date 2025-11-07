@@ -717,8 +717,10 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Voice Interface */}
-        <VoiceInterface onSpeakingChange={() => {}} />
+        {/* Voice Interface - Hidden on mobile, only shown on desktop when panel is closed */}
+        <div className="hidden lg:block">
+          {!isSophiaPanelOpen && <VoiceInterface onSpeakingChange={() => {}} />}
+        </div>
 
         {/* Floating Sophia Toggle Button - Shows when panel is hidden */}
         {!isSophiaPanelOpen && (
