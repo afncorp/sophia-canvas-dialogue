@@ -1,4 +1,5 @@
 import { ConversationDemo } from "@/components/ConversationDemo";
+import { SophiaWelcome } from "@/components/SophiaWelcome";
 import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
@@ -33,6 +34,7 @@ const Index = () => {
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
   const [isSophiaPanelOpen, setIsSophiaPanelOpen] = useState(true);
   const [showSophiaTooltip, setShowSophiaTooltip] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
 
   // Show tooltip to draw attention to Sophia when panel is closed
   useEffect(() => {
@@ -550,7 +552,11 @@ const Index = () => {
             {/* Chat Area - Scrollable */}
             <div id="sophia-chat" className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
               {messages.length === 0 ? (
-                <ConversationDemo />
+                showWelcome ? (
+                  <SophiaWelcome onComplete={() => setShowWelcome(false)} />
+                ) : (
+                  <ConversationDemo />
+                )
               ) : (
                 <>
                   <ChatMessages messages={messages} isLoading={isLoading} />
@@ -665,7 +671,11 @@ const Index = () => {
           {/* Chat Area - Scrollable */}
           <div className="overflow-y-auto p-3 space-y-3 max-h-[500px]">
             {messages.length === 0 ? (
-              <ConversationDemo />
+              showWelcome ? (
+                <SophiaWelcome onComplete={() => setShowWelcome(false)} />
+              ) : (
+                <ConversationDemo />
+              )
             ) : (
               <ChatMessages messages={messages} isLoading={isLoading} />
             )}
