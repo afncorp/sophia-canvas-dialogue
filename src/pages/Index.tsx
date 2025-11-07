@@ -241,45 +241,57 @@ const Index = () => {
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden hover:bg-primary/10"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <Menu className="w-6 h-6" />
-            </Button>
+            {/* Mobile Actions */}
+            <div className="flex lg:hidden items-center gap-2">
+              <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10 min-w-[44px] min-h-[44px]"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                <Menu className="w-6 h-6" />
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-primary/20 py-4 space-y-4 bg-card/50 backdrop-blur-lg">
-              <a href="#locations" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <div className="lg:hidden border-t border-primary/20 py-4 space-y-3 bg-card/50 backdrop-blur-lg animate-fade-in">
+              <a 
+                href="#locations" 
+                className="block py-3 px-4 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 transition-colors rounded-lg min-h-[44px] flex items-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Locations
               </a>
-              <a href="#testimonials" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+              <a 
+                href="#testimonials" 
+                className="block py-3 px-4 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 transition-colors rounded-lg min-h-[44px] flex items-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Testimonials
               </a>
-              <div className="space-y-2">
-                <p className="text-sm font-semibold text-muted-foreground">Resources</p>
-                <div className="pl-4 space-y-2">
-                  <a href="#calculator" className="block py-1 text-sm text-foreground hover:text-primary">Mortgage Calculator</a>
-                  <a href="#learning" className="block py-1 text-sm text-foreground hover:text-primary">Learning Center</a>
-                  <a href="#blog" className="block py-1 text-sm text-foreground hover:text-primary">Blog</a>
+              <div className="space-y-2 px-4">
+                <p className="text-sm font-semibold text-muted-foreground py-2">Resources</p>
+                <div className="space-y-1">
+                  <a href="#calculator" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Mortgage Calculator</a>
+                  <a href="#learning" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Learning Center</a>
+                  <a href="#blog" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Blog</a>
                 </div>
               </div>
-              <div className="space-y-2">
-                <p className="text-sm font-semibold text-muted-foreground">Company</p>
-                <div className="pl-4 space-y-2">
-                  <a href="#about" className="block py-1 text-sm text-foreground hover:text-primary">About Us</a>
-                  <a href="#team" className="block py-1 text-sm text-foreground hover:text-primary">Our Team</a>
-                  <a href="#contact" className="block py-1 text-sm text-foreground hover:text-primary">Contact</a>
+              <div className="space-y-2 px-4">
+                <p className="text-sm font-semibold text-muted-foreground py-2">Company</p>
+                <div className="space-y-1">
+                  <a href="#about" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">About Us</a>
+                  <a href="#team" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Our Team</a>
+                  <a href="#contact" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Contact</a>
                 </div>
               </div>
-              <div className="pt-4 space-y-2">
-                <Button className="w-full border-primary/30" variant="outline">Free Quote</Button>
-                <Button className="w-full bg-gradient-to-r from-primary to-secondary">Apply Now</Button>
+              <div className="pt-2 px-4 space-y-3">
+                <Button className="w-full border-primary/30 min-h-[44px]" variant="outline">Free Quote</Button>
+                <Button className="w-full bg-gradient-to-r from-primary to-secondary min-h-[44px]">Apply Now</Button>
               </div>
             </div>
           )}
@@ -333,20 +345,20 @@ const Index = () => {
                 AI-Powered Mortgage Technology
               </span>
             </div>
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
-            <p className="text-sm md:text-lg text-muted-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
               15+ years experience • NMLS #12345 • Licensed Nationwide
             </p>
-            <p className="text-xs md:text-sm text-muted-foreground/80 mt-1">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground/80 mt-1">
               Partnered with American Financial Network • 24 years in business
             </p>
             <div className="flex items-center justify-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Award key={i} className="w-4 h-4 md:w-5 md:h-5 fill-primary text-primary" />
+                  <Award key={i} className="w-5 h-5 md:w-6 md:h-6 fill-primary text-primary" />
                 ))}
               </div>
-              <span className="text-xs md:text-sm font-semibold text-foreground">4.9/5.0 (200+ reviews)</span>
+              <span className="text-sm sm:text-base md:text-lg font-semibold text-foreground">4.9/5.0 (200+ reviews)</span>
             </div>
           </div>
 
@@ -380,19 +392,19 @@ const Index = () => {
                   Helped hundreds of families achieve their homeownership dreams with personalized service.
                 </p>
 
-                {/* Contact Buttons */}
-                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
-                  <Button size="sm" className="w-full text-xs md:text-sm h-8 md:h-9 bg-primary hover:bg-primary/90">
-                    <Phone className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
-                    <span className="hidden md:inline">Call</span>
+                {/* Contact Buttons - Touch-friendly */}
+                <div className="grid grid-cols-3 gap-2 md:gap-3">
+                  <Button size="sm" className="w-full text-xs sm:text-sm min-h-[44px] bg-primary hover:bg-primary/90 flex-col sm:flex-row gap-1">
+                    <Phone className="w-4 h-4 md:w-5 md:h-5" />
+                    <span>Call</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
-                    <Mail className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
-                    <span className="hidden md:inline">Email</span>
+                  <Button size="sm" variant="outline" className="w-full text-xs sm:text-sm min-h-[44px] border-primary/30 hover:bg-primary/10 flex-col sm:flex-row gap-1">
+                    <Mail className="w-4 h-4 md:w-5 md:h-5" />
+                    <span>Email</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
-                    <MessageSquare className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
-                    <span className="hidden md:inline">Text</span>
+                  <Button size="sm" variant="outline" className="w-full text-xs sm:text-sm min-h-[44px] border-primary/30 hover:bg-primary/10 flex-col sm:flex-row gap-1">
+                    <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
+                    <span>Text</span>
                   </Button>
                 </div>
               </div>
@@ -412,18 +424,17 @@ const Index = () => {
                 <h3 className="text-xl md:text-3xl font-bold text-foreground mb-2 md:mb-3">Your Next Step Starts Here</h3>
                 <p className="text-sm md:text-base text-muted-foreground">Three simple ways to begin</p>
               </div>
-              
-              {/* Three Primary Actions */}
-              <div className="grid md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
+              {/* Three Primary Actions - Touch-optimized */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 max-w-4xl mx-auto">
                 {/* Action 1: Apply for a Loan */}
                 <Button 
                   size="lg" 
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 bg-gradient-to-br from-primary via-primary-glow to-secondary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group flex-col"
+                  className="text-base md:text-lg px-6 md:px-8 min-h-[110px] py-6 bg-gradient-to-br from-primary via-primary-glow to-secondary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group flex-col active:scale-95 touch-manipulation"
                   onClick={() => sendMessage("I'd like to apply for a loan. Can you help me get started with the application process?")}
                 >
-                  <FileCheck className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
+                  <FileCheck className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="text-center">
-                    <div className="font-bold text-base">Apply for a Loan</div>
+                    <div className="font-bold text-base md:text-lg">Apply for a Loan</div>
                     <div className="text-xs opacity-90 mt-1">Start your application</div>
                   </div>
                 </Button>
@@ -432,12 +443,12 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col"
+                  className="text-base md:text-lg px-6 md:px-8 min-h-[110px] py-6 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col active:scale-95 touch-manipulation"
                   onClick={() => sendMessage("I'd like to speak with a loan officer. Can you arrange a call or meeting?")}
                 >
-                  <Phone className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
+                  <Phone className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="text-center">
-                    <div className="font-bold text-base">Contact Loan Officer</div>
+                    <div className="font-bold text-base md:text-lg">Contact Loan Officer</div>
                     <div className="text-xs opacity-70 mt-1">Speak with an expert</div>
                   </div>
                 </Button>
@@ -446,19 +457,19 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col"
+                  className="text-base md:text-lg px-6 md:px-8 min-h-[110px] py-6 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col active:scale-95 touch-manipulation"
                   onClick={scrollToChat}
                 >
-                  <MessageSquare className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
+                  <MessageSquare className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="text-center">
-                    <div className="font-bold text-base">Chat with Sophia</div>
+                    <div className="font-bold text-base md:text-lg">Chat with Sophia</div>
                     <div className="text-xs opacity-70 mt-1">Get instant answers</div>
                   </div>
                 </Button>
               </div>
 
               {/* Supporting Text */}
-              <p className="text-center text-xs md:text-sm text-muted-foreground/80 max-w-2xl mx-auto">
+              <p className="text-center text-sm md:text-base text-muted-foreground/80 max-w-2xl mx-auto px-4">
                 All pathways are accessible 24/7. Sophia can assist with applications, answer questions, or connect you with a loan officer.
               </p>
             </div>
@@ -711,10 +722,10 @@ const Index = () => {
 
         {/* Floating Sophia Toggle Button - Shows when panel is hidden */}
         {!isSophiaPanelOpen && (
-          <div className="fixed bottom-6 right-6 z-40">
+          <div className="fixed bottom-6 right-6 z-40 sm:bottom-8 sm:right-8">
             {/* Tooltip */}
             {showSophiaTooltip && (
-              <div className="absolute bottom-full right-0 mb-4 animate-fade-in">
+              <div className="absolute bottom-full right-0 mb-4 animate-fade-in hidden sm:block">
                 <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-4 py-2 rounded-lg shadow-xl relative">
                   <p className="text-sm font-medium whitespace-nowrap">👋 Need help? Chat with me!</p>
                   <div className="absolute top-full right-8 -mt-1">
@@ -729,21 +740,22 @@ const Index = () => {
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-xl opacity-50 animate-glow-pulse"></div>
               
-              {/* Button */}
+              {/* Button - Larger touch target on mobile */}
               <Button
                 size="lg"
-                className="relative w-16 h-16 rounded-full shadow-2xl shadow-primary/50 hover:shadow-primary/70 transition-all hover:scale-110 bg-gradient-to-r from-primary via-primary-glow to-secondary border-2 border-primary-foreground/20 animate-bounce"
+                className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full shadow-2xl shadow-primary/50 hover:shadow-primary/70 transition-all hover:scale-110 bg-gradient-to-r from-primary via-primary-glow to-secondary border-2 border-primary-foreground/20 animate-bounce active:scale-95"
                 onClick={() => {
                   setIsSophiaPanelOpen(true);
                   setShowSophiaTooltip(false);
                 }}
                 title="Chat with Sophia - Your AI Mortgage Assistant"
+                aria-label="Open Sophia chat"
               >
-                <MessageSquare className="w-7 h-7" />
+                <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8" />
               </Button>
               
               {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-75"></div>
+              <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-75 pointer-events-none"></div>
             </div>
           </div>
         )}

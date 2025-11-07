@@ -201,4 +201,42 @@ All colors MUST be HSL.
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
+  
+  /* Mobile Performance Optimizations */
+  @media (max-width: 1024px) {
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+    
+    /* Smooth scrolling for mobile */
+    html {
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    
+    /* Hardware acceleration for animations */
+    .animate-fade-in,
+    .animate-glow-pulse,
+    .animate-bounce {
+      transform: translateZ(0);
+      will-change: transform, opacity;
+    }
+  }
+  
+  /* Safe area support for notched devices */
+  @supports (padding: max(0px)) {
+    header {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+  
+  /* Touch-friendly interactions */
+  @media (hover: hover) and (pointer: fine) {
+    /* Desktop-only hover effects */
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+  }
 }
