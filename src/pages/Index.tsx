@@ -77,12 +77,10 @@ const Index = () => {
   ];
 
   const quickActions = [
-    { icon: FileCheck, label: "Pre-Approval", type: "process" as const },
-    { icon: MessageSquare, label: "Loan Options", type: "info" as const },
-    { icon: DollarSign, label: "Affordability", type: "info" as const },
-    { icon: Zap, label: "Refinancing", type: "info" as const },
-    { icon: CreditCard, label: "Rates", type: "info" as const },
+    { icon: DollarSign, label: "Check Rates", type: "info" as const },
     { icon: Home, label: "First-Time Buyers", type: "info" as const },
+    { icon: Zap, label: "Refinancing", type: "info" as const },
+    { icon: CreditCard, label: "Credit & Affordability", type: "info" as const },
   ];
 
   const testimonials = [
@@ -360,7 +358,7 @@ const Index = () => {
             </div>
           </div>
 
-          {/* CTA Section */}
+          {/* CTA Section - Three Primary Actions */}
           <div 
             ref={ctaSection.ref}
             className={`relative overflow-hidden bg-gradient-to-r from-primary/15 via-secondary/15 to-accent/15 rounded-xl md:rounded-2xl p-6 md:p-8 border border-primary/40 shadow-xl shadow-primary/20 transition-all duration-700 delay-300 ${
@@ -370,45 +368,58 @@ const Index = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
             <div className="relative space-y-4 md:space-y-6">
               <div className="text-center">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
-                <p className="text-sm md:text-base text-muted-foreground">Choose how you'd like to begin your mortgage journey</p>
+                <h3 className="text-xl md:text-3xl font-bold text-foreground mb-2 md:mb-3">Your Next Step Starts Here</h3>
+                <p className="text-sm md:text-base text-muted-foreground">Three simple ways to begin</p>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-3 md:gap-4 max-w-2xl mx-auto">
+              {/* Three Primary Actions */}
+              <div className="grid md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
+                {/* Action 1: Apply for a Loan */}
                 <Button 
                   size="lg" 
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 bg-gradient-to-r from-primary via-secondary to-primary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group"
-                  onClick={() => sendMessage("I'd like to get pre-approved. Can you help me start the process?")}
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 bg-gradient-to-br from-primary via-primary-glow to-secondary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group flex-col"
+                  onClick={() => sendMessage("I'd like to apply for a loan. Can you help me get started with the application process?")}
                 >
-                  <FileCheck className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">Get Pre-Approved</div>
-                    <div className="text-xs opacity-90">Start with Sophia</div>
+                  <FileCheck className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
+                  <div className="text-center">
+                    <div className="font-bold text-base">Apply for a Loan</div>
+                    <div className="text-xs opacity-90 mt-1">Start your application</div>
                   </div>
                 </Button>
                 
+                {/* Action 2: Contact Loan Officer */}
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
-                  onClick={() => sendMessage("I'd like a loan officer to contact me about my options.")}
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col"
+                  onClick={() => sendMessage("I'd like to speak with a loan officer. Can you arrange a call or meeting?")}
                 >
-                  <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">Request Contact</div>
-                    <div className="text-xs opacity-70">We'll reach out</div>
+                  <Phone className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
+                  <div className="text-center">
+                    <div className="font-bold text-base">Contact Loan Officer</div>
+                    <div className="text-xs opacity-70 mt-1">Speak with an expert</div>
+                  </div>
+                </Button>
+
+                {/* Action 3: Chat with Sophia */}
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col"
+                  onClick={scrollToChat}
+                >
+                  <MessageSquare className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
+                  <div className="text-center">
+                    <div className="font-bold text-base">Chat with Sophia</div>
+                    <div className="text-xs opacity-70 mt-1">Get instant answers</div>
                   </div>
                 </Button>
               </div>
-            </div>
 
-            {/* Contextual Sophia Bubble */}
-            <div className="pt-4">
-              <SophiaContextualBubble
-                message="Hi! I can help you get a free quote in just a few minutes. I'll collect your information and make sure a loan officer follows up with you."
-                onClick={scrollToChat}
-                position="right"
-              />
+              {/* Supporting Text */}
+              <p className="text-center text-xs md:text-sm text-muted-foreground/80 max-w-2xl mx-auto">
+                All pathways are accessible 24/7. Sophia can assist with applications, answer questions, or connect you with a loan officer.
+              </p>
             </div>
           </div>
         </div>
@@ -494,30 +505,23 @@ const Index = () => {
             <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
               <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
               
-              {/* Quick Action Buttons */}
-              <div className="grid grid-cols-2 gap-2">
-                {quickActions.map((action) => (
-                  <Button
-                    key={action.label}
-                    variant={action.type === 'process' ? 'default' : 'outline'}
-                    size="sm"
-                    className={`justify-start text-xs h-8 px-2.5 ${
-                      action.type === 'process' 
-                        ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                        : 'border-primary/20 hover:bg-primary/10'
-                    }`}
-                    onClick={() => {
-                      if (action.label === 'Pre-Approval') {
-                        sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps?");
-                      } else {
-                        sendMessage(`Tell me about ${action.label.toLowerCase()}`);
-                      }
-                    }}
-                  >
-                    <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                    <span className="truncate">{action.label}</span>
-                  </Button>
-                ))}
+              {/* Quick Topic Buttons */}
+              <div className="border-t border-primary/10 pt-2">
+                <p className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wide font-semibold">Quick Topics</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {quickActions.map((action) => (
+                    <Button
+                      key={action.label}
+                      variant="outline"
+                      size="sm"
+                      className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
+                      onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                    >
+                      <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                      <span className="truncate">{action.label}</span>
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -574,30 +578,23 @@ const Index = () => {
           <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
             <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
             
-            {/* Quick Action Buttons */}
-            <div className="grid grid-cols-2 gap-2">
-              {quickActions.map((action) => (
-                <Button
-                  key={action.label}
-                  variant={action.type === 'process' ? 'default' : 'outline'}
-                  size="sm"
-                  className={`justify-start text-xs h-8 px-2.5 ${
-                    action.type === 'process' 
-                      ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                      : 'border-primary/20 hover:bg-primary/10'
-                  }`}
-                  onClick={() => {
-                    if (action.label === 'Pre-Approval') {
-                      sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps?");
-                    } else {
-                      sendMessage(`Tell me about ${action.label.toLowerCase()}`);
-                    }
-                  }}
-                >
-                  <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                  <span className="truncate">{action.label}</span>
-                </Button>
-              ))}
+            {/* Quick Topic Buttons */}
+            <div className="border-t border-primary/10 pt-2">
+              <p className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wide font-semibold">Quick Topics</p>
+              <div className="grid grid-cols-2 gap-2">
+                {quickActions.map((action) => (
+                  <Button
+                    key={action.label}
+                    variant="outline"
+                    size="sm"
+                    className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
+                    onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                  >
+                    <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                    <span className="truncate">{action.label}</span>
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
