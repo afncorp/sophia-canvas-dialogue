@@ -449,15 +449,12 @@ const Index = () => {
         {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
         <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
           <div className="h-full flex flex-col">
-            {/* Enhanced Header with Sophia Introduction */}
-            <div className="flex-shrink-0 border-b border-primary/20">
-              {/* Hero Header with Large Avatar */}
-              <div className="p-6 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent">
-                <div className="flex items-center gap-4 mb-4">
-                  {/* Large Sophia Avatar */}
-                  <div className="relative flex-shrink-0">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-secondary/40 rounded-full blur-2xl animate-glow-pulse"></div>
-                    <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/50 shadow-2xl shadow-primary/30">
+            {/* Compact Header */}
+            <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
+              <div className="p-3 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg">
                       <video 
                         src={sophiaVideo}
                         autoPlay
@@ -467,57 +464,29 @@ const Index = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse ring-2 ring-background">
-                      <div className="w-2.5 h-2.5 bg-primary-foreground rounded-full animate-pulse"></div>
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
+                      <div className="w-1 h-1 bg-primary-foreground rounded-full animate-pulse"></div>
                     </div>
                   </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h2 className="font-bold text-2xl text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Meet Sophia</h2>
-                        <p className="text-sm text-primary font-semibold mt-0.5">Your AI Mortgage Assistant</p>
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className={`w-10 h-10 transition-all flex-shrink-0 ${voiceModeActive ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30' : 'border-primary/30 hover:bg-primary/10'}`}
-                        onClick={() => setVoiceModeActive(!voiceModeActive)}
-                        title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
-                      >
-                        <Mic className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    <p className="text-xs text-muted-foreground italic leading-relaxed mt-2 border-l-2 border-primary/30 pl-3">
-                      "I'm not like other boring chatbots – I can actually help you get approved, answer complex mortgage questions, and guide you every step of the way."
-                    </p>
+                  <div>
+                    <h2 className="font-bold text-sm text-foreground">Sophia AI</h2>
+                    <p className="text-[10px] text-muted-foreground">Your Mortgage Assistant</p>
                   </div>
                 </div>
-
-                {/* Key Features Grid */}
-                <div className="grid grid-cols-3 gap-2 mt-4">
-                  <div className="bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm rounded-lg p-2.5 border border-primary/20 text-center hover:border-primary/40 transition-all">
-                    <div className="text-lg mb-1">🌐</div>
-                    <p className="text-[10px] font-semibold text-foreground">24/7 Available</p>
-                    <p className="text-[9px] text-muted-foreground">Always here</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm rounded-lg p-2.5 border border-primary/20 text-center hover:border-primary/40 transition-all">
-                    <div className="text-lg mb-1">⚡</div>
-                    <p className="text-[10px] font-semibold text-foreground">Instant Answers</p>
-                    <p className="text-[9px] text-muted-foreground">No waiting</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm rounded-lg p-2.5 border border-primary/20 text-center hover:border-primary/40 transition-all">
-                    <div className="text-lg mb-1">🎯</div>
-                    <p className="text-[10px] font-semibold text-foreground">Personalized</p>
-                    <p className="text-[9px] text-muted-foreground">For your needs</p>
-                  </div>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary/20 text-primary' : 'hover:bg-primary/10'}`}
+                  onClick={() => setVoiceModeActive(!voiceModeActive)}
+                  title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
+                >
+                  <Mic className="w-4 h-4" />
+                </Button>
               </div>
 
               {voiceModeActive && (
-                <div className="mx-4 mb-4 p-3 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 shadow-lg shadow-primary/10 animate-fade-in">
-                  <p className="text-sm text-primary font-semibold">🎙️ Voice Mode Active</p>
-                  <p className="text-xs text-muted-foreground mt-1">Speak naturally - I'm listening</p>
+                <div className="mx-3 mb-3 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 shadow-lg shadow-primary/10 animate-fade-in">
+                  <p className="text-xs text-primary font-semibold">🎙️ Voice Mode Active</p>
                 </div>
               )}
             </div>
