@@ -455,7 +455,7 @@ const Index = () => {
             className="fixed top-20 right-6 z-50 group"
           >
             <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 group-hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 group-hover:scale-110">
+              <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 group-hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 group-hover:scale-110">
                 <video 
                   src={sophiaVideo}
                   autoPlay
@@ -465,8 +465,8 @@ const Index = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
-                <MessageSquare className="w-3 h-3 text-primary-foreground" />
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
+                <MessageSquare className="w-4 h-4 text-primary-foreground" />
               </div>
             </div>
           </button>
@@ -702,12 +702,9 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Voice Interface */}
-      <VoiceInterface onSpeakingChange={() => {}} />
-    </div>
+          </div>
+        )}
+      </div>
 
       {/* Below the Fold Content - Full Width */}
       <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
