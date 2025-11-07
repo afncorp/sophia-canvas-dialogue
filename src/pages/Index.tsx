@@ -77,12 +77,10 @@ const Index = () => {
   ];
 
   const quickActions = [
-    { icon: FileCheck, label: "Pre-Approval", type: "process" as const },
-    { icon: CreditCard, label: "Check Rates", type: "info" as const },
-    { icon: Home, label: "First-Time Buyer", type: "info" as const },
-    { icon: Zap, label: "Refinance", type: "info" as const },
-    { icon: DollarSign, label: "Affordability", type: "info" as const },
-    { icon: MessageSquare, label: "Loan Programs", type: "info" as const },
+    { icon: FileCheck, label: "Get Pre-Approved", type: "process" as const },
+    { icon: Home, label: "First-Time Buyer Guide", type: "info" as const },
+    { icon: Zap, label: "Refinance Options", type: "info" as const },
+    { icon: DollarSign, label: "Calculate Affordability", type: "info" as const },
   ];
 
   const testimonials = [
@@ -400,54 +398,49 @@ const Index = () => {
             <div className="relative space-y-4 md:space-y-6">
               <div className="text-center">
                 <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
-                <p className="text-sm md:text-base text-muted-foreground">Three simple ways to begin your mortgage journey</p>
+                <p className="text-sm md:text-base text-muted-foreground">Choose your path forward</p>
               </div>
               
-              <div className="grid md:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
                 {/* Apply Now - Main CTA */}
                 <Button 
                   size="lg" 
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 bg-gradient-to-r from-primary via-secondary to-primary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 bg-gradient-to-r from-primary via-secondary to-primary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group"
                 >
-                  <ArrowRight className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">Apply Now</div>
-                    <div className="text-xs opacity-90">Start application</div>
-                  </div>
-                </Button>
-                
-                {/* Chat with Sophia */}
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
-                  onClick={scrollToChat}
-                >
-                  <MessageSquare className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">Chat with Sophia</div>
-                    <div className="text-xs opacity-70">AI Assistant</div>
+                  <div className="flex items-center gap-3 w-full">
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                    <div className="text-left flex-1">
+                      <div className="font-bold text-lg">Apply Now</div>
+                      <div className="text-xs opacity-90 mt-0.5">Start your full loan application</div>
+                    </div>
                   </div>
                 </Button>
 
-                {/* Call Matt */}
+                {/* Talk to Matt - Human Connection */}
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-4 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
                 >
-                  <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">Call Matt</div>
-                    <div className="text-xs opacity-70">(555) 123-4567</div>
+                  <div className="flex items-center gap-3 w-full">
+                    <Phone className="w-6 h-6 group-hover:scale-110 transition-transform flex-shrink-0" />
+                    <div className="text-left flex-1">
+                      <div className="font-bold text-lg">Talk to Matt</div>
+                      <div className="text-xs opacity-70 mt-0.5">Call or text (555) 123-4567</div>
+                    </div>
                   </div>
                 </Button>
               </div>
 
-              {/* Help text */}
-              <p className="text-xs md:text-sm text-center text-muted-foreground/80 pt-2">
-                Not sure where to start? <button onClick={scrollToChat} className="text-primary hover:underline font-medium">Ask Sophia</button> - she's available 24/7
-              </p>
+              {/* Sophia Help Text */}
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border border-primary/30">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  <p className="text-xs md:text-sm text-foreground">
+                    Have questions first? <button onClick={scrollToChat} className="text-primary hover:underline font-semibold">Chat with Sophia AI</button> for instant answers
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -569,10 +562,14 @@ const Index = () => {
                         : 'border-primary/20 hover:bg-primary/10'
                     }`}
                     onClick={() => {
-                      if (action.label === 'Pre-Approval') {
-                        sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps and collect my information?");
-                      } else if (action.label === 'Check Rates') {
-                        sendMessage("What are the current mortgage rates? Can you show me rates for different loan types?");
+                      if (action.label === 'Get Pre-Approved') {
+                        sendMessage("I'd like to get pre-approved for a mortgage. Can you guide me through the process and collect my information?");
+                      } else if (action.label === 'First-Time Buyer Guide') {
+                        sendMessage("I'm a first-time homebuyer. Can you explain the process and what I need to know?");
+                      } else if (action.label === 'Refinance Options') {
+                        sendMessage("I'm interested in refinancing my mortgage. What are my options and how does it work?");
+                      } else if (action.label === 'Calculate Affordability') {
+                        sendMessage("How much home can I afford? Can you help me calculate what I can borrow based on my income?");
                       } else {
                         sendMessage(`Tell me about ${action.label.toLowerCase()}`);
                       }
@@ -675,10 +672,14 @@ const Index = () => {
                           : 'border-primary/20 hover:bg-primary/10'
                       }`}
                       onClick={() => {
-                        if (action.label === 'Pre-Approval') {
-                          sendMessage("I'd like to start the pre-approval process. Can you guide me through the steps and collect my information?");
-                        } else if (action.label === 'Check Rates') {
-                          sendMessage("What are the current mortgage rates? Can you show me rates for different loan types?");
+                        if (action.label === 'Get Pre-Approved') {
+                          sendMessage("I'd like to get pre-approved for a mortgage. Can you guide me through the process and collect my information?");
+                        } else if (action.label === 'First-Time Buyer Guide') {
+                          sendMessage("I'm a first-time homebuyer. Can you explain the process and what I need to know?");
+                        } else if (action.label === 'Refinance Options') {
+                          sendMessage("I'm interested in refinancing my mortgage. What are my options and how does it work?");
+                        } else if (action.label === 'Calculate Affordability') {
+                          sendMessage("How much home can I afford? Can you help me calculate what I can borrow based on my income?");
                         } else {
                           sendMessage(`Tell me about ${action.label.toLowerCase()}`);
                         }
