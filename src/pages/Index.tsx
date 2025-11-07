@@ -586,6 +586,7 @@ const Index = () => {
                     <span className="truncate">{action.label}</span>
                   </Button>
                 ))}
+                </div>
               </div>
             </div>
           </div>
@@ -701,11 +702,12 @@ const Index = () => {
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Voice Interface */}
-        <VoiceInterface onSpeakingChange={() => {}} />
-      </div>
+      {/* Voice Interface */}
+      <VoiceInterface onSpeakingChange={() => {}} />
+    </div>
 
       {/* Below the Fold Content - Full Width */}
       <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
