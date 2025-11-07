@@ -22,7 +22,6 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -118,17 +117,6 @@ export default {
             transform: "translateY(0)",
             opacity: "1"
           }
-        },
-        "pulse-once": {
-          "0%": {
-            boxShadow: "0 0 0 0 hsl(var(--primary) / 0.7)"
-          },
-          "50%": {
-            boxShadow: "0 0 0 10px hsl(var(--primary) / 0)"
-          },
-          "100%": {
-            boxShadow: "0 0 0 0 hsl(var(--primary) / 0)"
-          }
         }
       },
       animation: {
@@ -138,7 +126,6 @@ export default {
         "float": "float 6s ease-in-out infinite",
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
         "slide-up": "slide-up 0.6s ease-out",
-        "pulse-once": "pulse-once 1s ease-out",
       },
     },
   },

@@ -1,5 +1,4 @@
 import { ConversationDemo } from "@/components/ConversationDemo";
-import { SophiaWelcome } from "@/components/SophiaWelcome";
 import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
@@ -12,14 +11,14 @@ import { SophiaContextualBubble } from "@/components/SophiaContextualBubble";
 import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck, X } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck } from "lucide-react";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
 import afnLogo from "@/assets/afn-logo.png";
 import afnLogoWhite from "@/assets/afn-logo-white.png";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,21 +31,6 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
-  const [isSophiaPanelOpen, setIsSophiaPanelOpen] = useState(true);
-  const [showSophiaTooltip, setShowSophiaTooltip] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(true);
-
-  // Show tooltip to draw attention to Sophia when panel is closed
-  useEffect(() => {
-    if (!isSophiaPanelOpen) {
-      const timer = setTimeout(() => {
-        setShowSophiaTooltip(true);
-        // Auto-hide tooltip after 5 seconds
-        setTimeout(() => setShowSophiaTooltip(false), 5000);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSophiaPanelOpen]);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -56,42 +40,12 @@ const Index = () => {
   const videoCalcSection = useScrollAnimation({ threshold: 0.2 });
   const reviewsSection = useScrollAnimation({ threshold: 0.2 });
 
-  // Handle speaking state from voice interface
-  const handleSpeakingChange = (speaking: boolean) => {
-    setVoiceModeActive(speaking);
-  };
-
-  // Scroll to chat function with smooth opening
+  // Scroll to chat function
   const scrollToChat = () => {
-    // First, ensure Sophia panel is open
-    setIsSophiaPanelOpen(true);
-    
-    // Wait for panel to open, then handle scrolling/focusing
-    setTimeout(() => {
-      const chatElement = document.getElementById('sophia-chat');
-      
-      // On mobile, scroll to the chat panel
-      if (window.innerWidth < 1024) {
-        if (chatElement) {
-          chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      } else {
-        // On desktop, add a subtle pulse effect to draw attention
-        const desktopPanel = document.querySelector('.lg\\:block.fixed.right-0') as HTMLElement;
-        if (desktopPanel) {
-          desktopPanel.classList.add('animate-pulse-once');
-          setTimeout(() => {
-            desktopPanel.classList.remove('animate-pulse-once');
-          }, 1000);
-        }
-      }
-      
-      // Focus the chat input
-      const chatInput = document.querySelector('input[placeholder*="Ask"]') as HTMLInputElement;
-      if (chatInput) {
-        chatInput.focus();
-      }
-    }, 350); // Wait for slide animation to complete
+    const chatElement = document.getElementById('sophia-chat');
+    if (chatElement) {
+      chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   // Handle Free Quote submission
@@ -246,57 +200,45 @@ const Index = () => {
               </Button>
             </div>
 
-            {/* Mobile Actions */}
-            <div className="flex lg:hidden items-center gap-2">
-              <ThemeToggle />
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-primary/10 min-w-[44px] min-h-[44px]"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle menu"
-              >
-                <Menu className="w-6 h-6" />
-              </Button>
-            </div>
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden hover:bg-primary/10"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <Menu className="w-6 h-6" />
+            </Button>
           </div>
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-primary/20 py-4 space-y-3 bg-card/50 backdrop-blur-lg animate-fade-in">
-              <a 
-                href="#locations" 
-                className="block py-3 px-4 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 transition-colors rounded-lg min-h-[44px] flex items-center"
-                onClick={() => setMobileMenuOpen(false)}
-              >
+            <div className="lg:hidden border-t border-primary/20 py-4 space-y-4 bg-card/50 backdrop-blur-lg">
+              <a href="#locations" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
                 Locations
               </a>
-              <a 
-                href="#testimonials" 
-                className="block py-3 px-4 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 transition-colors rounded-lg min-h-[44px] flex items-center"
-                onClick={() => setMobileMenuOpen(false)}
-              >
+              <a href="#testimonials" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
                 Testimonials
               </a>
-              <div className="space-y-2 px-4">
-                <p className="text-sm font-semibold text-muted-foreground py-2">Resources</p>
-                <div className="space-y-1">
-                  <a href="#calculator" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Mortgage Calculator</a>
-                  <a href="#learning" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Learning Center</a>
-                  <a href="#blog" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Blog</a>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-muted-foreground">Resources</p>
+                <div className="pl-4 space-y-2">
+                  <a href="#calculator" className="block py-1 text-sm text-foreground hover:text-primary">Mortgage Calculator</a>
+                  <a href="#learning" className="block py-1 text-sm text-foreground hover:text-primary">Learning Center</a>
+                  <a href="#blog" className="block py-1 text-sm text-foreground hover:text-primary">Blog</a>
                 </div>
               </div>
-              <div className="space-y-2 px-4">
-                <p className="text-sm font-semibold text-muted-foreground py-2">Company</p>
-                <div className="space-y-1">
-                  <a href="#about" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">About Us</a>
-                  <a href="#team" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Our Team</a>
-                  <a href="#contact" className="block py-2 text-sm text-foreground hover:text-primary min-h-[44px] flex items-center">Contact</a>
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-muted-foreground">Company</p>
+                <div className="pl-4 space-y-2">
+                  <a href="#about" className="block py-1 text-sm text-foreground hover:text-primary">About Us</a>
+                  <a href="#team" className="block py-1 text-sm text-foreground hover:text-primary">Our Team</a>
+                  <a href="#contact" className="block py-1 text-sm text-foreground hover:text-primary">Contact</a>
                 </div>
               </div>
-              <div className="pt-2 px-4 space-y-3">
-                <Button className="w-full border-primary/30 min-h-[44px]" variant="outline">Free Quote</Button>
-                <Button className="w-full bg-gradient-to-r from-primary to-secondary min-h-[44px]">Apply Now</Button>
+              <div className="pt-4 space-y-2">
+                <Button className="w-full border-primary/30" variant="outline">Free Quote</Button>
+                <Button className="w-full bg-gradient-to-r from-primary to-secondary">Apply Now</Button>
               </div>
             </div>
           )}
@@ -309,7 +251,7 @@ const Index = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col relative">
+      <div className="flex-1 flex flex-col lg:flex-row relative">
         {/* Animated grid background */}
         <div className="fixed inset-0 pointer-events-none animated-grid opacity-30 z-0"></div>
         
@@ -336,7 +278,7 @@ const Index = () => {
         </div>
 
         {/* Content Area - Full width on mobile, adjusts for fixed sidebar on desktop */}
-        <div className="w-full lg:pr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
+        <div className="w-full lg:mr-[33.333333%] flex items-center justify-center p-4 md:p-8 relative z-10">
         <div className="max-w-5xl w-full space-y-6 md:space-y-8">
           {/* Hero Section */}
           <div 
@@ -350,20 +292,20 @@ const Index = () => {
                 AI-Powered Mortgage Technology
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">Meet Your Loan Officer, Matt Maine</h2>
+            <p className="text-sm md:text-lg text-muted-foreground">
               15+ years experience • NMLS #12345 • Licensed Nationwide
             </p>
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground/80 mt-1">
+            <p className="text-xs md:text-sm text-muted-foreground/80 mt-1">
               Partnered with American Financial Network • 24 years in business
             </p>
             <div className="flex items-center justify-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Award key={i} className="w-5 h-5 md:w-6 md:h-6 fill-primary text-primary" />
+                  <Award key={i} className="w-4 h-4 md:w-5 md:h-5 fill-primary text-primary" />
                 ))}
               </div>
-              <span className="text-sm sm:text-base md:text-lg font-semibold text-foreground">4.9/5.0 (200+ reviews)</span>
+              <span className="text-xs md:text-sm font-semibold text-foreground">4.9/5.0 (200+ reviews)</span>
             </div>
           </div>
 
@@ -397,19 +339,19 @@ const Index = () => {
                   Helped hundreds of families achieve their homeownership dreams with personalized service.
                 </p>
 
-                {/* Contact Buttons - Touch-friendly */}
-                <div className="grid grid-cols-3 gap-2 md:gap-3">
-                  <Button size="sm" className="w-full text-xs sm:text-sm min-h-[44px] bg-primary hover:bg-primary/90 flex-col sm:flex-row gap-1">
-                    <Phone className="w-4 h-4 md:w-5 md:h-5" />
-                    <span>Call</span>
+                {/* Contact Buttons */}
+                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
+                  <Button size="sm" className="w-full text-xs md:text-sm h-8 md:h-9 bg-primary hover:bg-primary/90">
+                    <Phone className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+                    <span className="hidden md:inline">Call</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs sm:text-sm min-h-[44px] border-primary/30 hover:bg-primary/10 flex-col sm:flex-row gap-1">
-                    <Mail className="w-4 h-4 md:w-5 md:h-5" />
-                    <span>Email</span>
+                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
+                    <Mail className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+                    <span className="hidden md:inline">Email</span>
                   </Button>
-                  <Button size="sm" variant="outline" className="w-full text-xs sm:text-sm min-h-[44px] border-primary/30 hover:bg-primary/10 flex-col sm:flex-row gap-1">
-                    <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
-                    <span>Text</span>
+                  <Button size="sm" variant="outline" className="w-full text-xs md:text-sm h-8 md:h-9 border-primary/30 hover:bg-primary/10">
+                    <MessageSquare className="w-3 h-3 md:w-4 md:h-4 md:mr-1" />
+                    <span className="hidden md:inline">Text</span>
                   </Button>
                 </div>
               </div>
@@ -429,17 +371,18 @@ const Index = () => {
                 <h3 className="text-xl md:text-3xl font-bold text-foreground mb-2 md:mb-3">Your Next Step Starts Here</h3>
                 <p className="text-sm md:text-base text-muted-foreground">Three simple ways to begin</p>
               </div>
-              {/* Three Primary Actions - Touch-optimized */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 max-w-4xl mx-auto">
+              
+              {/* Three Primary Actions */}
+              <div className="grid md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
                 {/* Action 1: Apply for a Loan */}
                 <Button 
                   size="lg" 
-                  className="text-base md:text-lg px-6 md:px-8 min-h-[110px] py-6 bg-gradient-to-br from-primary via-primary-glow to-secondary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group flex-col active:scale-95 touch-manipulation"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 bg-gradient-to-br from-primary via-primary-glow to-secondary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group flex-col"
                   onClick={() => sendMessage("I'd like to apply for a loan. Can you help me get started with the application process?")}
                 >
-                  <FileCheck className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
+                  <FileCheck className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-center">
-                    <div className="font-bold text-base md:text-lg">Apply for a Loan</div>
+                    <div className="font-bold text-base">Apply for a Loan</div>
                     <div className="text-xs opacity-90 mt-1">Start your application</div>
                   </div>
                 </Button>
@@ -448,12 +391,12 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 min-h-[110px] py-6 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col active:scale-95 touch-manipulation"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col"
                   onClick={() => sendMessage("I'd like to speak with a loan officer. Can you arrange a call or meeting?")}
                 >
-                  <Phone className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
+                  <Phone className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-center">
-                    <div className="font-bold text-base md:text-lg">Contact Loan Officer</div>
+                    <div className="font-bold text-base">Contact Loan Officer</div>
                     <div className="text-xs opacity-70 mt-1">Speak with an expert</div>
                   </div>
                 </Button>
@@ -462,19 +405,19 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 min-h-[110px] py-6 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col active:scale-95 touch-manipulation"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group flex-col"
                   onClick={scrollToChat}
                 >
-                  <MessageSquare className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform" />
+                  <MessageSquare className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
                   <div className="text-center">
-                    <div className="font-bold text-base md:text-lg">Chat with Sophia</div>
+                    <div className="font-bold text-base">Chat with Sophia</div>
                     <div className="text-xs opacity-70 mt-1">Get instant answers</div>
                   </div>
                 </Button>
               </div>
 
               {/* Supporting Text */}
-              <p className="text-center text-sm md:text-base text-muted-foreground/80 max-w-2xl mx-auto px-4">
+              <p className="text-center text-xs md:text-sm text-muted-foreground/80 max-w-2xl mx-auto">
                 All pathways are accessible 24/7. Sophia can assist with applications, answer questions, or connect you with a loan officer.
               </p>
             </div>
@@ -483,35 +426,15 @@ const Index = () => {
       </div>
 
         {/* Fixed Sophia Panel - Right Side on Desktop, Bottom on Mobile */}
-        <div 
-          className={`hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-gradient-to-br from-card/60 to-card/40 backdrop-blur-xl border-l-2 border-primary/30 shadow-2xl shadow-primary/20 z-30 transition-all duration-300 ease-in-out ${
-            isSophiaPanelOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-          }`}
-        >
-          {/* Decorative gradient border accent */}
-          <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary via-secondary to-accent"></div>
-          
+        <div className="hidden lg:block fixed right-0 top-[149px] md:top-[153px] bottom-0 w-[33.333333%] bg-card/50 backdrop-blur-lg border-l border-primary/20 z-30">
           <div className="h-full flex flex-col">
             {/* Enhanced Header with Sophia Introduction */}
-            <div className="flex-shrink-0 p-6 border-b-2 border-primary/30 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 relative">
-              {/* Decorative top accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
-              {/* Close button - absolute positioned */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 right-2 w-8 h-8 z-10"
-                onClick={() => setIsSophiaPanelOpen(false)}
-                title="Hide Sophia"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-
+            <div className="flex-shrink-0 p-6 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5">
               <div className="flex items-start gap-4 mb-4">
-                {/* Larger Sophia Avatar with enhanced glow */}
+                {/* Larger Sophia Avatar */}
                 <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-secondary/40 rounded-full blur-2xl animate-glow-pulse"></div>
-                  <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-secondary/20 flex items-center justify-center overflow-hidden ring-4 ring-primary/50 shadow-2xl shadow-primary/30">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-xl animate-glow-pulse"></div>
+                  <div className="relative w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg shadow-primary/20">
                     <video 
                       src={sophiaVideo}
                       autoPlay
@@ -521,26 +444,16 @@ const Index = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-xl shadow-primary/50 animate-glow-pulse ring-2 ring-primary-foreground/30">
-                    <div className="w-3 h-3 bg-primary-foreground rounded-full"></div>
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
+                    <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
                   </div>
                 </div>
                 
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <div>
-                        <h2 className="font-bold text-2xl text-foreground flex items-center gap-2">
-                          Sophia
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground animate-glow-pulse">
-                            AI
-                          </span>
-                        </h2>
-                        <p className="text-xs text-primary font-semibold flex items-center gap-1">
-                          <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                          Online Now • Ready to Help
-                        </p>
-                      </div>
+                    <div>
+                      <h2 className="font-bold text-xl text-foreground">Sophia</h2>
+                      <p className="text-xs text-primary font-semibold">AI Mortgage Assistant</p>
                     </div>
                     <Button
                       variant="outline"
@@ -568,11 +481,7 @@ const Index = () => {
             {/* Chat Area - Scrollable */}
             <div id="sophia-chat" className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
               {messages.length === 0 ? (
-                showWelcome ? (
-                  <SophiaWelcome onComplete={() => setShowWelcome(false)} />
-                ) : (
-                  <ConversationDemo />
-                )
+                <ConversationDemo />
               ) : (
                 <>
                   <ChatMessages messages={messages} isLoading={isLoading} />
@@ -592,77 +501,51 @@ const Index = () => {
               )}
             </div>
 
-          {/* Input Area - Quick Topics & Voice */}
-          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-xs text-muted-foreground font-medium">Choose a topic:</p>
-              <VoiceInterface onSpeakingChange={handleSpeakingChange} />
+            {/* Input Area - Always Visible */}
+            <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+              <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+              
+              {/* Quick Topic Buttons */}
+              <div className="border-t border-primary/10 pt-2">
+                <p className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wide font-semibold">Quick Topics</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {quickActions.map((action) => (
+                    <Button
+                      key={action.label}
+                      variant="outline"
+                      size="sm"
+                      className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
+                      onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                    >
+                      <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                      <span className="truncate">{action.label}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              {quickActions.map((action) => (
-                <Button
-                  key={action.label}
-                  variant="outline"
-                  size="sm"
-                  className="justify-start text-xs h-10 px-3 border-primary/20 hover:bg-primary/10"
-                  onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
-                >
-                  <action.icon className="w-4 h-4 mr-2 flex-shrink-0" />
-                  <span className="truncate">{action.label}</span>
-                </Button>
-              ))}
-            </div>
-          </div>
           </div>
         </div>
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
-        <div 
-          className={`lg:hidden w-full bg-gradient-to-br from-card/60 to-card/40 backdrop-blur-xl border-t-2 border-primary/30 shadow-2xl shadow-primary/20 relative z-10 transition-all duration-300 ease-in-out ${
-            isSophiaPanelOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-          }`}
-        >
-          {/* Decorative gradient top accent */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
-          
+        <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
           {/* Header with Sophia */}
-          <div className="flex-shrink-0 p-4 border-b-2 border-primary/30 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 relative">
-            {/* Close button - absolute positioned */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-2 right-2 w-8 h-8 z-10"
-              onClick={() => setIsSophiaPanelOpen(false)}
-              title="Hide Sophia"
-            >
-              <X className="w-4 h-4" />
-            </Button>
+          <div className="flex-shrink-0 p-4 border-b border-primary/20">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-lg animate-glow-pulse"></div>
-                  <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/40 shadow-lg shadow-primary/20">
-                    <video 
-                      src={sophiaVideo}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/30">
+                  <video 
+                    src={sophiaVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
-                  <h2 className="font-semibold text-base text-foreground flex items-center gap-2">
-                    Sophia
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground">
-                      AI
-                    </span>
-                  </h2>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                    {voiceModeActive ? 'Voice Mode Active' : 'Online Now'}
-                  </p>
+                  <h2 className="font-semibold text-base text-foreground">Sophia</h2>
+                  <p className="text-xs text-muted-foreground">{voiceModeActive ? 'Voice Mode' : 'AI Assistant'}</p>
                 </div>
               </div>
               <Button
@@ -685,82 +568,43 @@ const Index = () => {
           {/* Chat Area - Scrollable */}
           <div className="overflow-y-auto p-3 space-y-3 max-h-[500px]">
             {messages.length === 0 ? (
-              showWelcome ? (
-                <SophiaWelcome onComplete={() => setShowWelcome(false)} />
-              ) : (
-                <ConversationDemo />
-              )
+              <ConversationDemo />
             ) : (
               <ChatMessages messages={messages} isLoading={isLoading} />
             )}
           </div>
 
-          {/* Input Area - Quick Topics & Voice */}
-          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-xs text-muted-foreground font-medium">Choose a topic:</p>
-              <VoiceInterface onSpeakingChange={handleSpeakingChange} />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {quickActions.map((action) => (
-                <Button
-                  key={action.label}
-                  variant="outline"
-                  size="sm"
-                  className="justify-start text-xs h-10 px-3 border-primary/20 hover:bg-primary/10"
-                  onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
-                >
-                  <action.icon className="w-4 h-4 mr-2 flex-shrink-0" />
-                  <span className="truncate">{action.label}</span>
-                </Button>
-              ))}
+          {/* Input Area - Always Visible */}
+          <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+            <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
+            
+            {/* Quick Topic Buttons */}
+            <div className="border-t border-primary/10 pt-2">
+              <p className="text-[10px] text-muted-foreground mb-2 uppercase tracking-wide font-semibold">Quick Topics</p>
+              <div className="grid grid-cols-2 gap-2">
+                {quickActions.map((action) => (
+                  <Button
+                    key={action.label}
+                    variant="outline"
+                    size="sm"
+                    className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
+                    onClick={() => sendMessage(`Tell me about ${action.label.toLowerCase()}`)}
+                  >
+                    <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
+                    <span className="truncate">{action.label}</span>
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Floating Sophia Toggle Button - Shows when panel is hidden */}
-        {!isSophiaPanelOpen && (
-          <div className="fixed bottom-6 right-6 z-40 sm:bottom-8 sm:right-8">
-            {/* Tooltip */}
-            {showSophiaTooltip && (
-              <div className="absolute bottom-full right-0 mb-4 animate-fade-in hidden sm:block">
-                <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-4 py-2 rounded-lg shadow-xl relative">
-                  <p className="text-sm font-medium whitespace-nowrap">👋 Need help? Chat with me!</p>
-                  <div className="absolute top-full right-8 -mt-1">
-                    <div className="border-8 border-transparent border-t-primary"></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            {/* Floating Button with enhanced visuals */}
-            <div className="relative">
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-xl opacity-50 animate-glow-pulse"></div>
-              
-              {/* Button - Larger touch target on mobile */}
-              <Button
-                size="lg"
-                className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full shadow-2xl shadow-primary/50 hover:shadow-primary/70 transition-all hover:scale-110 bg-gradient-to-r from-primary via-primary-glow to-secondary border-2 border-primary-foreground/20 animate-bounce active:scale-95"
-                onClick={() => {
-                  setIsSophiaPanelOpen(true);
-                  setShowSophiaTooltip(false);
-                }}
-                title="Chat with Sophia - Your AI Mortgage Assistant"
-                aria-label="Open Sophia chat"
-              >
-                <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8" />
-              </Button>
-              
-              {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-75 pointer-events-none"></div>
-            </div>
-          </div>
-        )}
+        {/* Voice Interface */}
+        <VoiceInterface onSpeakingChange={() => {}} />
       </div>
 
       {/* Below the Fold Content - Full Width */}
-      <div className="w-full lg:pr-[33.333333%] bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
+      <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto space-y-12 md:space-y-20">
           
           {/* Process Flow Comparison */}
