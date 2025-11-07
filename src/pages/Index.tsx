@@ -31,7 +31,6 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
-  const [showSophiaChat, setShowSophiaChat] = useState(false);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -43,7 +42,6 @@ const Index = () => {
 
   // Scroll to chat function
   const scrollToChat = () => {
-    setShowSophiaChat(true);
     const chatElement = document.getElementById('sophia-chat');
     if (chatElement) {
       chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -448,34 +446,9 @@ const Index = () => {
         </div>
       </div>
 
-        {/* Floating Sophia Icon - Shows when chat is closed */}
-        {!showSophiaChat && (
-          <button
-            onClick={() => setShowSophiaChat(true)}
-            className="fixed top-20 right-6 z-50 group"
-          >
-            <div className="relative">
-              <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 group-hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 group-hover:scale-110">
-                <video 
-                  src={sophiaVideo}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
-                <MessageSquare className="w-4 h-4 text-primary-foreground" />
-              </div>
-            </div>
-          </button>
-        )}
-
         {/* Floating Sophia Panel - Upper Right Corner on Desktop, Bottom on Mobile */}
-        {showSophiaChat && (
-          <div className="hidden lg:block fixed top-20 right-6 w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50">
-            <div className="h-full flex flex-col max-h-[600px]">
+        <div className="hidden lg:block fixed top-20 right-6 w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50">
+          <div className="h-full flex flex-col max-h-[600px]">
               {/* Compact Header */}
               <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
                 <div className="p-3 flex items-center justify-between">
@@ -509,15 +482,6 @@ const Index = () => {
                       title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
                     >
                       <Mic className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="w-9 h-9 hover:bg-primary/10"
-                      onClick={() => setShowSophiaChat(false)}
-                      title="Close chat"
-                    >
-                      <X className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
@@ -590,11 +554,10 @@ const Index = () => {
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
-        {showSophiaChat && (
-          <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
+        <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
           {/* Collapsible Header with Sophia */}
           <div className="flex-shrink-0">
             <button 
@@ -702,9 +665,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-          </div>
-        )}
-      </div>
+        </div>
 
       {/* Below the Fold Content - Full Width */}
       <div className="w-full bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
