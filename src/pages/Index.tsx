@@ -235,7 +235,6 @@ const Index = () => {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-              <ThemeToggle />
               <Button 
                 size="sm" 
                 variant="outline"
@@ -248,6 +247,7 @@ const Index = () => {
               <Button size="sm" className="bg-gradient-to-r from-primary via-primary-glow to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
                 Apply Now
               </Button>
+              <ThemeToggle />
             </div>
 
             {/* Mobile Menu Button */}
