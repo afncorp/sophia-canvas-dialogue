@@ -22,21 +22,17 @@ export const ThemeToggle = () => {
 
   return (
     <Button
-      variant="outline"
-      size="sm"
+      variant="ghost"
+      size="icon"
       onClick={toggleTheme}
-      className="border-primary/30 hover:bg-primary/10 transition-all relative group"
+      className="w-9 h-9 hover:bg-primary/10 transition-all"
       title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
     >
       {theme === 'dark' ? (
-        <Sun className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+        <Sun className="w-4 h-4" />
       ) : (
-        <Moon className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+        <Moon className="w-4 h-4" />
       )}
-      <span className="hidden md:inline font-medium">
-        {theme === 'dark' ? 'Light' : 'Dark'}
-      </span>
-      <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
     </Button>
   );
 };
