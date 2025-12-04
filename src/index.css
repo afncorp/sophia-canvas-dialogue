@@ -8,161 +8,180 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Default theme - uses Modern */
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    /* Bronze/Metallic Theme - Warm sophisticated palette */
+    --background: 30 15% 10%;
+    --foreground: 37 35% 92%;
 
-    --card: 222 47% 14%;
-    --card-foreground: 210 40% 98%;
+    --card: 30 12% 14%;
+    --card-foreground: 37 35% 92%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 30 15% 10%;
+    --popover-foreground: 37 35% 92%;
 
-    /* Vibrant pink/magenta primary */
-    --primary: 330 85% 65%;
-    --primary-foreground: 222 47% 11%;
-    --primary-glow: 330 100% 75%;
+    /* Primary Bronze #D4A572 / #E6C192 */
+    --primary: 30 50% 64%;
+    --primary-foreground: 30 15% 10%;
+    --primary-glow: 34 56% 74%;
 
-    /* Vibrant purple secondary */
-    --secondary: 280 80% 65%;
-    --secondary-foreground: 222 47% 11%;
+    /* Terracotta Bronze #B38B6D / #D9B8A0 */
+    --secondary: 26 33% 56%;
+    --secondary-foreground: 30 15% 10%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 30 10% 20%;
+    --muted-foreground: 0 0% 62%;
 
-    /* Cyan accent */
-    --accent: 195 90% 60%;
-    --accent-foreground: 222 47% 11%;
+    /* Silver-Teal #8C9A9A / #A3B5B5 */
+    --accent: 180 6% 58%;
+    --accent-foreground: 30 15% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    /* Metallic Green #7A8B76 / #9CAF9A */
+    --metallic-green: 109 9% 50%;
+    --metallic-green-light: 111 15% 65%;
 
-    --border: 217 33% 20%;
-    --input: 217 33% 17%;
-    --ring: 330 85% 65%;
+    /* Metallic Red #8B6F6F / #B89A8C */
+    --metallic-red: 0 12% 49%;
+    --metallic-red-light: 18 22% 64%;
 
-    --radius: 1rem;
+    /* Light Brass #C9B89A / #E2D4C0 */
+    --brass: 38 29% 69%;
+    --brass-light: 37 35% 82%;
 
-    /* Vibrant futuristic gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(330 85% 65%), hsl(330 100% 75%));
-    --gradient-tech: linear-gradient(180deg, hsl(222 47% 11%), hsl(222 47% 14%));
-    --gradient-accent: linear-gradient(135deg, hsl(330 85% 65%), hsl(195 90% 60%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(330 85% 65% / 0.2), transparent 70%);
-    --shadow-bronze: 0 0 40px hsl(330 85% 65% / 0.4), 0 0 80px hsl(330 85% 65% / 0.2);
-    --shadow-soft: 0 10px 40px -10px hsl(330 85% 65% / 0.3);
-    --shadow-card: 0 4px 20px hsl(222 47% 5% / 0.6);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 330 85% 65%;
-    --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 20%;
-    --sidebar-ring: 330 85% 65%;
-  }
-
-  /* Traditional Theme - Command Suite silver/bronze, dark charcoal background */
-  [data-theme="traditional"] {
-    --background: 0 0% 17%;
-    --foreground: 0 0% 90%;
-
-    --card: 0 0% 20%;
-    --card-foreground: 0 0% 90%;
-
-    --popover: 0 0% 17%;
-    --popover-foreground: 0 0% 90%;
-
-    /* Silver primary - cool metallic gray */
-    --primary: 210 8% 60%;
-    --primary-foreground: 0 0% 15%;
-    --primary-glow: 210 10% 70%;
-
-    /* Bronze secondary from Command Suite */
-    --secondary: 35 45% 60%;
-    --secondary-foreground: 0 0% 15%;
-
-    --muted: 0 0% 25%;
-    --muted-foreground: 0 0% 60%;
-
-    /* Bronze accent */
-    --accent: 35 40% 55%;
-    --accent-foreground: 0 0% 15%;
+    /* Neutral Gray #9E9E9E / #BDBDBD */
+    --neutral: 0 0% 62%;
+    --neutral-light: 0 0% 74%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 28%;
-    --input: 0 0% 25%;
-    --ring: 210 8% 60%;
+    --border: 30 10% 22%;
+    --input: 30 10% 18%;
+    --ring: 30 50% 64%;
 
-    /* Tech-forward gradients with silver/bronze */
-    --gradient-primary: linear-gradient(135deg, hsl(210 8% 60%), hsl(210 10% 70%));
-    --gradient-tech: linear-gradient(180deg, hsl(0 0% 17%), hsl(0 0% 20%));
-    --gradient-accent: linear-gradient(135deg, hsl(210 8% 60%), hsl(35 45% 60%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(210 8% 60% / 0.15), transparent 70%);
-    --shadow-bronze: 0 0 30px hsl(35 45% 60% / 0.25), 0 0 60px hsl(35 45% 60% / 0.12);
-    --shadow-soft: 0 8px 30px -8px hsl(210 8% 60% / 0.2);
-    --shadow-card: 0 4px 20px hsl(0 0% 10% / 0.4);
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 17%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 210 8% 60%;
-    --sidebar-primary-foreground: 0 0% 15%;
-    --sidebar-accent: 0 0% 25%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 28%;
-    --sidebar-ring: 210 8% 60%;
+    /* Bronze/metallic gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(30 50% 64%), hsl(34 56% 74%));
+    --gradient-tech: linear-gradient(180deg, hsl(30 15% 10%), hsl(30 12% 14%));
+    --gradient-accent: linear-gradient(135deg, hsl(30 50% 64%), hsl(26 33% 56%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(30 50% 64% / 0.2), transparent 70%);
+    --shadow-bronze: 0 0 40px hsl(30 50% 64% / 0.3), 0 0 80px hsl(30 50% 64% / 0.15);
+    --shadow-soft: 0 10px 40px -10px hsl(30 50% 64% / 0.25);
+    --shadow-card: 0 4px 20px hsl(30 15% 5% / 0.5);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 30 15% 10%;
+    --sidebar-foreground: 37 35% 92%;
+    --sidebar-primary: 30 50% 64%;
+    --sidebar-primary-foreground: 30 15% 10%;
+    --sidebar-accent: 30 10% 20%;
+    --sidebar-accent-foreground: 37 35% 92%;
+    --sidebar-border: 30 10% 22%;
+    --sidebar-ring: 30 50% 64%;
   }
 
-  /* Modern Theme - Vibrant futuristic look (default, same as root) */
-  [data-theme="modern"] {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+  /* Traditional Theme - Cooler metallic tones */
+  [data-theme="traditional"] {
+    --background: 180 5% 12%;
+    --foreground: 0 0% 90%;
 
-    --card: 222 47% 14%;
-    --card-foreground: 210 40% 98%;
+    --card: 180 4% 16%;
+    --card-foreground: 0 0% 90%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 180 5% 12%;
+    --popover-foreground: 0 0% 90%;
 
-    --primary: 330 85% 65%;
-    --primary-foreground: 222 47% 11%;
-    --primary-glow: 330 100% 75%;
+    /* Silver-Teal primary */
+    --primary: 180 6% 58%;
+    --primary-foreground: 180 5% 12%;
+    --primary-glow: 180 11% 67%;
 
-    --secondary: 280 80% 65%;
-    --secondary-foreground: 222 47% 11%;
+    /* Metallic Green secondary */
+    --secondary: 109 9% 50%;
+    --secondary-foreground: 180 5% 12%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 180 4% 22%;
+    --muted-foreground: 0 0% 62%;
 
-    --accent: 195 90% 60%;
-    --accent-foreground: 222 47% 11%;
+    /* Light Brass accent */
+    --accent: 38 29% 69%;
+    --accent-foreground: 180 5% 12%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 20%;
-    --input: 217 33% 17%;
-    --ring: 330 85% 65%;
+    --border: 180 4% 25%;
+    --input: 180 4% 20%;
+    --ring: 180 6% 58%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(330 85% 65%), hsl(330 100% 75%));
-    --gradient-tech: linear-gradient(180deg, hsl(222 47% 11%), hsl(222 47% 14%));
-    --gradient-accent: linear-gradient(135deg, hsl(330 85% 65%), hsl(195 90% 60%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(330 85% 65% / 0.2), transparent 70%);
-    --shadow-bronze: 0 0 40px hsl(330 85% 65% / 0.4), 0 0 80px hsl(330 85% 65% / 0.2);
-    --shadow-soft: 0 10px 40px -10px hsl(330 85% 65% / 0.3);
-    --shadow-card: 0 4px 20px hsl(222 47% 5% / 0.6);
+    /* Cool metallic gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(180 6% 58%), hsl(180 11% 67%));
+    --gradient-tech: linear-gradient(180deg, hsl(180 5% 12%), hsl(180 4% 16%));
+    --gradient-accent: linear-gradient(135deg, hsl(180 6% 58%), hsl(109 9% 50%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(180 6% 58% / 0.15), transparent 70%);
+    --shadow-bronze: 0 0 30px hsl(38 29% 69% / 0.2), 0 0 60px hsl(38 29% 69% / 0.1);
+    --shadow-soft: 0 8px 30px -8px hsl(180 6% 58% / 0.2);
+    --shadow-card: 0 4px 20px hsl(180 5% 5% / 0.4);
 
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 330 85% 65%;
-    --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 20%;
-    --sidebar-ring: 330 85% 65%;
+    --sidebar-background: 180 5% 12%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 180 6% 58%;
+    --sidebar-primary-foreground: 180 5% 12%;
+    --sidebar-accent: 180 4% 22%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 180 4% 25%;
+    --sidebar-ring: 180 6% 58%;
+  }
+
+  /* Modern Theme - Warm bronze emphasis */
+  [data-theme="modern"] {
+    --background: 26 18% 11%;
+    --foreground: 37 35% 92%;
+
+    --card: 26 15% 15%;
+    --card-foreground: 37 35% 92%;
+
+    --popover: 26 18% 11%;
+    --popover-foreground: 37 35% 92%;
+
+    /* Primary Bronze - warmer */
+    --primary: 30 50% 64%;
+    --primary-foreground: 26 18% 11%;
+    --primary-glow: 34 56% 74%;
+
+    /* Terracotta Bronze secondary */
+    --secondary: 26 33% 56%;
+    --secondary-foreground: 26 18% 11%;
+
+    --muted: 26 12% 20%;
+    --muted-foreground: 0 0% 62%;
+
+    /* Metallic Red accent */
+    --accent: 18 22% 64%;
+    --accent-foreground: 26 18% 11%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 26 12% 24%;
+    --input: 26 12% 18%;
+    --ring: 30 50% 64%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(30 50% 64%), hsl(34 56% 74%));
+    --gradient-tech: linear-gradient(180deg, hsl(26 18% 11%), hsl(26 15% 15%));
+    --gradient-accent: linear-gradient(135deg, hsl(30 50% 64%), hsl(18 22% 64%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(30 50% 64% / 0.2), transparent 70%);
+    --shadow-bronze: 0 0 40px hsl(30 50% 64% / 0.35), 0 0 80px hsl(30 50% 64% / 0.18);
+    --shadow-soft: 0 10px 40px -10px hsl(30 50% 64% / 0.3);
+    --shadow-card: 0 4px 20px hsl(26 18% 5% / 0.5);
+
+    --sidebar-background: 26 18% 11%;
+    --sidebar-foreground: 37 35% 92%;
+    --sidebar-primary: 30 50% 64%;
+    --sidebar-primary-foreground: 26 18% 11%;
+    --sidebar-accent: 26 12% 20%;
+    --sidebar-accent-foreground: 37 35% 92%;
+    --sidebar-border: 26 12% 24%;
+    --sidebar-ring: 30 50% 64%;
   }
 }
 
@@ -180,22 +199,22 @@ All colors MUST be HSL.
   /* Animated Grid Background */
   .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(330 85% 65% / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(330 85% 65% / 0.05) 1px, transparent 1px);
+      linear-gradient(to right, hsl(30 50% 64% / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(30 50% 64% / 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
     animation: grid-move 20s linear infinite;
   }
 
   [data-theme="traditional"] .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(210 8% 60% / 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(210 8% 60% / 0.08) 1px, transparent 1px);
+      linear-gradient(to right, hsl(180 6% 58% / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(180 6% 58% / 0.08) 1px, transparent 1px);
   }
 
   [data-theme="modern"] .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(330 85% 65% / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(330 85% 65% / 0.05) 1px, transparent 1px);
+      linear-gradient(to right, hsl(30 50% 64% / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(30 50% 64% / 0.05) 1px, transparent 1px);
   }
 
   @keyframes grid-move {
