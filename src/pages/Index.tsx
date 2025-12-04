@@ -122,6 +122,14 @@ const Index = () => {
     { icon: DollarSign, label: "Calculate Affordability", type: "info" as const },
   ];
 
+  const smartPrompts = [
+    "What's my estimated payment?",
+    "Check today's rates",
+    "Can I qualify with FHA?",
+    "Pre-approve me now",
+    "Connect me to Matt",
+  ];
+
   const testimonials = [
     {
       name: "Anthony",
@@ -228,14 +236,17 @@ const Index = () => {
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <ThemeToggle />
-              <Button variant="outline" size="sm" className="border-primary/30 hover:bg-primary/10">
-                Login
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="border-primary/40 hover:bg-primary/10 gap-2"
+                onClick={() => setShowSophiaChat(true)}
+              >
+                <MessageSquare className="w-4 h-4" />
+                Chat with Sophia
               </Button>
               <Button size="sm" className="bg-gradient-to-r from-primary via-primary-glow to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
                 Apply Now
-              </Button>
-              <Button variant="ghost" size="icon" className="w-9 h-9 hover:bg-primary/10">
-                <Search className="w-4 h-4" />
               </Button>
             </div>
 
@@ -598,6 +609,19 @@ const Index = () => {
 
             {/* Input Area - Always Visible */}
             <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+              {/* Smart Prompt Pills */}
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {smartPrompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    onClick={() => sendMessage(prompt)}
+                    className="px-2.5 py-1 text-[10px] bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-full transition-all hover:scale-105"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+              
               <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
               
               {/* Quick Action Buttons */}
@@ -1060,6 +1084,35 @@ const Index = () => {
           <p className="text-center text-xs text-muted-foreground mt-1">
             This is a demonstration website for development purposes only.
           </p>
+        </div>
+      </div>
+
+      {/* Sticky Bottom CTA Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-primary/30 py-3 px-4 z-40 lg:hidden">
+        <div className="flex items-center justify-center gap-3 max-w-lg mx-auto">
+          <Button 
+            size="sm"
+            className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg gap-2"
+            onClick={() => setShowSophiaChat(true)}
+          >
+            <MessageSquare className="w-4 h-4" />
+            Chat with Sophia
+          </Button>
+          <Button 
+            size="sm"
+            variant="outline"
+            className="flex-1 border-primary/40 hover:bg-primary/10 gap-2"
+          >
+            Apply Now
+          </Button>
+          <Button 
+            size="sm"
+            variant="ghost"
+            className="gap-2"
+          >
+            <Phone className="w-4 h-4" />
+            Call
+          </Button>
         </div>
       </div>
     </div>
