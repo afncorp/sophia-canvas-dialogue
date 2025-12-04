@@ -500,8 +500,7 @@ const Index = () => {
         {!showSophiaChat && (
           <button
             onClick={() => setShowSophiaChat(true)}
-            className="fixed w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 hover:scale-110 z-50 group"
-            style={{ left: `${chatPosition.x}px`, top: `${chatPosition.y}px` }}
+            className="fixed bottom-6 right-6 w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 hover:scale-110 z-50 group"
           >
             <video 
               src={sophiaVideo}
