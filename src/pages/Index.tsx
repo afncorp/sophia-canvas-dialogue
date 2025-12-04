@@ -32,7 +32,7 @@ const Index = () => {
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
   const [showSophiaChat, setShowSophiaChat] = useState(true);
-  const [chatPosition, setChatPosition] = useState({ x: window.innerWidth - 420, y: 80 });
+  const [chatPosition, setChatPosition] = useState({ x: window.innerWidth - 420, y: window.innerHeight - 650 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
