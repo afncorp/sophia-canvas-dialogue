@@ -31,10 +31,7 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
-  const [showSophiaChat, setShowSophiaChat] = useState(true);
-  const [chatPosition, setChatPosition] = useState({ x: window.innerWidth - 420, y: window.innerHeight - 650 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [showMobileChat, setShowMobileChat] = useState(false);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -46,46 +43,11 @@ const Index = () => {
 
   // Scroll to chat function
   const scrollToChat = () => {
-    setShowSophiaChat(true);
     const chatElement = document.getElementById('sophia-chat');
     if (chatElement) {
       chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
-
-  // Drag handlers for floating chat
-  const handleDragStart = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragOffset({
-      x: e.clientX - chatPosition.x,
-      y: e.clientY - chatPosition.y
-    });
-  };
-
-  const handleDragMove = useCallback((e: MouseEvent) => {
-    if (isDragging) {
-      setChatPosition({
-        x: e.clientX - dragOffset.x,
-        y: e.clientY - dragOffset.y
-      });
-    }
-  }, [isDragging, dragOffset]);
-
-  const handleDragEnd = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  // Add event listeners for dragging
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', handleDragMove);
-      window.addEventListener('mouseup', handleDragEnd);
-      return () => {
-        window.removeEventListener('mousemove', handleDragMove);
-        window.removeEventListener('mouseup', handleDragEnd);
-      };
-    }
-  }, [isDragging, handleDragMove, handleDragEnd]);
 
   // Handle Free Quote submission
   const handleFreeQuoteSubmit = (data: Record<string, string>) => {
@@ -235,15 +197,6 @@ const Index = () => {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-              <Button 
-                size="sm" 
-                variant="outline"
-                className="border-primary/40 hover:bg-primary/10 gap-2"
-                onClick={() => setShowSophiaChat(true)}
-              >
-                <MessageSquare className="w-4 h-4" />
-                Chat with Sophia
-              </Button>
               <Button size="sm" className="bg-gradient-to-r from-primary via-primary-glow to-secondary hover:opacity-90 shadow-lg shadow-primary/30">
                 Apply Now
               </Button>
@@ -300,8 +253,8 @@ const Index = () => {
         <LiveCounters />
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:flex-row relative">
+      {/* Main Layout - Content (75%) + Fixed Chat Sidebar (25%) */}
+      <div className="flex-1 flex relative min-h-0">
         {/* Animated grid background */}
         <div className="fixed inset-0 pointer-events-none animated-grid opacity-30 z-0"></div>
         
@@ -327,9 +280,9 @@ const Index = () => {
           <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         </div>
 
-        {/* Content Area - Full width */}
-        <div className="w-full flex items-center justify-center p-4 md:p-8 relative z-10">
-        <div className="max-w-5xl w-full space-y-6 md:space-y-8">
+        {/* Scrollable Content Area - 75% on desktop, full on mobile */}
+        <div className="w-full lg:w-3/4 p-4 md:p-8 relative z-10">
+        <div className="max-w-4xl mx-auto w-full space-y-6 md:space-y-8">
           {/* Hero Section - Matt Maine Profile */}
           <div 
             ref={heroSection.ref}
@@ -492,99 +445,57 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </div>
         </div>
-      </div>
+        </div>
+        </div>
 
-        {/* Floating Sophia Icon - Shows when chat is hidden */}
-        {!showSophiaChat && (
-          <button
-            onClick={() => setShowSophiaChat(true)}
-            className="fixed bottom-6 right-6 w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 hover:ring-primary/60 transition-all shadow-lg shadow-primary/20 hover:scale-110 z-50 group"
-          >
-            <video 
-              src={sophiaVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-lg animate-glow-pulse">
-              <MessageSquare className="w-4 h-4 text-primary-foreground" />
-            </div>
-          </button>
-        )}
-
-        {/* Floating Sophia Panel - Draggable */}
-        {showSophiaChat && (
-          <div 
-            className="hidden lg:block fixed w-96 max-h-[600px] bg-card/95 backdrop-blur-lg border border-primary/30 rounded-2xl shadow-2xl shadow-primary/20 z-50"
-            style={{ 
-              left: `${chatPosition.x}px`, 
-              top: `${chatPosition.y}px`,
-              cursor: isDragging ? 'grabbing' : 'default'
-            }}
-          >
-            <div className="h-full flex flex-col max-h-[600px]">
-              {/* Compact Header - Draggable */}
-              <div 
-                className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent cursor-grab active:cursor-grabbing"
-                onMouseDown={handleDragStart}
-              >
-                <div className="p-3 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg">
-                        <video 
-                          src={sophiaVideo}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
-                        <div className="w-1 h-1 bg-primary-foreground rounded-full animate-pulse"></div>
-                      </div>
+        {/* Fixed Chat Sidebar - 25% on desktop, hidden on mobile */}
+        <div className="hidden lg:flex lg:w-1/4 fixed right-0 top-[117px] bottom-0 flex-col bg-card/95 backdrop-blur-lg border-l border-primary/30 z-40">
+          <div className="h-full flex flex-col">
+            {/* Header */}
+            <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
+              <div className="p-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg">
+                      <video 
+                        src={sophiaVideo}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <div>
-                      <h2 className="font-bold text-sm text-foreground">Sophia AI</h2>
-                      <p className="text-[10px] text-muted-foreground">Your Mortgage Assistant</p>
+                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
+                      <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-pulse"></div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary/20 text-primary' : 'hover:bg-primary/10'}`}
-                      onClick={() => setVoiceModeActive(!voiceModeActive)}
-                      title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
-                    >
-                      <Mic className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="w-9 h-9 hover:bg-primary/10"
-                      onClick={() => setShowSophiaChat(false)}
-                      title="Hide chat"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
+                  <div>
+                    <h2 className="font-bold text-foreground">Sophia AI</h2>
+                    <p className="text-xs text-muted-foreground">Your Mortgage Assistant</p>
                   </div>
                 </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`w-9 h-9 transition-all ${voiceModeActive ? 'bg-primary/20 text-primary' : 'hover:bg-primary/10'}`}
+                  onClick={() => setVoiceModeActive(!voiceModeActive)}
+                  title={voiceModeActive ? "Switch to Text Chat" : "Switch to Voice Mode"}
+                >
+                  <Mic className="w-4 h-4" />
+                </Button>
+              </div>
 
               {voiceModeActive && (
-                <div className="mx-3 mb-3 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 shadow-lg shadow-primary/10 animate-fade-in">
+                <div className="mx-4 mb-3 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 shadow-lg shadow-primary/10 animate-fade-in">
                   <p className="text-xs text-primary font-semibold">🎙️ Voice Mode Active</p>
                 </div>
               )}
             </div>
 
             {/* Chat Area - Scrollable */}
-            <div id="sophia-chat" className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
+            <div id="sophia-chat" className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
               {messages.length === 0 ? (
                 <ConversationDemo />
               ) : (
@@ -607,9 +518,9 @@ const Index = () => {
             </div>
 
             {/* Input Area - Always Visible */}
-            <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
+            <div className="flex-shrink-0 p-4 border-t border-primary/20 space-y-3 bg-card/50">
               {/* Smart Prompt Pills */}
-              <div className="flex flex-wrap gap-1.5 mb-2">
+              <div className="flex flex-wrap gap-1.5">
                 {smartPrompts.map((prompt) => (
                   <button
                     key={prompt}
@@ -653,11 +564,10 @@ const Index = () => {
                     <span className="truncate">{action.label}</span>
                   </Button>
                 ))}
-                </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Mobile Sophia Panel - Shows below content on mobile */}
         <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
@@ -1092,7 +1002,7 @@ const Index = () => {
           <Button 
             size="sm"
             className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg gap-2"
-            onClick={() => setShowSophiaChat(true)}
+            onClick={() => setShowMobileChat(true)}
           >
             <MessageSquare className="w-4 h-4" />
             Chat with Sophia
