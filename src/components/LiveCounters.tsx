@@ -79,7 +79,7 @@ export const LiveCounters = () => {
   if (visibleCounters.length === 0) return null;
 
   return (
-    <div className="overflow-x-auto scrollbar-hide">
+    <div className="overflow-x-auto scrollbar-hide lg:w-3/4">
       <div className="flex items-center justify-start md:justify-center gap-3 md:gap-6 py-2 md:py-4 px-3 md:px-4 min-w-max md:min-w-0">
         {visibleCounters.map((counter, index) => (
           <div 
