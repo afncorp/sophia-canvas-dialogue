@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -46,6 +47,21 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        // Metallic palette colors
+        brass: {
+          DEFAULT: "hsl(var(--brass))",
+          light: "hsl(var(--brass-light))",
+        },
+        metallic: {
+          green: "hsl(var(--metallic-green))",
+          "green-light": "hsl(var(--metallic-green-light))",
+          red: "hsl(var(--metallic-red))",
+          "red-light": "hsl(var(--metallic-red-light))",
+        },
+        neutral: {
+          DEFAULT: "hsl(var(--neutral))",
+          light: "hsl(var(--neutral-light))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
