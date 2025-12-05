@@ -281,8 +281,8 @@ const Index = () => {
         </div>
 
         {/* Scrollable Content Area - 75% on desktop, full on mobile */}
-        <div className="w-full lg:w-3/4 px-3 md:px-5 py-4 md:py-8 relative z-10">
-        <div className="max-w-6xl mx-auto w-full space-y-6 md:space-y-8">
+        <div className="w-full lg:w-3/4 p-4 md:p-8 relative z-10">
+        <div className="max-w-4xl mx-auto w-full space-y-6 md:space-y-8">
           {/* Hero Section - Matt Maine Profile */}
           <div 
             ref={heroSection.ref}
