@@ -450,7 +450,7 @@ const Index = () => {
         </div>
 
         {/* Fixed Chat Sidebar - 25% on desktop, hidden on mobile */}
-        <div className="hidden lg:flex lg:w-1/4 fixed right-0 top-[117px] bottom-0 flex-col bg-card/95 backdrop-blur-lg border-l border-primary/30 z-40">
+        <div className="hidden lg:flex lg:w-1/4 fixed right-0 top-[117px] bottom-0 flex-col bg-card/95 backdrop-blur-lg border-l border-primary/30 z-40 rounded-l-2xl overflow-hidden">
           <div className="h-full flex flex-col">
             {/* Header */}
             <div className="flex-shrink-0 border-b border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/3 to-transparent">
