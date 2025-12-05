@@ -280,9 +280,9 @@ const Index = () => {
           <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         </div>
 
-        {/* Scrollable Content Area - 75% on desktop, full on mobile */}
-        <div className="w-full lg:w-3/4 p-4 md:p-8 relative z-10">
-        <div className="max-w-4xl mx-auto w-full space-y-6 md:space-y-8">
+        {/* Scrollable Content Area - Full width minus chat sidebar on desktop */}
+        <div className="w-full lg:w-[calc(100%-25%)] p-4 md:p-6 lg:pr-3 xl:pr-8 relative z-10">
+        <div className="w-full space-y-6 md:space-y-8">
           {/* Hero Section - Matt Maine Profile */}
           <div 
             ref={heroSection.ref}
@@ -615,9 +615,9 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Below the Fold Content - 75% width on desktop to avoid chat sidebar */}
-      <div className="w-full lg:w-3/4 bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto space-y-12 md:space-y-20">
+      {/* Below the Fold Content - Full width minus chat sidebar on desktop */}
+      <div className="w-full lg:w-[calc(100%-25%)] bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-6 lg:pr-3 xl:pr-8">
+        <div className="w-full space-y-12 md:space-y-20">
           
 
           {/* Process Flow Comparison */}
@@ -876,12 +876,12 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Compliance Footer - 75% width on desktop */}
-      <footer className="relative bg-gradient-to-b from-background via-card/50 to-background border-t border-primary/20 py-6 md:py-8 px-4 md:px-8 overflow-hidden lg:w-3/4">
+      {/* Compliance Footer - Full width minus chat sidebar on desktop */}
+      <footer className="relative bg-gradient-to-b from-background via-card/50 to-background border-t border-primary/20 py-6 md:py-8 px-4 md:px-6 lg:pr-3 xl:pr-8 overflow-hidden lg:w-[calc(100%-25%)]">
         {/* Background effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
         
-        <div className="max-w-4xl mx-auto relative z-10">
+        <div className="w-full relative z-10">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             {/* Logo */}
             <div className="flex-shrink-0 mx-auto md:mx-0">
@@ -948,9 +948,9 @@ const Index = () => {
       </footer>
 
       {/* Sample Website Disclaimer */}
-      <div className="relative bg-gradient-to-r from-destructive/15 via-destructive/20 to-destructive/15 border-t border-destructive/40 py-4 px-4 md:px-8 overflow-hidden lg:w-3/4">
+      <div className="relative bg-gradient-to-r from-destructive/15 via-destructive/20 to-destructive/15 border-t border-destructive/40 py-4 px-4 md:px-6 lg:pr-3 xl:pr-8 overflow-hidden lg:w-[calc(100%-25%)]">
         <div className="absolute inset-0 bg-gradient-to-br from-destructive/10 to-transparent pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
+        <div className="w-full relative z-10">
           <p className="text-center text-sm md:text-base font-bold text-foreground flex items-center justify-center gap-2">
             <span className="text-destructive">⚠️</span>
             SAMPLE WEBSITE - NOT FOR OFFICIAL MORTGAGE USE - NOT FOR USE BY CONSUMERS
