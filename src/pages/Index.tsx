@@ -7,7 +7,7 @@ import { LiveCounters } from "@/components/LiveCounters";
 import { MortgageCalculator } from "@/components/MortgageCalculator";
 import { LoanProgramsTabs } from "@/components/LoanProgramsTabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { ScrollingSophiaBubble } from "@/components/ScrollingSophiaBubble";
+
 import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -380,72 +380,6 @@ const Index = () => {
               </div>
             </div>
           </div>
-
-          {/* Sophia Bubble - Hero Section */}
-          <div className="hidden lg:block">
-            <ScrollingSophiaBubble
-              message="Hi! I'm Sophia, your AI mortgage assistant. I can help you get pre-approved, explain loan programs, and answer any questions instantly. Want to get started?"
-              section="hero"
-              onChatClick={scrollToChat}
-            />
-          </div>
-
-          {/* CTA Section - Streamlined */}
-          <div 
-            ref={ctaSection.ref}
-            className={`relative overflow-hidden bg-gradient-to-r from-primary/15 via-secondary/15 to-accent/15 rounded-xl md:rounded-2xl p-6 md:p-8 border border-primary/40 shadow-xl shadow-primary/20 transition-all duration-700 delay-300 ${
-              ctaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
-            <div className="relative space-y-4 md:space-y-6">
-              <div className="text-center">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
-                <p className="text-sm md:text-base text-muted-foreground">Choose your path forward</p>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
-                {/* Apply Now - Main CTA */}
-                <Button 
-                  size="lg" 
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 bg-gradient-to-r from-primary via-secondary to-primary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group"
-                >
-                  <div className="flex items-center gap-3 w-full">
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-                    <div className="text-left flex-1">
-                      <div className="font-bold text-lg">Apply Now</div>
-                      <div className="text-xs opacity-90 mt-0.5">Start your full loan application</div>
-                    </div>
-                  </div>
-                </Button>
-
-                {/* Talk to Matt - Human Connection */}
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
-                >
-                  <div className="flex items-center gap-3 w-full">
-                    <Phone className="w-6 h-6 group-hover:scale-110 transition-transform flex-shrink-0" />
-                    <div className="text-left flex-1">
-                      <div className="font-bold text-lg">Talk to Matt</div>
-                      <div className="text-xs opacity-70 mt-0.5">Call or text (555) 123-4567</div>
-                    </div>
-                  </div>
-                </Button>
-              </div>
-
-              {/* Sophia Help Text */}
-              <div className="text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border border-primary/30">
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  <p className="text-xs md:text-sm text-foreground">
-                    Have questions first? <button onClick={scrollToChat} className="text-primary hover:underline font-semibold">Chat with Sophia AI</button> for instant answers
-                  </p>
-                </div>
-              </div>
-            </div>
-        </div>
         </div>
         </div>
 
@@ -685,14 +619,6 @@ const Index = () => {
       <div className="w-full lg:w-3/4 bg-gradient-to-b from-background to-muted/20 py-8 md:py-16 px-4 md:px-8">
         <div className="max-w-4xl mx-auto space-y-12 md:space-y-20">
           
-          {/* Sophia Bubble - Process Section */}
-          <div className="hidden lg:block mb-6 max-w-5xl mx-auto">
-            <ScrollingSophiaBubble
-              message="Curious how AI makes mortgages faster? Let me walk you through the traditional process vs. our AI-enhanced approach. The difference is remarkable!"
-              section="process"
-              onChatClick={scrollToChat}
-            />
-          </div>
 
           {/* Process Flow Comparison */}
           <section 
@@ -784,14 +710,6 @@ const Index = () => {
             </div>
           </section>
 
-          {/* Sophia Bubble - Calculator Section */}
-          <div className="hidden lg:block mb-6 max-w-5xl mx-auto">
-            <ScrollingSophiaBubble
-              message="Want to know what your monthly payment could be? Try our calculator below, and if you have questions about rates or programs, just ask me!"
-              section="calculator"
-              onChatClick={scrollToChat}
-            />
-          </div>
 
           {/* Video & Calculator Section - Side by Side */}
           <section 
@@ -842,6 +760,14 @@ const Index = () => {
             </div>
           </section>
 
+          {/* Loan Programs */}
+          <section className="space-y-6 md:space-y-8">
+            <LoanProgramsTabs onAskSophia={(message) => {
+              sendMessage(message);
+              scrollToChat();
+            }} />
+          </section>
+
           {/* Reviews Section */}
           <section 
             ref={reviewsSection.ref}
@@ -890,22 +816,62 @@ const Index = () => {
             </div>
           </section>
 
-          {/* Loan Programs */}
-          <section className="space-y-6 md:space-y-8 pb-8">
-            {/* Sophia Bubble - Loan Programs */}
-            <div className="hidden lg:block mb-6 max-w-5xl mx-auto">
-              <ScrollingSophiaBubble
-                message="Not sure which loan program is right for you? Let's chat! I can help you understand your options and find the perfect fit for your situation."
-                section="programs"
-                onChatClick={scrollToChat}
-              />
+          {/* CTA Section - Ready to Get Started */}
+          <div 
+            ref={ctaSection.ref}
+            className={`relative overflow-hidden bg-gradient-to-r from-primary/15 via-secondary/15 to-accent/15 rounded-xl md:rounded-2xl p-6 md:p-8 border border-primary/40 shadow-xl shadow-primary/20 transition-all duration-700 delay-300 ${
+              ctaSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
+            <div className="relative space-y-4 md:space-y-6">
+              <div className="text-center">
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">Ready to Get Started?</h3>
+                <p className="text-sm md:text-base text-muted-foreground">Choose your path forward</p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
+                {/* Apply Now - Main CTA */}
+                <Button 
+                  size="lg" 
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 bg-gradient-to-r from-primary via-secondary to-primary hover:opacity-90 hover:shadow-xl hover:shadow-primary/40 shadow-lg shadow-primary/30 transition-all duration-300 group"
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                    <div className="text-left flex-1">
+                      <div className="font-bold text-lg">Apply Now</div>
+                      <div className="text-xs opacity-90 mt-0.5">Start your full loan application</div>
+                    </div>
+                  </div>
+                </Button>
+
+                {/* Talk to Matt - Human Connection */}
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-base md:text-lg px-6 md:px-8 h-auto py-5 border-primary/40 hover:bg-primary/10 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group"
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    <Phone className="w-6 h-6 group-hover:scale-110 transition-transform flex-shrink-0" />
+                    <div className="text-left flex-1">
+                      <div className="font-bold text-lg">Talk to Matt</div>
+                      <div className="text-xs opacity-70 mt-0.5">Call or text (555) 123-4567</div>
+                    </div>
+                  </div>
+                </Button>
+              </div>
+
+              {/* Sophia Help Text */}
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border border-primary/30">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  <p className="text-xs md:text-sm text-foreground">
+                    Have questions first? <button onClick={scrollToChat} className="text-primary hover:underline font-semibold">Chat with Sophia AI</button> for instant answers
+                  </p>
+                </div>
+              </div>
             </div>
-            
-            <LoanProgramsTabs onAskSophia={(message) => {
-              sendMessage(message);
-              scrollToChat();
-            }} />
-          </section>
+          </div>
 
         </div>
       </div>
