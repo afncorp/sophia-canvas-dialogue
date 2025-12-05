@@ -1,442 +1,593 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { useState, useEffect, useRef } from "react";
+import { ChevronRight } from "lucide-react";
+
+type Purpose = 'purchase' | 'refi';
+type LoanType = 'conv' | 'fha' | 'va';
 
 export const MortgageCalculator = () => {
-  // Transaction type
-  const [transactionType, setTransactionType] = useState<"purchase" | "refinance">("purchase");
-  const [loanType, setLoanType] = useState<"conventional" | "fha">("conventional");
+  const [purpose, setPurpose] = useState<Purpose>('purchase');
+  const [loanType, setLoanType] = useState<LoanType>('conv');
   
-  // Basic inputs
+  // Core values
   const [homePrice, setHomePrice] = useState(500000);
-  const [downPaymentDollar, setDownPaymentDollar] = useState(100000);
-  const [downPaymentPercent, setDownPaymentPercent] = useState(20);
-  const [loanAmount, setLoanAmount] = useState(400000);
-  const [interestRate, setInterestRate] = useState(6.5);
-  const [loanTerm, setLoanTerm] = useState(30);
+  const [downPct, setDownPct] = useState(20);
+  const [downAmt, setDownAmt] = useState(100000);
+  const [loanAmt, setLoanAmt] = useState(400000);
+  const [loanPct, setLoanPct] = useState(80);
+  const [rate, setRate] = useState(6.5);
+  const [term, setTerm] = useState(30);
   
-  // Advanced inputs
-  const [propertyTaxRate, setPropertyTaxRate] = useState(1.2);
-  const [insuranceOverride, setInsuranceOverride] = useState<number | null>(null);
-  const [miOverride, setMiOverride] = useState<number | null>(null);
-  const [showDetails, setShowDetails] = useState(false);
-
+  // Advanced settings
+  const [taxRate, setTaxRate] = useState(1.2);
+  const [insurance, setInsurance] = useState(0);
+  const [hoa, setHoa] = useState(0);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  
   // Calculated values
-  const [monthlyPayment, setMonthlyPayment] = useState(0);
-  const [propertyTax, setPropertyTax] = useState(0);
-  const [homeInsurance, setHomeInsurance] = useState(0);
+  const [pi, setPi] = useState(0);
+  const [taxes, setTaxes] = useState(0);
   const [pmi, setPmi] = useState(0);
-  const [totalPayment, setTotalPayment] = useState(0);
-  const [ufmip, setUfmip] = useState(0);
+  const [total, setTotal] = useState(0);
+  
+  // Track what drove the last change
+  const lastDriver = useRef<string>('slider');
 
-  // Sync calculations when inputs change
-  useEffect(() => {
-    // Update loan amount when home price or down payment changes
-    if (transactionType === "purchase") {
-      const newLoanAmount = homePrice - downPaymentDollar;
-      setLoanAmount(newLoanAmount);
-    } else {
-      // For refinance, loan amount can be set independently
-      setLoanAmount(homePrice);
-    }
-  }, [homePrice, downPaymentDollar, transactionType]);
-
-  // Update down payment dollar when percent changes
-  useEffect(() => {
-    const newDownPaymentDollar = (homePrice * downPaymentPercent) / 100;
-    setDownPaymentDollar(newDownPaymentDollar);
-  }, [downPaymentPercent, homePrice]);
-
-  // Update down payment percent when dollar changes
-  useEffect(() => {
-    const newDownPaymentPercent = (downPaymentDollar / homePrice) * 100;
-    setDownPaymentPercent(newDownPaymentPercent);
-  }, [downPaymentDollar, homePrice]);
-
-  const calculateFHAMIP = (baseLoanAmount: number, ltvRatio: number) => {
-    // FHA Upfront MIP: 1.75% of base loan amount
-    const upfrontMIP = baseLoanAmount * 0.0175;
-    
-    // FHA Annual MIP (varies by LTV, loan amount, and term)
-    let annualMIPRate = 0;
-    if (ltvRatio > 95) {
-      annualMIPRate = baseLoanAmount <= 500000 ? 0.0085 : 0.009;
-    } else if (ltvRatio > 90) {
-      annualMIPRate = 0.008;
-    } else {
-      annualMIPRate = loanTerm <= 15 ? 0.0045 : 0.008;
-    }
-    
-    const monthlyMIP = ((baseLoanAmount + upfrontMIP) * annualMIPRate) / 12;
-    
-    return { upfrontMIP, monthlyMIP };
+  // Calculate recommended insurance (0.35% annually)
+  const getRecommendedIns = (price: number) => {
+    if (!price) return 0;
+    const annual = price * 0.0035;
+    const monthly = annual / 12;
+    return Math.round(monthly / 5) * 5;
   };
 
-  const calculateMortgage = () => {
-    let principal = loanAmount;
-    let baseLoanAmount = loanAmount;
-    
-    // For FHA loans, calculate UFMIP and add to principal
-    if (loanType === "fha" && transactionType === "purchase") {
-      baseLoanAmount = homePrice - downPaymentDollar;
-      const fhaCalc = calculateFHAMIP(baseLoanAmount, (baseLoanAmount / homePrice) * 100);
-      principal = baseLoanAmount + fhaCalc.upfrontMIP;
-      setUfmip(fhaCalc.upfrontMIP);
-    } else {
-      setUfmip(0);
-    }
-    
-    const monthlyRate = interestRate / 100 / 12;
-    const numberOfPayments = loanTerm * 12;
-
-    // Calculate monthly P&I payment
-    const monthlyPI =
-      (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
-
-    // Calculate property tax (user-adjustable rate)
-    const monthlyPropertyTax = (homePrice * (propertyTaxRate / 100)) / 12;
-
-    // Calculate home insurance (user can override)
-    const monthlyInsurance = insuranceOverride !== null 
-      ? insuranceOverride 
-      : (homePrice / 1000) * 3.5 / 12;
-
-    // Calculate MI/MIP
-    let monthlyMI = 0;
-    if (miOverride !== null) {
-      monthlyMI = miOverride;
-    } else if (transactionType === "purchase") {
-      const ltvRatio = (baseLoanAmount / homePrice) * 100;
-      
-      if (loanType === "fha") {
-        const fhaCalc = calculateFHAMIP(baseLoanAmount, ltvRatio);
-        monthlyMI = fhaCalc.monthlyMIP;
-      } else if (ltvRatio > 80) {
-        // Conventional PMI
-        monthlyMI = (baseLoanAmount * 0.005) / 12;
-      }
-    }
-
-    setMonthlyPayment(monthlyPI);
-    setPropertyTax(monthlyPropertyTax);
-    setHomeInsurance(monthlyInsurance);
-    setPmi(monthlyMI);
-    setTotalPayment(monthlyPI + monthlyPropertyTax + monthlyInsurance + monthlyMI);
+  // Snap percent to 1% steps, preserving 3.5%
+  const snapPercent = (p: number) => {
+    if (!isFinite(p)) return 0;
+    if (Math.abs(p - 3.5) <= 0.5) return 3.5;
+    return Math.round(p);
   };
 
+  // Calculate monthly payment
+  const calcPayment = (loan: number, r: number, t: number) => {
+    const monthlyRate = r / 1200;
+    const n = t * 12;
+    if (monthlyRate === 0) return loan / n;
+    return loan * monthlyRate * Math.pow(1 + monthlyRate, n) / (Math.pow(1 + monthlyRate, n) - 1);
+  };
+
+  // Format currency
+  const formatCurrency = (n: number) => {
+    if (!isFinite(n)) n = 0;
+    return Math.round(n).toLocaleString('en-US');
+  };
+
+  const formatCurrencyFull = (n: number) => {
+    if (!isFinite(n)) n = 0;
+    return n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  };
+
+  // Initialize insurance on mount
   useEffect(() => {
-    calculateMortgage();
-  }, [homePrice, downPaymentDollar, loanAmount, interestRate, loanTerm, transactionType, loanType, propertyTaxRate, insuranceOverride, miOverride]);
+    setInsurance(getRecommendedIns(homePrice));
+  }, []);
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
+  // Update insurance when price changes via slider
+  const handlePriceChange = (newPrice: number) => {
+    setHomePrice(newPrice);
+    setInsurance(getRecommendedIns(newPrice));
   };
 
-  const ltvRatio = transactionType === "purchase" 
-    ? ((homePrice - downPaymentDollar) / homePrice) * 100 
-    : 0;
+  // Recalculate all values
+  useEffect(() => {
+    const price = homePrice;
+    const ltv = loanPct || 0;
+
+    // FHA upfront MIP
+    const ufmipRate = 1.75;
+    let ufmip = 0;
+    let totalLoan = loanAmt;
+    if (loanType === 'fha') {
+      ufmip = loanAmt * ufmipRate / 100;
+      totalLoan += ufmip;
+    }
+
+    // PI calculation
+    const piVal = calcPayment(totalLoan, rate, term);
+    setPi(piVal);
+
+    // Taxes
+    const taxVal = price * (taxRate / 100) / 12;
+    setTaxes(taxVal);
+
+    // MI / MIP
+    let pmiVal = 0;
+    if (loanType === 'fha') {
+      const annualRate = ltv > 95 ? 0.55 : 0.50;
+      pmiVal = totalLoan * (annualRate / 100) / 12;
+    } else if (loanType === 'conv' && ltv > 80) {
+      const convRate = 0.8;
+      pmiVal = totalLoan * (convRate / 100) / 12;
+    } else if (loanType === 'va' && downPct < 10) {
+      pmiVal = totalLoan * (0.3 / 100) / 12;
+    }
+    setPmi(pmiVal);
+
+    // Total
+    setTotal(piVal + taxVal + insurance + hoa + pmiVal);
+  }, [homePrice, loanAmt, loanPct, rate, term, taxRate, insurance, hoa, loanType, downPct]);
+
+  // Sync down payment / loan amount based on driver
+  const updateFromSlider = (sliderVal: number) => {
+    lastDriver.current = 'slider';
+    const snapped = snapPercent(sliderVal);
+    
+    if (purpose === 'refi') {
+      // Slider controls loan %
+      setLoanPct(snapped);
+      const newLoanAmt = homePrice * snapped / 100;
+      setLoanAmt(newLoanAmt);
+      setDownAmt(homePrice - newLoanAmt);
+      setDownPct(100 - snapped);
+    } else {
+      // Slider controls down %
+      setDownPct(snapped);
+      const newDownAmt = homePrice * snapped / 100;
+      setDownAmt(newDownAmt);
+      const newLoanAmt = homePrice - newDownAmt;
+      setLoanAmt(newLoanAmt);
+      setLoanPct(homePrice ? (newLoanAmt / homePrice * 100) : 0);
+    }
+  };
+
+  const updateFromDownAmt = (val: number) => {
+    lastDriver.current = 'downAmt';
+    let newDownAmt = Math.max(0, Math.min(homePrice, val));
+    setDownAmt(newDownAmt);
+    const newDownPct = homePrice ? (newDownAmt / homePrice * 100) : 0;
+    setDownPct(newDownPct);
+    const newLoanAmt = homePrice - newDownAmt;
+    setLoanAmt(newLoanAmt);
+    setLoanPct(homePrice ? (newLoanAmt / homePrice * 100) : 0);
+  };
+
+  const updateFromLoanAmt = (val: number) => {
+    lastDriver.current = 'loanAmt';
+    let newLoanAmt = Math.max(0, Math.min(homePrice, val));
+    setLoanAmt(newLoanAmt);
+    const newLoanPct = homePrice ? (newLoanAmt / homePrice * 100) : 0;
+    setLoanPct(newLoanPct);
+    const newDownAmt = homePrice - newLoanAmt;
+    setDownAmt(newDownAmt);
+    setDownPct(homePrice ? (newDownAmt / homePrice * 100) : 0);
+  };
+
+  const updateFromDownPct = (val: number) => {
+    lastDriver.current = 'downPct';
+    const newDownPct = Math.max(0, Math.min(100, val));
+    setDownPct(newDownPct);
+    const newDownAmt = homePrice * newDownPct / 100;
+    setDownAmt(newDownAmt);
+    const newLoanAmt = homePrice - newDownAmt;
+    setLoanAmt(newLoanAmt);
+    setLoanPct(homePrice ? (newLoanAmt / homePrice * 100) : 0);
+  };
+
+  const updateFromLoanPct = (val: number) => {
+    lastDriver.current = 'loanPct';
+    const newLoanPct = Math.max(0, Math.min(100, val));
+    setLoanPct(newLoanPct);
+    const newLoanAmt = homePrice * newLoanPct / 100;
+    setLoanAmt(newLoanAmt);
+    const newDownAmt = homePrice - newLoanAmt;
+    setDownAmt(newDownAmt);
+    setDownPct(homePrice ? (newDownAmt / homePrice * 100) : 0);
+  };
+
+  // When home price changes, recalc based on last driver
+  useEffect(() => {
+    if (lastDriver.current === 'slider' || lastDriver.current === 'downPct') {
+      const newDownAmt = homePrice * downPct / 100;
+      setDownAmt(newDownAmt);
+      const newLoanAmt = homePrice - newDownAmt;
+      setLoanAmt(newLoanAmt);
+      setLoanPct(homePrice ? (newLoanAmt / homePrice * 100) : 0);
+    } else if (lastDriver.current === 'downAmt') {
+      const newLoanAmt = homePrice - downAmt;
+      setLoanAmt(Math.max(0, newLoanAmt));
+      setLoanPct(homePrice ? (Math.max(0, newLoanAmt) / homePrice * 100) : 0);
+      setDownPct(homePrice ? (downAmt / homePrice * 100) : 0);
+    } else if (lastDriver.current === 'loanAmt' || lastDriver.current === 'loanPct') {
+      const newLoanPct = homePrice ? (loanAmt / homePrice * 100) : 0;
+      setLoanPct(newLoanPct);
+      const newDownAmt = homePrice - loanAmt;
+      setDownAmt(Math.max(0, newDownAmt));
+      setDownPct(homePrice ? (Math.max(0, newDownAmt) / homePrice * 100) : 0);
+    }
+  }, [homePrice]);
+
+  // Bar segment widths
+  const sum = pi + taxes + insurance + hoa + pmi || 1;
+  const piWidth = (pi / sum * 100);
+  const taxWidth = (taxes / sum * 100);
+  const insWidth = (insurance / sum * 100);
+  const hoaWidth = (hoa / sum * 100);
+  const pmiWidth = (pmi / sum * 100);
+
+  const typeMap: Record<LoanType, string> = { conv: 'Conventional', fha: 'FHA', va: 'VA' };
+  const programText = `${typeMap[loanType]} · ${purpose === 'refi' ? 'Refinance' : 'Purchase'}`;
+  const miRequired = loanPct > 80;
 
   return (
-    <div className="bg-card/40 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-primary/30 shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all duration-300">
-      <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/30 backdrop-blur-sm">
-          <TabsTrigger value="overview" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/20 data-[state=active]:to-secondary/20 data-[state=active]:text-foreground">Payment Breakdown</TabsTrigger>
-          <TabsTrigger value="details" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/20 data-[state=active]:to-secondary/20 data-[state=active]:text-foreground">Details</TabsTrigger>
-        </TabsList>
+    <div className="w-full max-w-[420px] mx-auto bg-gradient-to-br from-[#27211b] to-[#141316] rounded-[32px] p-[22px_18px_24px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/[0.06] overflow-hidden">
+      
+      {/* Header */}
+      <div className="text-left mb-3.5">
+        <div className="text-[13px] uppercase tracking-wider text-[#9a9a9d] mb-1">Payment Calculator</div>
+        <div className="flex justify-between items-end gap-2.5">
+          <div className="text-[32px] font-bold text-primary">${formatCurrency(total)}</div>
+          <div className="inline-flex items-center gap-1.5 bg-white/[0.04] px-2.5 py-1.5 rounded-[30px] text-[11px]">
+            <div className="w-[7px] h-[7px] rounded-full bg-[#32d74b] shadow-[0_0_12px_rgba(50,215,75,0.6)]"></div>
+            <span className="text-[#d0d0d3]">{programText}</span>
+          </div>
+        </div>
+      </div>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="space-y-4">
-            {/* Transaction Type and Loan Type Toggles */}
-            <div className="grid grid-cols-2 gap-3 p-3 bg-muted/20 rounded-lg">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="transaction-type" className="text-xs font-medium">
-                  {transactionType === "purchase" ? "Purchase" : "Refinance"}
-                </Label>
-                <Switch
-                  id="transaction-type"
-                  checked={transactionType === "refinance"}
-                  onCheckedChange={(checked) => setTransactionType(checked ? "refinance" : "purchase")}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="loan-type" className="text-xs font-medium">
-                  {loanType === "conventional" ? "Conventional" : "FHA"}
-                </Label>
-                <Switch
-                  id="loan-type"
-                  checked={loanType === "fha"}
-                  onCheckedChange={(checked) => setLoanType(checked ? "fha" : "conventional")}
-                />
-              </div>
+      {/* Purpose & Loan Type Segments */}
+      <div className="flex gap-2 mb-2.5">
+        <div className="flex-1 flex bg-white/[0.04] rounded-[30px] p-1 gap-1">
+          <button
+            onClick={() => setPurpose('purchase')}
+            className={`flex-1 py-2 px-2 rounded-[30px] border-none text-[12px] font-medium transition-all cursor-pointer ${
+              purpose === 'purchase'
+                ? 'bg-gradient-to-br from-primary to-primary/80 text-white font-semibold'
+                : 'bg-transparent text-[#9a9a9d]'
+            }`}
+          >
+            Purchase
+          </button>
+          <button
+            onClick={() => setPurpose('refi')}
+            className={`flex-1 py-2 px-2 rounded-[30px] border-none text-[12px] font-medium transition-all cursor-pointer ${
+              purpose === 'refi'
+                ? 'bg-gradient-to-br from-primary to-primary/80 text-white font-semibold'
+                : 'bg-transparent text-[#9a9a9d]'
+            }`}
+          >
+            Refinance
+          </button>
+        </div>
+      </div>
+      
+      <div className="flex gap-2 mb-3">
+        <div className="flex-1 flex bg-white/[0.04] rounded-[30px] p-1 gap-1">
+          {(['conv', 'fha', 'va'] as LoanType[]).map((type) => (
+            <button
+              key={type}
+              onClick={() => setLoanType(type)}
+              className={`flex-1 py-2 px-2 rounded-[30px] border-none text-[12px] font-medium transition-all cursor-pointer ${
+                loanType === type
+                  ? 'bg-gradient-to-br from-primary to-primary/80 text-white font-semibold'
+                  : 'bg-transparent text-[#9a9a9d]'
+              }`}
+            >
+              {type === 'conv' ? 'Conv' : type.toUpperCase()}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Payment Breakdown Bar */}
+      <div className="bg-[radial-gradient(circle_at_top_left,#302620_0,#181518_60%)] rounded-[22px] border border-white/[0.06] p-[12px_12px_14px] mb-3">
+        <div className="bg-black/[0.28] rounded-[10px] h-3.5 overflow-hidden mb-2.5 relative">
+          <div className="h-full flex w-full">
+            <div 
+              className="bg-[#4a9eff] relative flex items-center justify-center"
+              style={{ width: `${piWidth}%` }}
+              title={`P & I ${formatCurrencyFull(pi)}`}
+            >
+              {piWidth > 15 && (
+                <span className="text-[10px] font-semibold text-white absolute whitespace-nowrap" style={{ textShadow: '0 0 5px rgba(0,0,0,0.8)' }}>
+                  {formatCurrencyFull(pi)}
+                </span>
+              )}
             </div>
+            <div 
+              className="bg-[#ff6472]" 
+              style={{ width: `${taxWidth}%` }}
+              title={`Prop Tax ${formatCurrencyFull(taxes)}`}
+            />
+            <div 
+              className="bg-[#32d74b]" 
+              style={{ width: `${insWidth}%` }}
+              title={`Ins ${formatCurrencyFull(insurance)}`}
+            />
+            <div 
+              className="bg-[#af7bff]" 
+              style={{ width: `${hoaWidth}%` }}
+              title={`HOA ${formatCurrencyFull(hoa)}`}
+            />
+            <div 
+              className="bg-[#eac456]" 
+              style={{ width: `${pmiWidth}%` }}
+              title={`MI ${formatCurrencyFull(pmi)}`}
+            />
+          </div>
+        </div>
+        <div className="flex justify-between items-center text-[12px] text-[#9a9a9d]">
+          <div className="flex-1 flex items-center justify-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#4a9eff]"></span>
+            <span>P & I</span>
+          </div>
+          <div className="flex-1 flex items-center justify-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#ff6472]"></span>
+            <span>Prop Tax</span>
+          </div>
+          <div className="flex-1 flex items-center justify-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#32d74b]"></span>
+            <span>Ins</span>
+          </div>
+          <div className="flex-1 flex items-center justify-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#af7bff]"></span>
+            <span>HOA</span>
+          </div>
+          <div className="flex-1 flex items-center justify-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#eac456]"></span>
+            <span>MI</span>
+          </div>
+        </div>
+      </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-foreground">
-                  {transactionType === "purchase" ? "Home Price" : "Home Value"}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                  <Input
-                    type="number"
-                    value={homePrice}
-                    onChange={(e) => setHomePrice(Number(e.target.value))}
-                    className="pl-6"
-                  />
+      {/* Core Sliders Card */}
+      <div className="bg-[radial-gradient(circle_at_top_left,#302620_0,#181518_60%)] rounded-[22px] border border-white/[0.06] p-[14px_14px_16px] mb-3">
+        
+        {/* Home Price / Value */}
+        <div className="mb-4">
+          <div className="text-[13px] font-semibold text-[#f4f4f6]">
+            {purpose === 'refi' ? 'Property Value' : 'Home Price'}
+          </div>
+          <div className="flex justify-start items-end gap-1 mb-2">
+            <div className="flex items-baseline gap-1 text-[26px] font-semibold text-primary">
+              <span className="text-[0.8em] opacity-90">$</span>
+              <input
+                type="text"
+                value={formatCurrency(homePrice)}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value.replace(/[^\d]/g, '')) || 0;
+                  const clamped = Math.max(100000, Math.min(3000000, val));
+                  handlePriceChange(clamped);
+                }}
+                className="border-none bg-transparent font-inherit text-inherit inline-block text-left p-0 pb-px border-b border-dashed border-white/[0.18] focus:outline-none focus:border-primary"
+                style={{ width: `${formatCurrency(homePrice).length + 0.5}ch` }}
+              />
+            </div>
+          </div>
+          <input
+            type="range"
+            min="100000"
+            max="3000000"
+            step="5000"
+            value={homePrice}
+            onChange={(e) => handlePriceChange(parseInt(e.target.value))}
+            className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+          />
+        </div>
+
+        {/* Down Payment & Loan Amount */}
+        <div className="mb-4">
+          <div className={`flex gap-3.5 items-start mb-2 ${purpose === 'refi' ? 'justify-center' : ''}`}>
+            {purpose === 'purchase' && (
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-baseline mb-1">
+                  <div className="text-[13px] font-semibold text-[#f4f4f6]">Down Payment</div>
+                </div>
+                <div className="flex items-baseline gap-2 text-[20px] font-semibold text-primary w-full justify-start">
+                  <div className="flex items-baseline gap-1 min-w-0">
+                    <span className="text-[0.8em] opacity-90">$</span>
+                    <input
+                      type="text"
+                      value={formatCurrency(downAmt)}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value.replace(/[^\d]/g, '')) || 0;
+                        updateFromDownAmt(val);
+                      }}
+                      className="border-none bg-transparent font-inherit text-inherit inline-block text-left p-0 pb-px border-b border-dashed border-white/[0.18] focus:outline-none focus:border-primary"
+                      style={{ width: `${formatCurrency(downAmt).length + 0.5}ch` }}
+                    />
+                  </div>
+                  <div className="flex items-baseline gap-0.5 ml-2.5 whitespace-nowrap">
+                    <input
+                      type="text"
+                      value={downPct.toFixed(1).replace(/\.0$/, '')}
+                      onChange={(e) => {
+                        const val = parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0;
+                        updateFromDownPct(val);
+                      }}
+                      className="border-none bg-transparent font-inherit text-inherit inline-block text-right p-0 pb-px border-b border-dashed border-white/[0.18] focus:outline-none focus:border-primary text-[15px]"
+                      style={{ width: `${(downPct.toFixed(1).replace(/\.0$/, '')).length + 0.5}ch` }}
+                    />
+                    <span className="text-[15px]">%</span>
+                  </div>
                 </div>
               </div>
-              
-              {transactionType === "purchase" && (
-                <>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-foreground">Down Payment ($)</label>
-                    <div className="relative">
-                      <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                      <Input
-                        type="number"
-                        value={downPaymentDollar}
-                        onChange={(e) => setDownPaymentDollar(Number(e.target.value))}
-                        className="pl-6"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-foreground">Down Payment (%)</label>
-                    <div className="relative">
-                      <Input
-                        type="number"
-                        step="0.1"
-                        value={downPaymentPercent.toFixed(1)}
-                        onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
-                      />
-                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
-                    </div>
-                  </div>
-                </>
-              )}
-              
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-foreground">Loan Amount</label>
-                <div className="relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                  <Input
-                    type="number"
-                    value={loanAmount}
+            )}
+            
+            <div className={purpose === 'refi' ? 'flex-1' : 'flex-1 min-w-0'}>
+              <div className="flex justify-between items-baseline mb-1">
+                <div className="text-[13px] font-semibold text-[#f4f4f6]">Loan Amount</div>
+                <span className={`text-[11px] whitespace-nowrap ${miRequired ? 'text-[#ff6472]' : 'text-[#32d74b]'}`}>
+                  {miRequired ? 'MI req.' : 'No MI'}
+                </span>
+              </div>
+              <div className="flex items-baseline gap-2 text-[20px] font-semibold text-primary w-full justify-between">
+                <div className="flex items-baseline gap-1 min-w-0">
+                  <span className="text-[0.8em] opacity-90">$</span>
+                  <input
+                    type="text"
+                    value={formatCurrency(loanAmt)}
                     onChange={(e) => {
-                      const newLoanAmount = Number(e.target.value);
-                      setLoanAmount(newLoanAmount);
-                      if (transactionType === "purchase") {
-                        setDownPaymentDollar(homePrice - newLoanAmount);
-                      }
+                      const val = parseInt(e.target.value.replace(/[^\d]/g, '')) || 0;
+                      updateFromLoanAmt(val);
                     }}
-                    className="pl-6"
+                    className="border-none bg-transparent font-inherit text-inherit inline-block text-left p-0 pb-px border-b border-dashed border-white/[0.18] focus:outline-none focus:border-primary"
+                    style={{ width: `${formatCurrency(loanAmt).length + 0.5}ch` }}
                   />
                 </div>
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-foreground">Interest Rate</label>
-                <div className="relative">
-                  <Input
-                    type="number"
-                    step="0.01"
-                    value={interestRate}
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                <div className="flex items-baseline gap-0.5 ml-auto whitespace-nowrap">
+                  <input
+                    type="text"
+                    value={loanPct.toFixed(1).replace(/\.0$/, '')}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0;
+                      updateFromLoanPct(val);
+                    }}
+                    className="border-none bg-transparent font-inherit text-inherit inline-block text-right p-0 pb-px border-b border-dashed border-white/[0.18] focus:outline-none focus:border-primary text-[15px]"
+                    style={{ width: `${(loanPct.toFixed(1).replace(/\.0$/, '')).length + 0.5}ch` }}
                   />
-                  <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">%</span>
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-foreground">Loan Term</label>
-                <select
-                  value={loanTerm}
-                  onChange={(e) => setLoanTerm(Number(e.target.value))}
-                  className="w-full px-3 py-2 text-sm bg-background border border-input text-foreground rounded-md focus:ring-2 focus:ring-ring focus:border-input"
-                >
-                  <option value={30}>30 Years</option>
-                  <option value={20}>20 Years</option>
-                  <option value={15}>15 Years</option>
-                  <option value={10}>10 Years</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="p-4 bg-gradient-to-br from-primary/15 to-secondary/15 rounded-xl border-2 border-primary/40 shadow-lg shadow-primary/20 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-              <div className="relative">
-                <p className="text-xs text-muted-foreground mb-1">Est. Total Monthly Payment</p>
-                <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                  {formatCurrency(totalPayment)}
-                </p>
-                <div className="mt-3 space-y-1.5 text-xs">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Principal & Interest</span>
-                    <span className="font-medium text-foreground">{formatCurrency(monthlyPayment)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Property Tax</span>
-                    <span className="font-medium text-foreground">{formatCurrency(propertyTax)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Home Insurance</span>
-                    <span className="font-medium text-foreground">{formatCurrency(homeInsurance)}</span>
-                  </div>
-                  {pmi > 0 && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">PMI</span>
-                      <span className="font-medium text-foreground">{formatCurrency(pmi)}</span>
-                    </div>
-                  )}
+                  <span className="text-[15px]">%</span>
                 </div>
               </div>
             </div>
           </div>
-        </TabsContent>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="0.5"
+            value={purpose === 'refi' ? loanPct : downPct}
+            onChange={(e) => updateFromSlider(parseFloat(e.target.value))}
+            className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+          />
+        </div>
 
-        <TabsContent value="details" className="space-y-4">
-          <div className="space-y-3">
-            {/* Advanced Settings */}
-            <div className="space-y-3 p-3 bg-muted/10 rounded-lg border border-border">
-              <h4 className="text-sm font-semibold text-foreground">Advanced Settings</h4>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <label className="text-xs font-medium text-foreground">Property Tax Rate</label>
-                  <span className="text-xs text-muted-foreground">{propertyTaxRate.toFixed(2)}%</span>
-                </div>
-                <Slider
-                  value={[propertyTaxRate]}
-                  onValueChange={(value) => setPropertyTaxRate(value[0])}
-                  min={0}
-                  max={3}
-                  step={0.01}
-                  className="w-full"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-foreground">Home Insurance Override ($/mo)</label>
-                <div className="relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                  <Input
-                    type="number"
-                    placeholder="Auto-calculated"
-                    value={insuranceOverride ?? ''}
-                    onChange={(e) => setInsuranceOverride(e.target.value ? Number(e.target.value) : null)}
-                    className="pl-6"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-medium text-foreground">MI/MIP Override ($/mo)</label>
-                <div className="relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                  <Input
-                    type="number"
-                    placeholder="Auto-calculated"
-                    value={miOverride ?? ''}
-                    onChange={(e) => setMiOverride(e.target.value ? Number(e.target.value) : null)}
-                    className="pl-6"
-                  />
-                </div>
-              </div>
+        {/* Interest Rate & Term */}
+        <div className="flex gap-3.5">
+          <div className="flex-1">
+            <div className="mb-0.5">
+              <span className="text-[13px] font-semibold text-[#f4f4f6]">Interest Rate</span>
             </div>
-
-            <h4 className="text-sm font-semibold text-foreground">Loan Details</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between p-2 bg-muted/20 rounded">
-                <span className="text-muted-foreground">{transactionType === "purchase" ? "Home Price" : "Home Value"}</span>
-                <span className="font-medium text-foreground">{formatCurrency(homePrice)}</span>
-              </div>
-              {transactionType === "purchase" && (
-                <div className="flex justify-between p-2 bg-muted/20 rounded">
-                  <span className="text-muted-foreground">Down Payment ({downPaymentPercent.toFixed(1)}%)</span>
-                  <span className="font-medium text-foreground">{formatCurrency(downPaymentDollar)}</span>
-                </div>
-              )}
-              <div className="flex justify-between p-2 bg-muted/20 rounded">
-                <span className="text-muted-foreground">Base Loan Amount</span>
-                <span className="font-medium text-foreground">{formatCurrency(transactionType === "purchase" ? homePrice - downPaymentDollar : loanAmount)}</span>
-              </div>
-              {loanType === "fha" && ufmip > 0 && (
-                <div className="flex justify-between p-2 bg-muted/20 rounded">
-                  <span className="text-muted-foreground">FHA Upfront MIP (1.75%)</span>
-                  <span className="font-medium text-foreground">{formatCurrency(ufmip)}</span>
-                </div>
-              )}
-              <div className="flex justify-between p-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded border border-primary/20">
-                <span className="text-muted-foreground font-semibold">Total Loan Amount</span>
-                <span className="font-medium text-foreground">{formatCurrency(loanAmount + (loanType === "fha" ? ufmip : 0))}</span>
-              </div>
-              {transactionType === "purchase" && (
-                <div className="flex justify-between p-2 bg-muted/20 rounded">
-                  <span className="text-muted-foreground">LTV Ratio</span>
-                  <span className="font-medium text-foreground">{ltvRatio.toFixed(1)}%</span>
-                </div>
-              )}
+            <div className="flex items-baseline gap-1 my-0.5 mb-1.5 text-[20px] font-semibold text-primary">
+              <span>{rate.toFixed(3)}</span>
+              <span className="text-[0.8em] opacity-90">%</span>
             </div>
-
-            <div className="pt-3 border-t border-border">
-              <h4 className="text-sm font-semibold text-foreground mb-2">Monthly Payment Breakdown</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded border border-primary/20">
-                  <span className="text-muted-foreground">Principal & Interest</span>
-                  <span className="font-medium text-foreground">{formatCurrency(monthlyPayment)}</span>
-                </div>
-                <div className="flex justify-between p-2 bg-muted/20 rounded">
-                  <span className="text-muted-foreground">Property Tax ({propertyTaxRate}% annually)</span>
-                  <span className="font-medium text-foreground">{formatCurrency(propertyTax)}</span>
-                </div>
-                <div className="flex justify-between p-2 bg-muted/20 rounded">
-                  <span className="text-muted-foreground">Home Insurance</span>
-                  <span className="font-medium text-foreground">{formatCurrency(homeInsurance)}</span>
-                </div>
-                {pmi > 0 && (
-                  <div className="flex justify-between p-2 bg-muted/20 rounded">
-                    <span className="text-muted-foreground">
-                      {loanType === "fha" ? "FHA MIP" : "PMI"}
-                      {miOverride !== null ? " (override)" : ""}
-                    </span>
-                    <span className="font-medium text-foreground">{formatCurrency(pmi)}</span>
-                  </div>
-                )}
-                {pmi === 0 && transactionType === "purchase" && loanType === "conventional" && (
-                  <div className="p-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded border border-primary/20 text-primary text-xs flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center text-xs">✓</span>
-                    <span>No PMI required (LTV &lt; 80%)</span>
-                  </div>
-                )}
-                <div className="flex justify-between p-3 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg border-2 border-primary/40 shadow-lg shadow-primary/20 mt-2 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-                  <span className="font-semibold text-foreground relative z-10">Total Monthly Payment</span>
-                  <span className="font-bold text-lg bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent relative z-10">
-                    {formatCurrency(totalPayment)}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-border text-xs text-muted-foreground space-y-1">
-              <p>• Property tax rate adjustable in Advanced Settings (default 1.2%)</p>
-              <p>• Home insurance estimated at $3.50 per $1,000 of home value annually (can be overridden)</p>
-              <p>• Conventional PMI applies when down payment is less than 20% (LTV &gt; 80%)</p>
-              <p>• FHA loans include 1.75% upfront MIP added to loan amount plus monthly MIP</p>
-              <p>• Actual costs may vary based on location and credit profile</p>
-            </div>
+            <input
+              type="range"
+              min="4"
+              max="10"
+              step="0.125"
+              value={rate}
+              onChange={(e) => setRate(parseFloat(e.target.value))}
+              className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+            />
           </div>
-        </TabsContent>
-      </Tabs>
+          <div className="flex-1">
+            <div className="mb-0.5">
+              <span className="text-[13px] font-semibold text-[#f4f4f6]">Loan Term</span>
+            </div>
+            <div className="flex items-baseline gap-1 my-0.5 mb-1.5 text-[20px] font-semibold text-primary">
+              <span>{term}</span>
+              <span className="text-[0.8em] opacity-90">years</span>
+            </div>
+            <input
+              type="range"
+              min="10"
+              max="40"
+              step="5"
+              value={term}
+              onChange={(e) => setTerm(parseInt(e.target.value))}
+              className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Advanced Settings Toggle */}
+      <div
+        onClick={() => setAdvancedOpen(!advancedOpen)}
+        className="flex justify-between items-center cursor-pointer text-[13px] text-[#9a9a9d] mx-0.5 mt-1"
+      >
+        <span>Advanced Settings</span>
+        <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${advancedOpen ? 'rotate-90' : ''}`} />
+      </div>
+
+      {/* Advanced Panel */}
+      <div
+        className={`bg-[radial-gradient(circle_at_top_left,#302620_0,#181518_60%)] rounded-[20px] border border-white/[0.06] mt-2 overflow-hidden transition-all duration-300 ${
+          advancedOpen ? 'max-h-[600px] p-[12px_14px_14px]' : 'max-h-0 p-0 px-[14px]'
+        }`}
+      >
+        {/* Property Tax Rate */}
+        <div className="mb-3.5">
+          <div className="text-[12px] font-semibold text-[#f4f4f6]">Property Tax Rate</div>
+          <div className="text-[14px] font-medium text-primary mb-1.5">
+            <span>{taxRate.toFixed(2).replace(/\.?0+$/, '')}</span>
+            <span className="mx-0.5">%</span>
+            <span>annually</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="300"
+            step="5"
+            value={taxRate * 100}
+            onChange={(e) => setTaxRate(parseInt(e.target.value) / 100)}
+            className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+          />
+        </div>
+
+        {/* Homeowners Insurance */}
+        <div className="mb-3.5">
+          <div className="text-[12px] font-semibold text-[#f4f4f6]">Homeowners Insurance</div>
+          <div className="text-[14px] font-medium text-primary mb-1.5">
+            <span>$</span>
+            <span>{formatCurrency(insurance)}</span>
+            <span>/mo</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="1500"
+            step="5"
+            value={insurance}
+            onChange={(e) => {
+              const price = homePrice;
+              const rec = getRecommendedIns(price);
+              let cur = parseInt(e.target.value);
+              if (Math.abs(cur - rec) <= 5) cur = rec;
+              setInsurance(cur);
+            }}
+            className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+          />
+        </div>
+
+        {/* HOA Dues */}
+        <div>
+          <div className="text-[12px] font-semibold text-[#f4f4f6]">HOA Dues</div>
+          <div className="text-[14px] font-medium text-primary mb-1.5">
+            <span>$</span>
+            <span>{formatCurrency(hoa)}</span>
+            <span>/mo</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            step="10"
+            value={hoa}
+            onChange={(e) => setHoa(parseInt(e.target.value))}
+            className="w-full h-1.5 rounded bg-white/[0.15] outline-none appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[22px] [&::-webkit-slider-thumb]:h-[22px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:shadow-[0_4px_15px_rgba(192,138,74,0.4)] [&::-webkit-slider-thumb]:cursor-grab"
+          />
+        </div>
+      </div>
+
+      {/* CTA Buttons */}
+      <div className="flex gap-2.5 mt-3.5">
+        <button className="flex-1 py-3 px-3 rounded-[30px] border border-white/20 bg-transparent text-[#9a9a9d] font-semibold text-[13px] cursor-pointer transition-all hover:bg-white/5">
+          Ask Sophia bot
+        </button>
+        <button className="flex-1 py-3 px-3 rounded-[30px] border-none bg-gradient-to-br from-primary to-primary/80 text-white font-semibold text-[13px] cursor-pointer shadow-[0_10px_25px_rgba(0,0,0,0.5)] transition-all hover:shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+          Get Pre-Approved →
+        </button>
+      </div>
     </div>
   );
 };
