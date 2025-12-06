@@ -4,7 +4,7 @@ import { ChatInput } from "@/components/ChatInput";
 import VoiceInterface from "@/components/VoiceInterface";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { LiveCounters } from "@/components/LiveCounters";
-import { MortgageCalculator } from "@/components/MortgageCalculator";
+import { MortgageCalculator } from "@/components/calculator";
 import { LoanProgramsTabs } from "@/components/LoanProgramsTabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
