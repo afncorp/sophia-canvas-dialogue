@@ -4,84 +4,16 @@
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
+
+Target Vibe: "Modern wealth advisor meets Apple-grade fintech"
+- Trust first, tech second
+- AI as assistive layer, not hero aesthetic
+- Light mode as default (conversion mode)
 */
 
 @layer base {
-  /* ===== DARK THEME (Default) - Warm Neutral with Depth ===== */
+  /* ===== LIGHT THEME (Default) - Warm Off-White ===== */
   :root {
-    /* Warm Charcoal base - #1E1B18 */
-    --background: 25 10% 11%;
-    --foreground: 30 20% 92%;
-
-    /* Card background - #2A2622 */
-    --card: 28 9% 15%;
-    --card-foreground: 30 20% 92%;
-
-    --popover: 25 10% 11%;
-    --popover-foreground: 30 20% 92%;
-
-    /* Muted Champagne Bronze - #C8A46B primary */
-    --primary: 38 45% 60%;
-    --primary-foreground: 25 15% 12%;
-    --primary-glow: 40 50% 77%;
-
-    /* Bronze Soft - #E2CDA5 */
-    --secondary: 40 48% 76%;
-    --secondary-foreground: 25 15% 12%;
-
-    /* Subtle warm muted */
-    --muted: 28 8% 20%;
-    --muted-foreground: 30 12% 75%;
-
-    /* Tech Blue accent - #5FA8D3 (subtle AI indicator) */
-    --accent: 200 55% 60%;
-    --accent-foreground: 25 10% 11%;
-
-    /* Soft Indigo for active states - #7C8ED6 */
-    --tech-blue: 200 55% 60%;
-    --tech-indigo: 227 47% 66%;
-    --tech-teal: 165 30% 55%;
-
-    /* Bronze palette */
-    --brass: 38 45% 60%;
-    --brass-light: 40 50% 77%;
-
-    /* Neutral warm gray */
-    --neutral: 25 6% 55%;
-    --neutral-light: 25 6% 70%;
-
-    --destructive: 0 65% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    /* Subtle border - #3A342F */
-    --border: 25 10% 21%;
-    --input: 28 8% 18%;
-    --ring: 38 45% 60%;
-
-    --radius: 0.75rem;
-
-    /* Refined gradients - no glow, soft depth */
-    --gradient-primary: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 50% 70%));
-    --gradient-tech: linear-gradient(180deg, hsl(25 10% 11%), hsl(28 9% 15%));
-    --gradient-accent: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 48% 76%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(38 45% 60% / 0.08), transparent 70%);
-    --shadow-bronze: 0 4px 24px hsl(25 10% 5% / 0.4);
-    --shadow-soft: 0 8px 32px -8px hsl(25 10% 5% / 0.5);
-    --shadow-card: 0 2px 12px hsl(25 10% 5% / 0.3);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: 25 10% 11%;
-    --sidebar-foreground: 30 20% 92%;
-    --sidebar-primary: 38 45% 60%;
-    --sidebar-primary-foreground: 25 15% 12%;
-    --sidebar-accent: 28 8% 20%;
-    --sidebar-accent-foreground: 30 20% 92%;
-    --sidebar-border: 25 10% 21%;
-    --sidebar-ring: 38 45% 60%;
-  }
-
-  /* ===== LIGHT THEME - Warm Off-White ===== */
-  [data-theme="light"] {
     /* Page background - #FBF9F6 (warm off-white) */
     --background: 40 33% 98%;
     /* Heading text - #1F1B17 */
@@ -94,21 +26,90 @@ All colors MUST be HSL.
     --popover: 40 33% 98%;
     --popover-foreground: 25 15% 11%;
 
-    /* Bronze Primary darker for light bg - #9E7C3A */
+    /* Bronze Primary - #9E7C3A (darker for light bg) */
     --primary: 40 48% 42%;
     --primary-foreground: 40 33% 98%;
     --primary-glow: 38 45% 55%;
 
-    /* Secondary bronze */
-    --secondary: 38 35% 50%;
-    --secondary-foreground: 40 33% 98%;
+    /* Secondary bronze - #C8A46B */
+    --secondary: 38 45% 60%;
+    --secondary-foreground: 25 15% 12%;
 
     /* Muted surfaces */
     --muted: 38 20% 92%;
     /* Body text - #4A453F */
     --muted-foreground: 28 9% 27%;
 
-    /* Tech accent - quieter blue */
+    /* Tech accent - #5FA8D3 (quiet blue) */
+    --accent: 200 45% 50%;
+    --accent-foreground: 40 33% 98%;
+
+    /* Tech colors for AI elements */
+    --tech-blue: 200 45% 50%;
+    --tech-indigo: 227 40% 55%;
+    --tech-teal: 165 25% 45%;
+
+    /* Bronze palette */
+    --brass: 40 48% 42%;
+    --brass-light: 38 45% 55%;
+    
+    /* Neutral warm gray */
+    --neutral: 25 6% 45%;
+    --neutral-light: 25 6% 60%;
+
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Subtle borders - #E8E4DF */
+    --border: 38 18% 88%;
+    --input: 38 20% 94%;
+    --ring: 40 48% 42%;
+
+    --radius: 0.75rem;
+
+    /* Light theme gradients - matte finishes, no glow */
+    --gradient-primary: linear-gradient(135deg, hsl(40 48% 42%), hsl(38 45% 55%));
+    --gradient-tech: linear-gradient(180deg, hsl(40 33% 98%), hsl(38 30% 95%));
+    --gradient-accent: linear-gradient(135deg, hsl(40 48% 42%), hsl(38 45% 60%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(40 48% 42% / 0.04), transparent 60%);
+    
+    /* Soft shadows - no glow effects */
+    --shadow-bronze: 0 4px 20px hsl(25 15% 40% / 0.06);
+    --shadow-soft: 0 8px 32px -8px hsl(25 15% 40% / 0.1);
+    --shadow-card: 0 2px 12px hsl(25 15% 40% / 0.05);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 40 33% 98%;
+    --sidebar-foreground: 25 15% 11%;
+    --sidebar-primary: 40 48% 42%;
+    --sidebar-primary-foreground: 40 33% 98%;
+    --sidebar-accent: 38 20% 92%;
+    --sidebar-accent-foreground: 25 15% 11%;
+    --sidebar-border: 38 18% 88%;
+    --sidebar-ring: 40 48% 42%;
+  }
+
+  /* ===== LIGHT THEME (explicit) ===== */
+  [data-theme="light"] {
+    --background: 40 33% 98%;
+    --foreground: 25 15% 11%;
+
+    --card: 38 30% 95%;
+    --card-foreground: 25 15% 11%;
+
+    --popover: 40 33% 98%;
+    --popover-foreground: 25 15% 11%;
+
+    --primary: 40 48% 42%;
+    --primary-foreground: 40 33% 98%;
+    --primary-glow: 38 45% 55%;
+
+    --secondary: 38 45% 60%;
+    --secondary-foreground: 25 15% 12%;
+
+    --muted: 38 20% 92%;
+    --muted-foreground: 28 9% 27%;
+
     --accent: 200 45% 50%;
     --accent-foreground: 40 33% 98%;
 
@@ -124,19 +125,17 @@ All colors MUST be HSL.
     --destructive: 0 65% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Subtle borders */
     --border: 38 18% 88%;
     --input: 38 20% 94%;
     --ring: 40 48% 42%;
 
-    /* Light theme gradients */
     --gradient-primary: linear-gradient(135deg, hsl(40 48% 42%), hsl(38 45% 55%));
     --gradient-tech: linear-gradient(180deg, hsl(40 33% 98%), hsl(38 30% 95%));
-    --gradient-accent: linear-gradient(135deg, hsl(40 48% 42%), hsl(38 35% 50%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(40 48% 42% / 0.06), transparent 70%);
-    --shadow-bronze: 0 4px 20px hsl(25 15% 40% / 0.08);
-    --shadow-soft: 0 8px 32px -8px hsl(25 15% 40% / 0.12);
-    --shadow-card: 0 2px 12px hsl(25 15% 40% / 0.06);
+    --gradient-accent: linear-gradient(135deg, hsl(40 48% 42%), hsl(38 45% 60%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(40 48% 42% / 0.04), transparent 60%);
+    --shadow-bronze: 0 4px 20px hsl(25 15% 40% / 0.06);
+    --shadow-soft: 0 8px 32px -8px hsl(25 15% 40% / 0.1);
+    --shadow-card: 0 2px 12px hsl(25 15% 40% / 0.05);
 
     --sidebar-background: 40 33% 98%;
     --sidebar-foreground: 25 15% 11%;
@@ -148,53 +147,67 @@ All colors MUST be HSL.
     --sidebar-ring: 40 48% 42%;
   }
 
-  /* ===== DARK THEME (explicit) ===== */
+  /* ===== DARK THEME - Warm Charcoal ===== */
   [data-theme="dark"] {
+    /* Warm Charcoal base - #1E1B18 */
     --background: 25 10% 11%;
+    /* Heading text - #F1ECE6 */
     --foreground: 30 20% 92%;
 
+    /* Card background - #2A2622 */
     --card: 28 9% 15%;
     --card-foreground: 30 20% 92%;
 
     --popover: 25 10% 11%;
     --popover-foreground: 30 20% 92%;
 
+    /* Muted Champagne Bronze - #C8A46B */
     --primary: 38 45% 60%;
     --primary-foreground: 25 15% 12%;
-    --primary-glow: 40 50% 77%;
+    --primary-glow: 40 50% 70%;
 
+    /* Bronze Soft - #E2CDA5 */
     --secondary: 40 48% 76%;
     --secondary-foreground: 25 15% 12%;
 
+    /* Subtle warm muted */
     --muted: 28 8% 20%;
+    /* Body text - #CFC7BD */
     --muted-foreground: 30 12% 75%;
 
+    /* Tech Blue accent - #5FA8D3 */
     --accent: 200 55% 60%;
     --accent-foreground: 25 10% 11%;
 
+    /* Tech colors */
     --tech-blue: 200 55% 60%;
     --tech-indigo: 227 47% 66%;
     --tech-teal: 165 30% 55%;
 
+    /* Bronze palette */
     --brass: 38 45% 60%;
-    --brass-light: 40 50% 77%;
+    --brass-light: 40 50% 70%;
+    
+    /* Neutral warm gray */
     --neutral: 25 6% 55%;
     --neutral-light: 25 6% 70%;
 
     --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
+    /* Subtle border - #3A342F */
     --border: 25 10% 21%;
     --input: 28 8% 18%;
     --ring: 38 45% 60%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 50% 70%));
+    /* Dark theme gradients - reduced contrast, no glow */
+    --gradient-primary: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 50% 65%));
     --gradient-tech: linear-gradient(180deg, hsl(25 10% 11%), hsl(28 9% 15%));
-    --gradient-accent: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 48% 76%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(38 45% 60% / 0.08), transparent 70%);
-    --shadow-bronze: 0 4px 24px hsl(25 10% 5% / 0.4);
-    --shadow-soft: 0 8px 32px -8px hsl(25 10% 5% / 0.5);
-    --shadow-card: 0 2px 12px hsl(25 10% 5% / 0.3);
+    --gradient-accent: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 48% 70%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(38 45% 60% / 0.06), transparent 60%);
+    --shadow-bronze: 0 4px 24px hsl(25 10% 5% / 0.3);
+    --shadow-soft: 0 8px 32px -8px hsl(25 10% 5% / 0.4);
+    --shadow-card: 0 2px 12px hsl(25 10% 5% / 0.25);
 
     --sidebar-background: 25 10% 11%;
     --sidebar-foreground: 30 20% 92%;
@@ -218,25 +231,25 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-  /* Animated Grid Background - subtle, low contrast */
+  /* Animated Grid Background - very subtle */
   .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(38 45% 60% / 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(38 45% 60% / 0.03) 1px, transparent 1px);
+      linear-gradient(to right, hsl(40 48% 42% / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(40 48% 42% / 0.03) 1px, transparent 1px);
     background-size: 48px 48px;
     animation: grid-move 25s linear infinite;
   }
 
   [data-theme="light"] .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(40 48% 42% / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(40 48% 42% / 0.04) 1px, transparent 1px);
+      linear-gradient(to right, hsl(40 48% 42% / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(40 48% 42% / 0.03) 1px, transparent 1px);
   }
 
   [data-theme="dark"] .animated-grid {
     background-image: 
-      linear-gradient(to right, hsl(38 45% 60% / 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(38 45% 60% / 0.03) 1px, transparent 1px);
+      linear-gradient(to right, hsl(38 45% 60% / 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(38 45% 60% / 0.025) 1px, transparent 1px);
   }
 
   @keyframes grid-move {
@@ -254,7 +267,7 @@ All colors MUST be HSL.
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-8px);
+      transform: translateY(-6px);
     }
   }
 
@@ -262,10 +275,10 @@ All colors MUST be HSL.
     animation: float 8s ease-in-out infinite;
   }
 
-  /* Minimal pulse - no heavy glow */
+  /* Minimal pulse - no glow */
   @keyframes gentle-pulse {
     0%, 100% {
-      opacity: 0.7;
+      opacity: 0.8;
     }
     50% {
       opacity: 1;
@@ -290,41 +303,41 @@ All colors MUST be HSL.
 /* ===== CALCULATOR STYLES ===== */
 @layer base {
   :root {
-    /* Calculator color palette - muted tech colors */
-    --color-blue: 200 55% 60%;
-    --color-red: 0 55% 55%;
-    --color-green: 165 40% 45%;
-    --color-purple: 227 47% 60%;
-    --color-yellow: 40 70% 55%;
+    /* Calculator color palette - muted, friendly */
+    --color-blue: 200 45% 50%;
+    --color-red: 0 50% 50%;
+    --color-green: 165 35% 42%;
+    --color-purple: 227 40% 55%;
+    --color-yellow: 40 65% 50%;
   }
 
   [data-theme="light"] {
     --color-blue: 200 45% 50%;
-    --color-red: 0 55% 48%;
-    --color-green: 165 35% 38%;
-    --color-purple: 227 40% 50%;
-    --color-yellow: 40 70% 45%;
+    --color-red: 0 50% 50%;
+    --color-green: 165 35% 42%;
+    --color-purple: 227 40% 55%;
+    --color-yellow: 40 65% 50%;
   }
 
   [data-theme="dark"] {
-    --color-blue: 200 55% 60%;
+    --color-blue: 200 55% 58%;
     --color-red: 0 55% 55%;
-    --color-green: 165 40% 45%;
-    --color-purple: 227 47% 60%;
+    --color-green: 165 40% 48%;
+    --color-purple: 227 47% 62%;
     --color-yellow: 40 70% 55%;
   }
 }
 
 @layer components {
-  /* Calculator container - warm depth */
+  /* Calculator container - warm, flat surfaces */
   .calculator-container {
-    background: linear-gradient(135deg, hsl(28 9% 15%), hsl(25 10% 11%));
+    background: hsl(var(--card));
     border-radius: 0.75rem;
     border: 1px solid hsl(var(--border));
   }
 
-  [data-theme="light"] .calculator-container {
-    background: linear-gradient(135deg, hsl(38 30% 95%), hsl(40 33% 98%));
+  [data-theme="dark"] .calculator-container {
+    background: linear-gradient(135deg, hsl(28 9% 15%), hsl(25 10% 12%));
   }
 
   /* Calculator card */
@@ -345,7 +358,7 @@ All colors MUST be HSL.
   }
 
   .value-input:focus {
-    background: hsl(var(--muted) / 0.4);
+    background: hsl(var(--muted) / 0.5);
     border-radius: 0.25rem;
   }
 
@@ -369,7 +382,7 @@ All colors MUST be HSL.
     background: hsl(var(--primary));
     cursor: pointer;
     border: 2px solid hsl(var(--background));
-    box-shadow: 0 2px 6px hsl(25 10% 5% / 0.3);
+    box-shadow: 0 2px 6px hsl(25 10% 20% / 0.15);
     transition: transform 0.15s ease;
   }
 
@@ -384,12 +397,20 @@ All colors MUST be HSL.
     background: hsl(var(--primary));
     cursor: pointer;
     border: 2px solid hsl(var(--background));
-    box-shadow: 0 2px 6px hsl(25 10% 5% / 0.3);
+    box-shadow: 0 2px 6px hsl(25 10% 20% / 0.15);
     transition: transform 0.15s ease;
   }
 
   .range-slider::-moz-range-thumb:hover {
     transform: scale(1.1);
+  }
+
+  [data-theme="dark"] .range-slider::-webkit-slider-thumb {
+    box-shadow: 0 2px 6px hsl(25 10% 5% / 0.25);
+  }
+
+  [data-theme="dark"] .range-slider::-moz-range-thumb {
+    box-shadow: 0 2px 6px hsl(25 10% 5% / 0.25);
   }
 
   /* Segment control */
@@ -421,15 +442,24 @@ All colors MUST be HSL.
   .segment-button.active {
     color: hsl(var(--primary-foreground));
     background: hsl(var(--primary));
+    box-shadow: 0 1px 4px hsl(25 10% 20% / 0.1);
+  }
+
+  [data-theme="dark"] .segment-button.active {
     box-shadow: 0 1px 4px hsl(25 10% 5% / 0.2);
   }
 
-  /* Bronze gradient button - softer */
+  /* Bronze button - matte finish, no glow */
   .bronze-gradient {
     background: hsl(var(--primary));
+    box-shadow: 0 2px 8px hsl(25 15% 20% / 0.1);
   }
 
   .bronze-gradient:hover {
     background: hsl(var(--primary-glow));
+  }
+
+  [data-theme="dark"] .bronze-gradient {
+    box-shadow: 0 2px 8px hsl(25 10% 5% / 0.2);
   }
 }

@@ -5,10 +5,11 @@ import { Sun, Moon } from "lucide-react";
 type Theme = 'light' | 'dark';
 
 export const ThemeToggle = () => {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme || 'dark';
+    // Light mode is default (conversion mode)
+    const savedTheme = localStorage.getItem('theme') as Theme || 'light';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
