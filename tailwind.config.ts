@@ -48,16 +48,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Metallic palette colors
+        // Warm neutral palette
         brass: {
           DEFAULT: "hsl(var(--brass))",
           light: "hsl(var(--brass-light))",
         },
-        metallic: {
-          green: "hsl(var(--metallic-green))",
-          "green-light": "hsl(var(--metallic-green-light))",
-          red: "hsl(var(--metallic-red))",
-          "red-light": "hsl(var(--metallic-red-light))",
+        // Tech accent colors (AI indicators)
+        tech: {
+          blue: "hsl(var(--tech-blue))",
+          indigo: "hsl(var(--tech-indigo))",
+          teal: "hsl(var(--tech-teal))",
         },
         neutral: {
           DEFAULT: "hsl(var(--neutral))",
