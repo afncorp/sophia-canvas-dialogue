@@ -11,7 +11,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { ChatFormField, FormField } from "@/components/ChatFormField";
 import { useChat } from "@/hooks/useChat";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck, X } from "lucide-react";
+import { MessageSquare, DollarSign, Zap, Home, CreditCard, Users, Award, Phone, Mail, ArrowRight, ChevronDown, Search, Menu, Mic, FileCheck, X, UserPlus, Download } from "lucide-react";
+import pathAppIcon from "@/assets/path-app-icon.png";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
@@ -251,6 +252,40 @@ const Index = () => {
       {/* Live Counters */}
       <div className="bg-background/95 backdrop-blur-sm border-b border-primary/10 sticky top-[73px] md:top-[77px] z-40">
         <LiveCounters />
+      </div>
+
+      {/* Mobile-only Save Contact Button */}
+      <div className="lg:hidden px-4 py-3 bg-card/50 border-b border-primary/10">
+        <Button 
+          variant="outline" 
+          className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary/50"
+          onClick={() => {
+            // Create VCF content for Matt Maine
+            const vcfContent = `BEGIN:VCARD
+VERSION:3.0
+FN:Matt Maine
+N:Maine;Matt;;;
+ORG:American Financial Network
+TITLE:Senior Mortgage Loan Officer
+TEL;TYPE=WORK,VOICE:(555) 123-4567
+EMAIL:matt.maine@afnet.com
+URL:https://www.afn.com
+NOTE:NMLS #12345 - Your trusted mortgage professional
+END:VCARD`;
+            const blob = new Blob([vcfContent], { type: 'text/vcard' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Matt_Maine_Contact.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          }}
+        >
+          <UserPlus className="w-5 h-5 mr-2" />
+          Save Contact
+        </Button>
       </div>
 
       {/* Main Layout - Content (75%) + Fixed Chat Sidebar (25%) */}
@@ -868,6 +903,41 @@ const Index = () => {
                   <p className="text-xs md:text-sm text-foreground">
                     Have questions first? <button onClick={scrollToChat} className="text-primary hover:underline font-semibold">Chat with Sophia AI</button> for instant answers
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile-only App Download Section */}
+          <div className="lg:hidden bg-card/50 backdrop-blur-md rounded-xl p-6 border border-primary/20 shadow-lg">
+            <div className="flex items-center gap-4">
+              <img 
+                src={pathAppIcon} 
+                alt="Path Mobile App" 
+                className="w-16 h-16 rounded-xl shadow-lg"
+              />
+              <div className="flex-1">
+                <h4 className="font-bold text-foreground mb-1">Get the Path App</h4>
+                <p className="text-xs text-muted-foreground mb-3">Track your loan progress on the go</p>
+                <div className="flex gap-2">
+                  <a 
+                    href="https://apps.apple.com/app/path-mortgage" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-md text-xs font-medium hover:opacity-90 transition-opacity"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    App Store
+                  </a>
+                  <a 
+                    href="https://play.google.com/store/apps/details?id=com.path.mortgage" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-md text-xs font-medium hover:opacity-90 transition-opacity"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    Google Play
+                  </a>
                 </div>
               </div>
             </div>
