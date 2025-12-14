@@ -390,10 +390,16 @@ END:VCARD`;
 
             {/* Company Badge */}
             <div className="flex justify-center mt-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-card/60 backdrop-blur-sm rounded-full border border-primary/20">
-                <span className="text-xs md:text-sm text-muted-foreground">Partnered with</span>
-                <span className="text-xs md:text-sm font-bold text-foreground">American Financial Network</span>
+              <div className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-card/60 backdrop-blur-sm rounded-full border border-primary/20">
+                <span className="text-sm text-muted-foreground">Partnered with</span>
+                <span className="text-sm font-bold text-foreground">American Financial Network</span>
                 <span className="text-xs text-muted-foreground">• 24 years in business</span>
+              </div>
+              {/* Mobile version - stacked layout */}
+              <div className="flex md:hidden flex-col items-center gap-1 px-5 py-3 bg-card/60 backdrop-blur-sm rounded-xl border border-primary/20">
+                <span className="text-xs text-muted-foreground">Partnered with</span>
+                <span className="text-sm font-bold text-foreground">American Financial Network</span>
+                <span className="text-xs text-primary/80 font-medium">24 years in business</span>
               </div>
             </div>
           </div>
@@ -656,7 +662,7 @@ END:VCARD`;
                 videoCalcSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
                 <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">AI Workflow Demo</h3>
-                <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
+                <div className="relative aspect-[9/16] md:aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center space-y-3 z-10 relative px-4">
                       <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-2xl shadow-primary/50 animate-glow-pulse">
