@@ -802,45 +802,49 @@ END:VCARD`;
 
           {/* Mobile-only App Download Section */}
           <div className="lg:hidden bg-card/50 backdrop-blur-md rounded-xl p-4 border border-primary/20 shadow-lg">
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <img 
                 src={pathAppIcon} 
                 alt="Path Mobile App" 
-                className="w-14 h-14 rounded-xl shadow-lg flex-shrink-0"
+                className="w-16 h-16 rounded-xl shadow-lg flex-shrink-0"
               />
-              <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-foreground mb-2">Get the Path App</h4>
-                <ul className="text-xs text-muted-foreground space-y-1 mb-3">
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+              <div className="flex-1">
+                <h4 className="font-bold text-foreground text-lg">Get the Path App</h4>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mt-1">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-primary" />
                     Apply for loan
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-primary" />
                     Interact during process
-                  </li>
-                </ul>
-                <div className="flex gap-2">
-                  <a 
-                    href="https://apps.apple.com/app/path-mortgage" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-md text-xs font-medium hover:opacity-90 transition-opacity"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    App Store
-                  </a>
-                  <a 
-                    href="https://play.google.com/store/apps/details?id=com.path.mortgage" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-md text-xs font-medium hover:opacity-90 transition-opacity"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    Google Play
-                  </a>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-primary" />
+                    Access docs & payment
+                  </span>
                 </div>
               </div>
+            </div>
+            <div className="flex gap-2 mt-3">
+              <a 
+                href="https://apps.apple.com/app/path-mortgage" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-foreground text-background rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                <Download className="w-4 h-4" />
+                App Store
+              </a>
+              <a 
+                href="https://play.google.com/store/apps/details?id=com.path.mortgage" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-foreground text-background rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                <Download className="w-4 h-4" />
+                Google Play
+              </a>
             </div>
           </div>
 
@@ -849,89 +853,32 @@ END:VCARD`;
 
       {/* Compliance Footer - 75% width on desktop */}
       <footer className="relative bg-gradient-to-b from-background via-card/50 to-background border-t border-primary/20 py-6 md:py-8 px-4 md:px-8 overflow-hidden lg:w-3/4">
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
-        
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="flex flex-col md:flex-row gap-4 items-center md:items-start">
             {/* Logo */}
-            <div className="flex-shrink-0 mx-auto md:mx-0">
-              <div className="relative">
-                <div className="absolute inset-0 bg-primary/10 rounded-lg blur-xl"></div>
-                <img 
-                  src={afnLogoWhite} 
-                  alt="American Financial Network Logo" 
-                  className="h-12 md:h-16 w-auto relative drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]"
-                />
-              </div>
+            <div className="flex-shrink-0">
+              <img 
+                src={afnLogoWhite} 
+                alt="American Financial Network Logo" 
+                className="h-10 md:h-12 w-auto"
+              />
             </div>
 
-            {/* Compliance Content */}
-            <div className="flex-1 space-y-4">
-              {/* Main Compliance Text */}
-              <div className="text-xs text-muted-foreground space-y-2">
-                <p className="font-semibold text-foreground">
-                  Equal Housing Opportunity | NMLS #12345 | Licensed Mortgage Loan Officer
-                </p>
-                <p>
-                  This is not an offer to enter into an agreement. Not all customers will qualify. Information, rates, and programs are subject to change without prior notice. 
-                  All products are subject to credit and property approval. Not all products are available in all states or for all loan amounts. Other restrictions and limitations apply.
-                </p>
-                <p>
-                  Licensed by the Department of Financial Protection and Innovation under the California Residential Mortgage Lending Act. 
-                  Loans made or arranged pursuant to a California Residential Mortgage Lending Act License.
-                </p>
-                <p>
-                  Matt Maine (NMLS #12345). American Financial Network, Inc. For licensing information, go to: <a href="https://www.nmlsconsumeraccess.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary transition-colors underline decoration-primary/50 hover:decoration-secondary">www.nmlsconsumeraccess.org</a>
-                </p>
-                <p>
-                  Contact: matt.maine@afnet.com | (555) 123-4567 | Licensed to serve nationwide
-                </p>
-              </div>
-
-              {/* Links and Copyright */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-primary/20">
-                <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                  <a href="#" className="hover:text-primary transition-colors relative group">
-                    Privacy Policy
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                  <a href="#" className="hover:text-primary transition-colors relative group">
-                    Terms of Service
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                  <a href="#" className="hover:text-primary transition-colors relative group">
-                    Licensing
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                  <a href="#" className="hover:text-primary transition-colors relative group">
-                    Disclosures
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full"></span>
-                  </a>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  © {new Date().getFullYear()} American Financial Network (Team AFN). All rights reserved.
-                </p>
-              </div>
+            {/* Simple Footer Content */}
+            <div className="flex-1 text-center md:text-left space-y-2">
+              <p className="text-xs text-muted-foreground">
+                Equal Housing Opportunity | © {new Date().getFullYear()} American Financial Network (Team AFN). All rights reserved.
+              </p>
+              <Link 
+                to="/licensing" 
+                className="text-xs text-primary hover:text-secondary transition-colors inline-block"
+              >
+                Licensing & Disclosures
+              </Link>
             </div>
           </div>
         </div>
       </footer>
-
-      {/* Sample Website Disclaimer */}
-      <div className="relative bg-gradient-to-r from-destructive/15 via-destructive/20 to-destructive/15 border-t border-destructive/40 py-4 px-4 md:px-8 overflow-hidden lg:w-3/4">
-        <div className="absolute inset-0 bg-gradient-to-br from-destructive/10 to-transparent pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <p className="text-center text-sm md:text-base font-bold text-foreground flex items-center justify-center gap-2">
-            <span className="text-destructive">⚠️</span>
-            SAMPLE WEBSITE - NOT FOR OFFICIAL MORTGAGE USE - NOT FOR USE BY CONSUMERS
-            <span className="text-destructive">⚠️</span>
-          </p>
-          <p className="text-center text-xs text-muted-foreground mt-1">
-            This is a demonstration website for development purposes only.
-          </p>
-        </div>
-      </div>
 
       {/* Sticky Bottom CTA Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-primary/30 py-3 px-4 z-40 lg:hidden">
