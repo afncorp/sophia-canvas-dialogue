@@ -254,7 +254,7 @@ const Index = () => {
       </header>
 
       {/* Live Counters */}
-      <div className="bg-background/95 backdrop-blur-sm border-b border-primary/10 sticky top-[73px] md:top-[77px] z-40">
+      <div className="bg-background/95 backdrop-blur-sm border-b border-primary/10">
         <LiveCounters />
       </div>
 
@@ -340,17 +340,20 @@ const Index = () => {
 
                   {/* Contact Buttons */}
                   <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                    <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/30">
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call Now
+                    <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/30 px-3 md:px-4">
+                      <Phone className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Call Now</span>
+                      <span className="md:hidden">Call</span>
                     </Button>
-                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10">
-                      <Mail className="w-4 h-4 mr-2" />
-                      Email
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <Mail className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Email</span>
+                      <span className="md:hidden">Email</span>
                     </Button>
-                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10">
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Text
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <MessageSquare className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Text</span>
+                      <span className="md:hidden">Text</span>
                     </Button>
                     {/* Mobile-only Save Contact */}
                     <Button 
