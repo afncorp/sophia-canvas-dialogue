@@ -13,7 +13,7 @@ interface LoanProgram {
 }
 
 interface LoanProgramsTabsProps {
-  onAskSophia: (message: string) => void;
+  onAskSophia?: (message: string) => void;
 }
 
 export const LoanProgramsTabs = ({ onAskSophia }: LoanProgramsTabsProps) => {
@@ -124,29 +124,39 @@ export const LoanProgramsTabs = ({ onAskSophia }: LoanProgramsTabsProps) => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-5 bg-muted/30 backdrop-blur-sm p-1">
-          {loanPrograms.map((program) => (
-            <TabsTrigger
-              key={program.id}
-              value={program.id}
-              className="text-xs md:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/20 data-[state=active]:to-secondary/20 data-[state=active]:text-foreground data-[state=active]:shadow-lg transition-all"
-            >
-              {program.name.split(" ")[0]}
-            </TabsTrigger>
-          ))}
+          {loanPrograms.map((program) => {
+            // Mobile abbreviations
+            const mobileLabel = program.id === 'conventional' ? 'Conv' 
+              : program.id === 'non-agency' ? 'Non-QM' 
+              : program.name.split(" ")[0];
+            
+            return (
+              <TabsTrigger
+                key={program.id}
+                value={program.id}
+                className="text-[10px] md:text-sm px-1 md:px-3 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary/20 data-[state=active]:to-secondary/20 data-[state=active]:text-foreground data-[state=active]:shadow-lg transition-all"
+              >
+                <span className="md:hidden">{mobileLabel}</span>
+                <span className="hidden md:inline">{program.name.split(" ")[0]}</span>
+              </TabsTrigger>
+            );
+          })}
         </TabsList>
 
         {loanPrograms.map((program) => (
           <TabsContent key={program.id} value={program.id} className="mt-6">
             <div className="relative bg-card/40 backdrop-blur-md rounded-2xl p-6 md:p-8 border-2 border-primary/40 shadow-xl shadow-primary/20">
-              {/* Ask Sophia Button */}
-              <Button
-                onClick={() => onAskSophia(`Tell me all about ${program.name} and help me understand if they're right for my situation. What are the requirements and benefits?`)}
-                className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30"
-                size="sm"
-              >
-                <MessageSquare className="w-4 h-4 mr-2" />
-                Ask Sophia
-              </Button>
+              {/* Ask Sophia Button - Desktop only */}
+              {onAskSophia && (
+                <Button
+                  onClick={() => onAskSophia(`Tell me all about ${program.name} and help me understand if they're right for my situation. What are the requirements and benefits?`)}
+                  className="absolute top-4 right-4 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg shadow-primary/30 hidden md:flex"
+                  size="sm"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Ask Sophia
+                </Button>
+              )}
 
               {/* Program Header */}
               <div className="flex items-start gap-4 mb-6">

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ConversationDemo } from "@/components/ConversationDemo";
 import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
@@ -224,6 +225,9 @@ const Index = () => {
               <a href="#testimonials" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
                 Testimonials
               </a>
+              <Link to="/sophia" className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Sophia AI
+              </Link>
               <div className="space-y-2">
                 <p className="text-sm font-semibold text-muted-foreground">Resources</p>
                 <div className="pl-4 space-y-2">
@@ -254,39 +258,6 @@ const Index = () => {
         <LiveCounters />
       </div>
 
-      {/* Mobile-only Save Contact Button */}
-      <div className="lg:hidden px-4 py-3 bg-card/50 border-b border-primary/10">
-        <Button 
-          variant="outline" 
-          className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary/50"
-          onClick={() => {
-            // Create VCF content for Matt Maine
-            const vcfContent = `BEGIN:VCARD
-VERSION:3.0
-FN:Matt Maine
-N:Maine;Matt;;;
-ORG:American Financial Network
-TITLE:Senior Mortgage Loan Officer
-TEL;TYPE=WORK,VOICE:(555) 123-4567
-EMAIL:matt.maine@afnet.com
-URL:https://www.afn.com
-NOTE:NMLS #12345 - Your trusted mortgage professional
-END:VCARD`;
-            const blob = new Blob([vcfContent], { type: 'text/vcard' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'Matt_Maine_Contact.vcf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-          }}
-        >
-          <UserPlus className="w-5 h-5 mr-2" />
-          Save Contact
-        </Button>
-      </div>
 
       {/* Main Layout - Content (75%) + Fixed Chat Sidebar (25%) */}
       <div className="flex-1 flex relative min-h-0">
@@ -380,6 +351,37 @@ END:VCARD`;
                     <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10">
                       <MessageSquare className="w-4 h-4 mr-2" />
                       Text
+                    </Button>
+                    {/* Mobile-only Save Contact */}
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="lg:hidden border-primary/30 hover:bg-primary/10"
+                      onClick={() => {
+                        const vcfContent = `BEGIN:VCARD
+VERSION:3.0
+FN:Matt Maine
+N:Maine;Matt;;;
+ORG:American Financial Network
+TITLE:Senior Mortgage Loan Officer
+TEL;TYPE=WORK,VOICE:(555) 123-4567
+EMAIL:matt.maine@afnet.com
+URL:https://www.afn.com
+NOTE:NMLS #12345 - Your trusted mortgage professional
+END:VCARD`;
+                        const blob = new Blob([vcfContent], { type: 'text/vcard' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'Matt_Maine_Contact.vcf';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                      }}
+                    >
+                      <UserPlus className="w-4 h-4 mr-2" />
+                      Save Contact
                     </Button>
                   </div>
                 </div>
@@ -538,116 +540,6 @@ END:VCARD`;
           </div>
         </div>
 
-        {/* Mobile Sophia Panel - Shows below content on mobile */}
-        <div className="lg:hidden w-full bg-card/50 backdrop-blur-lg border-t border-primary/20 relative z-10">
-          {/* Collapsible Header with Sophia */}
-          <div className="flex-shrink-0">
-            <button 
-              onClick={() => {
-                const chatArea = document.getElementById('mobile-chat-area');
-                if (chatArea) {
-                  chatArea.classList.toggle('hidden');
-                }
-              }}
-              className="w-full p-3 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border-b border-primary/20 hover:from-primary/15 transition-all"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="relative">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden flex-shrink-0 ring-2 ring-primary/40 shadow-lg shadow-primary/20">
-                      <video 
-                        src={sophiaVideo}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md ring-1 ring-background">
-                      <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-pulse"></div>
-                    </div>
-                  </div>
-                  <div className="text-left">
-                    <h2 className="font-bold text-base text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Sophia AI</h2>
-                    <p className="text-[10px] text-muted-foreground">Tap to chat • 24/7 Available</p>
-                  </div>
-                </div>
-                <ChevronDown className="w-5 h-5 text-muted-foreground transition-transform" id="mobile-chat-chevron" />
-              </div>
-            </button>
-
-            <div id="mobile-chat-area" className="hidden">
-              {/* Key Features - Mobile Compact */}
-              <div className="grid grid-cols-3 gap-1.5 p-3 bg-muted/10">
-                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-1.5 border border-primary/20 text-center">
-                  <p className="text-base">🌐</p>
-                  <p className="text-[8px] font-semibold text-foreground">24/7</p>
-                </div>
-                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-1.5 border border-primary/20 text-center">
-                  <p className="text-base">⚡</p>
-                  <p className="text-[8px] font-semibold text-foreground">Instant</p>
-                </div>
-                <div className="bg-card/60 backdrop-blur-sm rounded-lg p-1.5 border border-primary/20 text-center">
-                  <p className="text-base">🎯</p>
-                  <p className="text-[8px] font-semibold text-foreground">Personal</p>
-                </div>
-              </div>
-
-              {voiceModeActive && (
-                <div className="mx-3 mb-2 p-2 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-lg text-center border border-primary/30 animate-fade-in">
-                  <p className="text-xs text-primary font-semibold">🎙️ Voice Active</p>
-                </div>
-              )}
-
-              {/* Chat Area - Scrollable with improved mobile height */}
-              <div className="overflow-y-auto p-3 space-y-3" style={{ maxHeight: 'calc(100vh - 400px)', minHeight: '300px' }}>
-                {messages.length === 0 ? (
-                  <ConversationDemo />
-                ) : (
-                  <ChatMessages messages={messages} isLoading={isLoading} />
-                )}
-              </div>
-
-              {/* Input Area - Always Visible */}
-              <div className="flex-shrink-0 p-3 border-t border-primary/20 space-y-2">
-                <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
-                
-                {/* Quick Action Buttons */}
-                <div className="grid grid-cols-2 gap-2">
-                  {quickActions.map((action) => (
-                    <Button
-                      key={action.label}
-                      variant={action.type === 'process' ? 'default' : 'outline'}
-                      size="sm"
-                      className={`justify-start text-xs h-8 px-2.5 ${
-                        action.type === 'process' 
-                          ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                          : 'border-primary/20 hover:bg-primary/10'
-                      }`}
-                      onClick={() => {
-                        if (action.label === 'Get Pre-Approved') {
-                          sendMessage("I'd like to get pre-approved for a mortgage. Can you guide me through the process and collect my information?");
-                        } else if (action.label === 'First-Time Buyer Guide') {
-                          sendMessage("I'm a first-time homebuyer. Can you explain the process and what I need to know?");
-                        } else if (action.label === 'Refinance Options') {
-                          sendMessage("I'm interested in refinancing my mortgage. What are my options and how does it work?");
-                        } else if (action.label === 'Calculate Affordability') {
-                          sendMessage("How much home can I afford? Can you help me calculate what I can borrow based on my income?");
-                        } else {
-                          sendMessage(`Tell me about ${action.label.toLowerCase()}`);
-                        }
-                      }}
-                    >
-                      <action.icon className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />
-                      <span className="truncate">{action.label}</span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Below the Fold Content - 75% width on desktop to avoid chat sidebar */}
@@ -909,16 +801,25 @@ END:VCARD`;
           </div>
 
           {/* Mobile-only App Download Section */}
-          <div className="lg:hidden bg-card/50 backdrop-blur-md rounded-xl p-6 border border-primary/20 shadow-lg">
-            <div className="flex items-center gap-4">
+          <div className="lg:hidden bg-card/50 backdrop-blur-md rounded-xl p-4 border border-primary/20 shadow-lg">
+            <div className="flex items-start gap-4">
               <img 
                 src={pathAppIcon} 
                 alt="Path Mobile App" 
-                className="w-16 h-16 rounded-xl shadow-lg"
+                className="w-14 h-14 rounded-xl shadow-lg flex-shrink-0"
               />
-              <div className="flex-1">
-                <h4 className="font-bold text-foreground mb-1">Get the Path App</h4>
-                <p className="text-xs text-muted-foreground mb-3">Track your loan progress on the go</p>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-foreground mb-2">Get the Path App</h4>
+                <ul className="text-xs text-muted-foreground space-y-1 mb-3">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    Apply for loan
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    Interact during process
+                  </li>
+                </ul>
                 <div className="flex gap-2">
                   <a 
                     href="https://apps.apple.com/app/path-mortgage" 
@@ -1035,14 +936,18 @@ END:VCARD`;
       {/* Sticky Bottom CTA Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-primary/30 py-3 px-4 z-40 lg:hidden">
         <div className="flex items-center justify-center gap-3 max-w-lg mx-auto">
-          <Button 
-            size="sm"
-            className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg gap-2"
-            onClick={() => setShowMobileChat(true)}
+          <Link 
+            to="/sophia"
+            className="flex-1"
           >
-            <MessageSquare className="w-4 h-4" />
-            Chat with Sophia
-          </Button>
+            <Button 
+              size="sm"
+              className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 shadow-lg gap-2"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Sophia AI
+            </Button>
+          </Link>
           <Button 
             size="sm"
             variant="outline"
