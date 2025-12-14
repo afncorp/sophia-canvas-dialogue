@@ -224,130 +224,94 @@ export function MortgageCalculator() {
           />
         </div>
 
-        {/* Down Payment & Loan Amount */}
-        <div className="mb-4">
-          <div className="flex gap-3.5 items-start relative">
-            {/* Down Payment Column - only show for purchase */}
-            {purpose === 'purchase' && (
-              <div className="flex-1 min-w-0 pr-3">
-                <div className="flex justify-between items-baseline mb-1">
-                  <div className="text-[13px] font-semibold text-foreground">Down Payment</div>
-                </div>
-                <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between">
-                  <div className="flex items-baseline gap-1 min-w-0">
-                    <span className="text-[0.8em] opacity-90">$</span>
-                    <input
-                      type="text"
-                      className="value-input text-xl font-semibold text-primary"
-                      value={downAmtInput}
-                      onChange={(e) => setDownAmtInput(e.target.value)}
-                      onBlur={handleDownAmtInputBlur}
-                      style={{ width: `${(downAmtInput.length || 1) + 0.5}ch` }}
-                    />
-                  </div>
-                  <div className="flex items-baseline gap-0.5 whitespace-nowrap mr-1">
-                    <input
-                      type="text"
-                      className="value-input text-[15px] font-semibold text-primary text-right"
-                      value={downPctInput}
-                      onChange={(e) => setDownPctInput(e.target.value)}
-                      onBlur={handleDownPctInputBlur}
-                      style={{ width: '3.2ch' }}
-                    />
-                    <span className="text-[15px] ml-0.5">%</span>
-                  </div>
-                </div>
+        {/* Down Payment - only show for purchase */}
+        {purpose === 'purchase' && (
+          <div className="mb-4">
+            <div className="text-[13px] font-semibold text-foreground">Down Payment</div>
+            <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between mb-2">
+              <div className="flex items-baseline gap-1 min-w-0">
+                <span className="text-[0.8em] opacity-90">$</span>
+                <input
+                  type="text"
+                  className="value-input text-xl font-semibold text-primary"
+                  value={downAmtInput}
+                  onChange={(e) => setDownAmtInput(e.target.value)}
+                  onBlur={handleDownAmtInputBlur}
+                  style={{ width: `${(downAmtInput.length || 1) + 0.5}ch` }}
+                />
               </div>
-            )}
-
-            {/* Vertical divider - only show for purchase */}
-            {purpose === 'purchase' && <div className="w-px bg-border self-stretch my-1" />}
-
-            {/* Loan Amount Column */}
-            <div className={purpose === 'refi' ? 'flex-1' : 'flex-1 min-w-0 pl-1'}>
-              {purpose === 'refi' ? (
-                /* Refinance layout: side by side with LTV aligned to right column */
-                <div className="flex gap-3.5 items-start relative">
-                  {/* Loan Amount side */}
-                  <div className="flex-1 pr-3">
-                    <div className="text-[13px] font-semibold text-foreground mb-1">Loan Amount</div>
-                    <div className="flex items-baseline gap-1 text-xl font-semibold text-primary">
-                      <span className="text-[0.8em] opacity-90">$</span>
-                      <input
-                        type="text"
-                        className="value-input text-xl font-semibold text-primary"
-                        value={loanAmtInput}
-                        onChange={(e) => setLoanAmtInput(e.target.value)}
-                        onBlur={handleLoanAmtInputBlur}
-                        style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
-                      />
-                    </div>
-                  </div>
-                  {/* Vertical divider for refi - aligned with divider below */}
-                  <div className="w-px bg-border self-stretch my-1" />
-                  {/* LTV side - aligned with Loan Term */}
-                  <div className="flex-1 pl-1">
-                    <div className="text-[13px] font-semibold text-foreground mb-1">LTV</div>
-                    <div className="text-xl font-semibold text-primary">
-                      {ltv.toFixed(1).replace(/\.0$/, '')}%
-                    </div>
-                  </div>
-                </div>
-              ) : (
-              /* Purchase layout */
-                <>
-                  <div className="flex justify-between items-baseline mb-1">
-                    <div className="text-[13px] font-semibold text-foreground">Loan Amount</div>
-                    <span 
-                      className="text-[11px] whitespace-nowrap"
-                      style={{ color: miRequired ? 'hsl(var(--color-red))' : 'hsl(var(--color-green))' }}
-                    >
-                      {miRequired ? 'MI req.' : 'No MI'}
-                    </span>
-                  </div>
-                  <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between">
-                    <div className="flex items-baseline gap-1 min-w-0">
-                      <span className="text-[0.8em] opacity-90">$</span>
-                      <input
-                        type="text"
-                        className="value-input text-xl font-semibold text-primary"
-                        value={loanAmtInput}
-                        onChange={(e) => setLoanAmtInput(e.target.value)}
-                        onBlur={handleLoanAmtInputBlur}
-                        style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
-                      />
-                    </div>
-                    <div className="flex items-baseline gap-0.5 whitespace-nowrap ml-auto">
-                      <input
-                        type="text"
-                        className="value-input text-[15px] font-semibold text-primary text-right"
-                        value={loanPctInput}
-                        onChange={(e) => setLoanPctInput(e.target.value)}
-                        onBlur={handleLoanPctInputBlur}
-                        style={{ width: '3.2ch' }}
-                      />
-                      <span className="text-[15px] ml-0.5">%</span>
-                    </div>
-                  </div>
-                </>
-              )}
+              <div className="flex items-baseline gap-0.5 whitespace-nowrap">
+                <input
+                  type="text"
+                  className="value-input text-[15px] font-semibold text-primary text-right"
+                  value={downPctInput}
+                  onChange={(e) => setDownPctInput(e.target.value)}
+                  onBlur={handleDownPctInputBlur}
+                  style={{ width: '3.2ch' }}
+                />
+                <span className="text-[15px] ml-0.5">%</span>
+              </div>
             </div>
-          </div>
-          <div className="mt-2">
             <RangeSlider
               min={0}
               max={100}
               step={0.5}
-              value={purpose === 'refi' ? loanPercent : downPercent}
-              onChange={(val) => {
-                if (purpose === 'refi') {
-                  setDownPercent(100 - snapPercent(val));
-                } else {
-                  handleDownPercentChange(val);
-                }
-              }}
+              value={downPercent}
+              onChange={handleDownPercentChange}
             />
           </div>
+        )}
+
+        {/* Loan Amount */}
+        <div className="mb-4">
+          <div className="flex justify-between items-baseline">
+            <div className="text-[13px] font-semibold text-foreground">Loan Amount</div>
+            {purpose === 'purchase' && (
+              <span 
+                className="text-[11px] whitespace-nowrap"
+                style={{ color: miRequired ? 'hsl(var(--color-red))' : 'hsl(var(--color-green))' }}
+              >
+                {miRequired ? 'MI req.' : 'No MI'}
+              </span>
+            )}
+          </div>
+          <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between mb-2">
+            <div className="flex items-baseline gap-1 min-w-0">
+              <span className="text-[0.8em] opacity-90">$</span>
+              <input
+                type="text"
+                className="value-input text-xl font-semibold text-primary"
+                value={loanAmtInput}
+                onChange={(e) => setLoanAmtInput(e.target.value)}
+                onBlur={handleLoanAmtInputBlur}
+                style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
+              />
+            </div>
+            <div className="flex items-baseline gap-0.5 whitespace-nowrap">
+              <input
+                type="text"
+                className="value-input text-[15px] font-semibold text-primary text-right"
+                value={loanPctInput}
+                onChange={(e) => setLoanPctInput(e.target.value)}
+                onBlur={handleLoanPctInputBlur}
+                style={{ width: '3.2ch' }}
+              />
+              <span className="text-[15px] ml-0.5">%</span>
+            </div>
+          </div>
+          <RangeSlider
+            min={0}
+            max={100}
+            step={0.5}
+            value={purpose === 'refi' ? loanPercent : (100 - downPercent)}
+            onChange={(val) => {
+              if (purpose === 'refi') {
+                setDownPercent(100 - snapPercent(val));
+              } else {
+                setDownPercent(snapPercent(100 - val));
+              }
+            }}
+          />
         </div>
 
         {/* Interest Rate */}
