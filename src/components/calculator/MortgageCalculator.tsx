@@ -151,7 +151,7 @@ export function MortgageCalculator() {
   const programLabel = `${loanType === 'conv' ? 'Conventional' : loanType.toUpperCase()} · ${purpose === 'refi' ? 'Refinance' : 'Purchase'}`;
 
   return (
-    <div className="calculator-container w-full max-w-[420px] p-[22px_18px_24px]">
+    <div className="calculator-container w-full max-w-[420px] md:max-w-[420px] p-[18px_14px_20px] md:p-[22px_18px_24px]">
       {/* Header */}
       <div className="text-left mb-3.5">
         <div className="text-[13px] uppercase tracking-wide text-muted-foreground mb-1">
@@ -350,42 +350,36 @@ export function MortgageCalculator() {
           </div>
         </div>
 
-        {/* Interest Rate & Loan Term */}
-        <div className="flex gap-3.5 items-start">
-          {/* Interest Rate */}
-          <div className="flex-1 pr-3">
-            <div className="text-[13px] font-semibold text-foreground mb-0.5">Interest Rate</div>
-            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
-              <span>{interestRate.toFixed(3)}</span>
-              <span className="text-[0.8em] opacity-90">%</span>
-            </div>
-            <RangeSlider
-              min={4}
-              max={10}
-              step={0.125}
-              value={interestRate}
-              onChange={setInterestRate}
-            />
+        {/* Interest Rate */}
+        <div className="mb-4">
+          <div className="text-[13px] font-semibold text-foreground mb-0.5">Interest Rate</div>
+          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
+            <span>{interestRate.toFixed(3)}</span>
+            <span className="text-[0.8em] opacity-90">%</span>
           </div>
+          <RangeSlider
+            min={4}
+            max={10}
+            step={0.125}
+            value={interestRate}
+            onChange={setInterestRate}
+          />
+        </div>
 
-          {/* Vertical divider */}
-          <div className="w-px bg-border self-stretch my-1" />
-
-          {/* Loan Term */}
-          <div className="flex-1 pl-1">
-            <div className="text-[13px] font-semibold text-foreground mb-0.5">Loan Term</div>
-            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
-              <span>{loanTerm}</span>
-              <span className="text-[0.8em] opacity-90">years</span>
-            </div>
-            <RangeSlider
-              min={10}
-              max={40}
-              step={5}
-              value={loanTerm}
-              onChange={setLoanTerm}
-            />
+        {/* Loan Term */}
+        <div>
+          <div className="text-[13px] font-semibold text-foreground mb-0.5">Loan Term</div>
+          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
+            <span>{loanTerm}</span>
+            <span className="text-[0.8em] opacity-90">years</span>
           </div>
+          <RangeSlider
+            min={10}
+            max={40}
+            step={5}
+            value={loanTerm}
+            onChange={setLoanTerm}
+          />
         </div>
       </div>
 
