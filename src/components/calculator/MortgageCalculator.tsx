@@ -151,69 +151,54 @@ export function MortgageCalculator() {
   const programLabel = `${loanType === 'conv' ? 'Conventional' : loanType.toUpperCase()} · ${purpose === 'refi' ? 'Refinance' : 'Purchase'}`;
 
   return (
-    <div className="calculator-container w-full max-w-[420px] md:max-w-[420px] p-[18px_14px_20px] md:p-[22px_18px_24px]">
-      {/* Header */}
-      <div className="text-left mb-3.5">
-        <div className="text-[13px] uppercase tracking-wide text-muted-foreground mb-1">
-          Payment Calculator
+    <div className="calculator-container w-full max-w-[420px] md:max-w-[800px] p-[18px_14px_20px] md:p-[22px_24px_24px]">
+      {/* Header - Total payment + Segments */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+        <div className="text-[36px] md:text-[42px] font-bold text-primary">
+          ${formatCurrencyWhole(breakdown.total)}
+          <span className="text-lg font-medium text-muted-foreground ml-1">/mo</span>
         </div>
-        <div className="flex justify-between items-start gap-2.5">
-          <div className="text-[32px] font-bold text-primary">
-            ${formatCurrencyWhole(breakdown.total)}
-            <span className="text-sm font-medium text-muted-foreground ml-1">/mo</span>
-          </div>
-          <div className="inline-flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-full text-[11px] mt-2 mr-[-4px]">
-            <span className="w-[7px] h-[7px] rounded-full bg-[hsl(var(--color-green))] shadow-[0_0_12px_hsl(var(--color-green)/0.6)]" />
-            <span>{programLabel}</span>
-          </div>
+        <div className="flex gap-2 items-center">
+          <SegmentControl
+            options={[
+              { value: 'conv', label: 'Conv' },
+              { value: 'fha', label: 'FHA' },
+              { value: 'va', label: 'VA' },
+            ]}
+            value={loanType}
+            onChange={setLoanType}
+          />
+          <SegmentControl
+            options={[
+              { value: 'purchase', label: 'Purch' },
+              { value: 'refi', label: 'Refi' },
+            ]}
+            value={purpose}
+            onChange={setPurpose}
+          />
         </div>
-      </div>
-
-      {/* Purpose & Loan Type Segments - same line, full width */}
-      <div className="flex gap-2 mb-3 items-center w-full">
-        <SegmentControl
-          options={[
-            { value: 'purchase', label: 'Purch' },
-            { value: 'refi', label: 'Refi' },
-          ]}
-          value={purpose}
-          onChange={setPurpose}
-          className="flex-1"
-        />
-        <SegmentControl
-          options={[
-            { value: 'conv', label: 'Conv' },
-            { value: 'fha', label: 'FHA' },
-            { value: 'va', label: 'VA' },
-          ]}
-          value={loanType}
-          onChange={setLoanType}
-          className="flex-[1.5]"
-        />
       </div>
 
       {/* Payment Breakdown */}
       <PaymentBar breakdown={breakdown} />
 
-      {/* Core Sliders Card */}
-      <div className="calculator-card p-3.5 mt-3">
-        {/* Home Price / Property Value */}
-        <div className="mb-4">
-          <div className="text-[13px] font-semibold text-foreground">
+      {/* Desktop: 2-column grid layout */}
+      <div className="hidden md:grid grid-cols-2 gap-3 mt-4">
+        {/* Home Price */}
+        <div className="calculator-card p-4">
+          <div className="text-[13px] font-semibold text-foreground mb-1">
             {purpose === 'refi' ? 'Property Value' : 'Home Price'}
           </div>
-          <div className="flex justify-start items-baseline gap-1 mb-2">
-            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary">
-              <span className="text-[0.8em] opacity-90">$</span>
-              <input
-                type="text"
-                className="value-input text-xl font-semibold text-primary"
-                value={homePriceInput}
-                onChange={(e) => handleHomePriceInputChange(e.target.value)}
-                onBlur={handleHomePriceInputBlur}
-                style={{ width: `${(homePriceInput.length || 1) + 0.5}ch` }}
-              />
-            </div>
+          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
+            <span className="text-[0.8em] opacity-90">$</span>
+            <input
+              type="text"
+              className="value-input text-xl font-semibold text-primary"
+              value={homePriceInput}
+              onChange={(e) => handleHomePriceInputChange(e.target.value)}
+              onBlur={handleHomePriceInputBlur}
+              style={{ width: `${(homePriceInput.length || 1) + 0.5}ch` }}
+            />
           </div>
           <RangeSlider
             min={100000}
@@ -224,100 +209,10 @@ export function MortgageCalculator() {
           />
         </div>
 
-        {/* Down Payment - only show for purchase */}
-        {purpose === 'purchase' && (
-          <div className="mb-4">
-            <div className="text-[13px] font-semibold text-foreground">Down Payment</div>
-            <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between mb-2">
-              <div className="flex items-baseline gap-1 min-w-0">
-                <span className="text-[0.8em] opacity-90">$</span>
-                <input
-                  type="text"
-                  className="value-input text-xl font-semibold text-primary"
-                  value={downAmtInput}
-                  onChange={(e) => setDownAmtInput(e.target.value)}
-                  onBlur={handleDownAmtInputBlur}
-                  style={{ width: `${(downAmtInput.length || 1) + 0.5}ch` }}
-                />
-              </div>
-              <div className="flex items-baseline gap-0.5 whitespace-nowrap">
-                <input
-                  type="text"
-                  className="value-input text-[15px] font-semibold text-primary text-right"
-                  value={downPctInput}
-                  onChange={(e) => setDownPctInput(e.target.value)}
-                  onBlur={handleDownPctInputBlur}
-                  style={{ width: '3.2ch' }}
-                />
-                <span className="text-[15px] ml-0.5">%</span>
-              </div>
-            </div>
-            <RangeSlider
-              min={0}
-              max={100}
-              step={0.5}
-              value={downPercent}
-              onChange={handleDownPercentChange}
-            />
-          </div>
-        )}
-
-        {/* Loan Amount */}
-        <div className="mb-4">
-          <div className="flex justify-between items-baseline">
-            <div className="text-[13px] font-semibold text-foreground">Loan Amount</div>
-            {purpose === 'purchase' && (
-              <span 
-                className="text-[11px] whitespace-nowrap"
-                style={{ color: miRequired ? 'hsl(var(--color-red))' : 'hsl(var(--color-green))' }}
-              >
-                {miRequired ? 'MI req.' : 'No MI'}
-              </span>
-            )}
-          </div>
-          <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between mb-2">
-            <div className="flex items-baseline gap-1 min-w-0">
-              <span className="text-[0.8em] opacity-90">$</span>
-              <input
-                type="text"
-                className="value-input text-xl font-semibold text-primary"
-                value={loanAmtInput}
-                onChange={(e) => setLoanAmtInput(e.target.value)}
-                onBlur={handleLoanAmtInputBlur}
-                style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
-              />
-            </div>
-            <div className="flex items-baseline gap-0.5 whitespace-nowrap">
-              <input
-                type="text"
-                className="value-input text-[15px] font-semibold text-primary text-right"
-                value={loanPctInput}
-                onChange={(e) => setLoanPctInput(e.target.value)}
-                onBlur={handleLoanPctInputBlur}
-                style={{ width: '3.2ch' }}
-              />
-              <span className="text-[15px] ml-0.5">%</span>
-            </div>
-          </div>
-          <RangeSlider
-            min={0}
-            max={100}
-            step={0.5}
-            value={purpose === 'refi' ? loanPercent : (100 - downPercent)}
-            onChange={(val) => {
-              if (purpose === 'refi') {
-                setDownPercent(100 - snapPercent(val));
-              } else {
-                setDownPercent(snapPercent(100 - val));
-              }
-            }}
-          />
-        </div>
-
         {/* Interest Rate */}
-        <div className="mb-4">
-          <div className="text-[13px] font-semibold text-foreground mb-0.5">Interest Rate</div>
-          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
+        <div className="calculator-card p-4">
+          <div className="text-[13px] font-semibold text-foreground mb-1">Interest Rate</div>
+          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
             <span>{interestRate.toFixed(3)}</span>
             <span className="text-[0.8em] opacity-90">%</span>
           </div>
@@ -330,10 +225,87 @@ export function MortgageCalculator() {
           />
         </div>
 
+        {/* Down Payment + Loan Amount (side by side in one card) */}
+        {purpose === 'purchase' && (
+          <div className="calculator-card p-4 flex gap-4">
+            <div className="flex-1">
+              <div className="text-[13px] font-semibold text-foreground mb-1">Down Payment</div>
+              <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
+                <span className="text-[0.8em] opacity-90">$</span>
+                <input
+                  type="text"
+                  className="value-input text-xl font-semibold text-primary"
+                  value={downAmtInput}
+                  onChange={(e) => setDownAmtInput(e.target.value)}
+                  onBlur={handleDownAmtInputBlur}
+                  style={{ width: `${(downAmtInput.length || 1) + 0.5}ch` }}
+                />
+                <span className="text-sm text-muted-foreground ml-2">{downPctInput}%</span>
+              </div>
+              <RangeSlider
+                min={0}
+                max={100}
+                step={0.5}
+                value={downPercent}
+                onChange={handleDownPercentChange}
+              />
+            </div>
+            <div className="flex-1">
+              <div className="flex justify-between items-baseline">
+                <div className="text-[13px] font-semibold text-foreground mb-1">Loan Amount</div>
+                <span 
+                  className="text-[11px] whitespace-nowrap"
+                  style={{ color: miRequired ? 'hsl(var(--color-red))' : 'hsl(var(--color-green))' }}
+                >
+                  {miRequired ? 'MI req.' : 'No MI'}
+                </span>
+              </div>
+              <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
+                <span className="text-[0.8em] opacity-90">$</span>
+                <input
+                  type="text"
+                  className="value-input text-xl font-semibold text-primary"
+                  value={loanAmtInput}
+                  onChange={(e) => setLoanAmtInput(e.target.value)}
+                  onBlur={handleLoanAmtInputBlur}
+                  style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
+                />
+                <span className="text-sm text-muted-foreground ml-2">{loanPctInput}%</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Refi mode - just Loan Amount */}
+        {purpose === 'refi' && (
+          <div className="calculator-card p-4">
+            <div className="text-[13px] font-semibold text-foreground mb-1">Loan Amount</div>
+            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
+              <span className="text-[0.8em] opacity-90">$</span>
+              <input
+                type="text"
+                className="value-input text-xl font-semibold text-primary"
+                value={loanAmtInput}
+                onChange={(e) => setLoanAmtInput(e.target.value)}
+                onBlur={handleLoanAmtInputBlur}
+                style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
+              />
+              <span className="text-sm text-muted-foreground ml-2">{loanPctInput}%</span>
+            </div>
+            <RangeSlider
+              min={0}
+              max={100}
+              step={0.5}
+              value={loanPercent}
+              onChange={(val) => setDownPercent(100 - snapPercent(val))}
+            />
+          </div>
+        )}
+
         {/* Loan Term */}
-        <div>
-          <div className="text-[13px] font-semibold text-foreground mb-0.5">Loan Term</div>
-          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
+        <div className="calculator-card p-4">
+          <div className="text-[13px] font-semibold text-foreground mb-1">Loan Term</div>
+          <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
             <span>{loanTerm}</span>
             <span className="text-[0.8em] opacity-90">years</span>
           </div>
@@ -344,6 +316,181 @@ export function MortgageCalculator() {
             value={loanTerm}
             onChange={setLoanTerm}
           />
+        </div>
+      </div>
+
+      {/* Mobile: Stacked portrait layout */}
+      <div className="md:hidden mt-3">
+        <div className="calculator-card p-3.5 space-y-4">
+          {/* Purpose & Loan Type Segments */}
+          <div className="flex gap-2 items-center w-full">
+            <SegmentControl
+              options={[
+                { value: 'purchase', label: 'Purch' },
+                { value: 'refi', label: 'Refi' },
+              ]}
+              value={purpose}
+              onChange={setPurpose}
+              className="flex-1"
+            />
+            <SegmentControl
+              options={[
+                { value: 'conv', label: 'Conv' },
+                { value: 'fha', label: 'FHA' },
+                { value: 'va', label: 'VA' },
+              ]}
+              value={loanType}
+              onChange={setLoanType}
+              className="flex-[1.5]"
+            />
+          </div>
+
+          {/* Home Price */}
+          <div>
+            <div className="text-[13px] font-semibold text-foreground">
+              {purpose === 'refi' ? 'Property Value' : 'Home Price'}
+            </div>
+            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
+              <span className="text-[0.8em] opacity-90">$</span>
+              <input
+                type="text"
+                className="value-input text-xl font-semibold text-primary"
+                value={homePriceInput}
+                onChange={(e) => handleHomePriceInputChange(e.target.value)}
+                onBlur={handleHomePriceInputBlur}
+                style={{ width: `${(homePriceInput.length || 1) + 0.5}ch` }}
+              />
+            </div>
+            <RangeSlider
+              min={100000}
+              max={3000000}
+              step={5000}
+              value={homePrice}
+              onChange={handleHomePriceChange}
+            />
+          </div>
+
+          {/* Down Payment */}
+          {purpose === 'purchase' && (
+            <div>
+              <div className="text-[13px] font-semibold text-foreground">Down Payment</div>
+              <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between mb-2">
+                <div className="flex items-baseline gap-1 min-w-0">
+                  <span className="text-[0.8em] opacity-90">$</span>
+                  <input
+                    type="text"
+                    className="value-input text-xl font-semibold text-primary"
+                    value={downAmtInput}
+                    onChange={(e) => setDownAmtInput(e.target.value)}
+                    onBlur={handleDownAmtInputBlur}
+                    style={{ width: `${(downAmtInput.length || 1) + 0.5}ch` }}
+                  />
+                </div>
+                <div className="flex items-baseline gap-0.5 whitespace-nowrap">
+                  <input
+                    type="text"
+                    className="value-input text-[15px] font-semibold text-primary text-right"
+                    value={downPctInput}
+                    onChange={(e) => setDownPctInput(e.target.value)}
+                    onBlur={handleDownPctInputBlur}
+                    style={{ width: '3.2ch' }}
+                  />
+                  <span className="text-[15px] ml-0.5">%</span>
+                </div>
+              </div>
+              <RangeSlider
+                min={0}
+                max={100}
+                step={0.5}
+                value={downPercent}
+                onChange={handleDownPercentChange}
+              />
+            </div>
+          )}
+
+          {/* Loan Amount */}
+          <div>
+            <div className="flex justify-between items-baseline">
+              <div className="text-[13px] font-semibold text-foreground">Loan Amount</div>
+              {purpose === 'purchase' && (
+                <span 
+                  className="text-[11px] whitespace-nowrap"
+                  style={{ color: miRequired ? 'hsl(var(--color-red))' : 'hsl(var(--color-green))' }}
+                >
+                  {miRequired ? 'MI req.' : 'No MI'}
+                </span>
+              )}
+            </div>
+            <div className="flex items-baseline gap-2 text-xl font-semibold text-primary w-full justify-between mb-2">
+              <div className="flex items-baseline gap-1 min-w-0">
+                <span className="text-[0.8em] opacity-90">$</span>
+                <input
+                  type="text"
+                  className="value-input text-xl font-semibold text-primary"
+                  value={loanAmtInput}
+                  onChange={(e) => setLoanAmtInput(e.target.value)}
+                  onBlur={handleLoanAmtInputBlur}
+                  style={{ width: `${(loanAmtInput.length || 1) + 0.5}ch` }}
+                />
+              </div>
+              <div className="flex items-baseline gap-0.5 whitespace-nowrap">
+                <input
+                  type="text"
+                  className="value-input text-[15px] font-semibold text-primary text-right"
+                  value={loanPctInput}
+                  onChange={(e) => setLoanPctInput(e.target.value)}
+                  onBlur={handleLoanPctInputBlur}
+                  style={{ width: '3.2ch' }}
+                />
+                <span className="text-[15px] ml-0.5">%</span>
+              </div>
+            </div>
+            <RangeSlider
+              min={0}
+              max={100}
+              step={0.5}
+              value={purpose === 'refi' ? loanPercent : (100 - downPercent)}
+              onChange={(val) => {
+                if (purpose === 'refi') {
+                  setDownPercent(100 - snapPercent(val));
+                } else {
+                  setDownPercent(snapPercent(100 - val));
+                }
+              }}
+            />
+          </div>
+
+          {/* Interest Rate */}
+          <div>
+            <div className="text-[13px] font-semibold text-foreground mb-0.5">Interest Rate</div>
+            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
+              <span>{interestRate.toFixed(3)}</span>
+              <span className="text-[0.8em] opacity-90">%</span>
+            </div>
+            <RangeSlider
+              min={4}
+              max={10}
+              step={0.125}
+              value={interestRate}
+              onChange={setInterestRate}
+            />
+          </div>
+
+          {/* Loan Term */}
+          <div>
+            <div className="text-[13px] font-semibold text-foreground mb-0.5">Loan Term</div>
+            <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-1.5">
+              <span>{loanTerm}</span>
+              <span className="text-[0.8em] opacity-90">years</span>
+            </div>
+            <RangeSlider
+              min={10}
+              max={40}
+              step={5}
+              value={loanTerm}
+              onChange={setLoanTerm}
+            />
+          </div>
         </div>
       </div>
 
