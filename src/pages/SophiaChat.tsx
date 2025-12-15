@@ -14,18 +14,10 @@ const SophiaChat = () => {
   const [voiceModeActive, setVoiceModeActive] = useState(false);
 
   const quickActions = [
-    { icon: FileCheck, label: "Get Pre-Approved", type: "process" as const },
-    { icon: Home, label: "First-Time Buyer Guide", type: "info" as const },
-    { icon: Zap, label: "Refinance Options", type: "info" as const },
-    { icon: DollarSign, label: "Calculate Affordability", type: "info" as const },
-  ];
-
-  const smartPrompts = [
-    "What's my estimated payment?",
-    "Check today's rates",
-    "Can I qualify with FHA?",
-    "Pre-approve me now",
-    "Connect me to Matt",
+    { icon: Zap, label: "Market Update" },
+    { icon: Home, label: "My Neighborhood" },
+    { icon: FileCheck, label: "Guidelines" },
+    { icon: DollarSign, label: "Refi Benefit" },
   ];
 
   return (
@@ -112,19 +104,6 @@ const SophiaChat = () => {
 
       {/* Input Area */}
       <div className="flex-shrink-0 p-4 border-t border-primary/20 space-y-3 bg-card/50 backdrop-blur-lg">
-        {/* Smart Prompt Pills */}
-        <div className="flex flex-wrap gap-1.5">
-          {smartPrompts.map((prompt) => (
-            <button
-              key={prompt}
-              onClick={() => sendMessage(prompt)}
-              className="px-2.5 py-1 text-[10px] bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-full transition-all hover:scale-105"
-            >
-              {prompt}
-            </button>
-          ))}
-        </div>
-        
         <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
         
         {/* Quick Action Buttons */}
@@ -132,22 +111,18 @@ const SophiaChat = () => {
           {quickActions.map((action) => (
             <Button
               key={action.label}
-              variant={action.type === 'process' ? 'default' : 'outline'}
+              variant="outline"
               size="sm"
-              className={`justify-start text-xs h-8 px-2.5 ${
-                action.type === 'process' 
-                  ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                  : 'border-primary/20 hover:bg-primary/10'
-              }`}
+              className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
               onClick={() => {
-                if (action.label === 'Get Pre-Approved') {
-                  sendMessage("I'd like to get pre-approved for a mortgage. Can you guide me through the process and collect my information?");
-                } else if (action.label === 'First-Time Buyer Guide') {
-                  sendMessage("I'm a first-time homebuyer. Can you explain the process and what I need to know?");
-                } else if (action.label === 'Refinance Options') {
-                  sendMessage("I'm interested in refinancing my mortgage. What are my options and how does it work?");
-                } else if (action.label === 'Calculate Affordability') {
-                  sendMessage("How much home can I afford? Can you help me calculate what I can borrow based on my income?");
+                if (action.label === 'Market Update') {
+                  sendMessage("Give me today's mortgage market update. What's happening with rates and what should I know?");
+                } else if (action.label === 'My Neighborhood') {
+                  sendMessage("I want to understand my neighborhood's real estate market. Can you help me analyze property values and trends in my area?");
+                } else if (action.label === 'Guidelines') {
+                  sendMessage("Help me understand lending guidelines. What are the requirements for different loan programs?");
+                } else if (action.label === 'Refi Benefit') {
+                  sendMessage("Help me calculate if refinancing makes sense for me. What would be my potential savings?");
                 } else {
                   sendMessage(`Tell me about ${action.label.toLowerCase()}`);
                 }
