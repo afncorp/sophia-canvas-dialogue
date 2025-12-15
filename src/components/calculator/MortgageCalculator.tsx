@@ -151,7 +151,7 @@ export function MortgageCalculator() {
   const programLabel = `${loanType === 'conv' ? 'Conventional' : loanType.toUpperCase()} · ${purpose === 'refi' ? 'Refinance' : 'Purchase'}`;
 
   return (
-    <div className="calculator-container w-full max-w-[420px] md:max-w-[800px] p-[18px_14px_20px] md:p-[22px_24px_24px]">
+    <div className="calculator-container w-full p-[18px_14px_20px] md:p-[22px_24px_24px]">
       {/* Header - Total payment + Segments */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
         <div className="text-[36px] md:text-[42px] font-bold text-primary">
