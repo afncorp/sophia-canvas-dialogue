@@ -530,13 +530,13 @@ END:VCARD`;
             <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
               processSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Traditional vs AI-Enhanced Process</h2>
-              <p className="text-sm md:text-lg text-muted-foreground">See how our AI technology accelerates your mortgage journey</p>
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground"><span className="hidden md:inline">Traditional vs </span>AI-Enhanced Process</h2>
+              <p className="text-sm md:text-lg text-muted-foreground">See how our AI tech<span className="hidden md:inline">nology</span> accelerates your mortgage journey</p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-3 md:gap-8">
-              {/* Traditional */}
-              <div className={`bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border/50 hover:border-border transition-all duration-700 delay-200 ${
+            <div className="grid md:grid-cols-2 gap-3 md:gap-8">
+              {/* Traditional - Hidden on mobile */}
+              <div className={`hidden md:block bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border/50 hover:border-border transition-all duration-700 delay-200 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
                 <div className="text-center mb-4 md:mb-6">
@@ -566,33 +566,36 @@ END:VCARD`;
               </div>
 
               {/* AI-Enhanced */}
-              <div className={`bg-gradient-to-br from-primary/15 via-secondary/12 to-accent/15 rounded-2xl p-4 md:p-8 border-2 border-primary/50 shadow-xl shadow-primary/25 relative overflow-hidden transition-all duration-700 delay-400 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30 ${
+              <div className={`bg-gradient-to-br from-primary/15 via-secondary/12 to-accent/15 rounded-2xl p-5 md:p-8 border-2 border-primary/50 shadow-xl shadow-primary/25 relative overflow-hidden transition-all duration-700 delay-400 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/5"></div>
                 <div className="relative">
-                  <div className="text-center mb-4 md:mb-6">
-                    <h3 className="text-sm md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
-                    <p className="text-[10px] md:text-sm text-secondary mt-1">Automated, accurate, fast</p>
+                  <div className="text-center mb-5 md:mb-6">
+                    <h3 className="text-base md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
+                    <p className="text-xs md:text-sm text-secondary mt-1">Automated, accurate, fast</p>
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {[
-                      { step: "1", label: "Chat with Sophia 24/7", time: "Instant response", desc: "Available anytime, anywhere", icon: Zap },
-                      { step: "2", label: "Easy Online/Phone Application", time: "5-10 minutes", desc: "Simple process guided by AI", icon: Zap },
-                      { step: "3", label: "AI Document Analysis", time: "Real-time", desc: "Automated verification, zero errors", icon: Zap },
-                      { step: "4", label: "Smart Pre-Approval", time: "Same day", desc: "AI + human review for accuracy", icon: Zap },
-                      { step: "5", label: "Final Approval", time: "Total: 5-7 days", desc: "Faster, more reliable", icon: Zap },
+                      { step: "1", label: "Chat with Sophia 24/7", mobileLabel: "Chat with Sophia 24/7", time: "Instant response", desc: "Available anytime, anywhere", icon: Zap },
+                      { step: "2", label: "Easy Online/Phone Application", mobileLabel: "Easy Online/Phone App", time: "5-10 minutes", desc: "Simple process guided by AI", icon: Zap },
+                      { step: "3", label: "AI Document Analysis", mobileLabel: "AI Document Analysis", time: "Real-time", desc: "Automated verification, zero errors", icon: Zap },
+                      { step: "4", label: "Smart Pre-Approval", mobileLabel: "Smart Pre-Approval", time: "Same day", desc: "AI + human review for accuracy", icon: Zap },
+                      { step: "5", label: "Final Approval", mobileLabel: "Final Approval", time: "Total: 5-7 days", desc: "Faster, more reliable", icon: Zap },
                     ].map((item) => (
-                      <div key={item.step} className="flex items-start gap-2 md:gap-4 p-2 md:p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
-                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-xs md:text-sm font-bold text-white shadow-lg">
+                      <div key={item.step} className="flex items-start gap-3 md:gap-4 p-3 md:p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
+                        <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-sm md:text-sm font-bold text-white shadow-lg">
                           {item.step}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1 md:gap-2">
-                            <p className="font-semibold text-foreground text-xs md:text-base truncate">{item.label}</p>
-                            <item.icon className="w-3 h-3 md:w-4 md:h-4 text-primary flex-shrink-0" />
+                          <div className="flex items-center gap-2 md:gap-2">
+                            <p className="font-semibold text-foreground text-sm md:text-base truncate">
+                              <span className="md:hidden">{item.mobileLabel}</span>
+                              <span className="hidden md:inline">{item.label}</span>
+                            </p>
+                            <item.icon className="w-4 h-4 md:w-4 md:h-4 text-primary flex-shrink-0" />
                           </div>
-                          <p className="text-[10px] md:text-xs text-secondary font-medium">{item.time}</p>
+                          <p className="text-xs md:text-xs text-secondary font-medium">{item.time}</p>
                           <p className="text-[8px] md:text-[10px] text-muted-foreground mt-0.5 hidden md:block">{item.desc}</p>
                         </div>
                       </div>
