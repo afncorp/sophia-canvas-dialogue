@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ConversationDemo } from "@/components/ConversationDemo";
 import { ChatMessages } from "@/components/ChatMessages";
 import { ChatInput } from "@/components/ChatInput";
 import { useChat } from "@/hooks/useChat";
@@ -96,7 +95,23 @@ const SophiaChat = () => {
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
-          <ConversationDemo />
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0 overflow-hidden ring-1 ring-primary/40">
+              <video 
+                src={sophiaVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="bg-muted/50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%] border border-primary/10">
+              <p className="text-sm text-foreground">
+                Hi! I'm Sophia, your AI mortgage assistant. How can I help you today?
+              </p>
+            </div>
+          </div>
         ) : (
           <ChatMessages messages={messages} isLoading={isLoading} />
         )}
