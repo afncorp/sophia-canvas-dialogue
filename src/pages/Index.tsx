@@ -197,15 +197,18 @@ const Index = () => {
               <ThemeToggle />
             </div>
 
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden hover:bg-primary/10"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <Menu className="w-6 h-6" />
-            </Button>
+            {/* Mobile Header Actions */}
+            <div className="lg:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-primary/10"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                <Menu className="w-6 h-6" />
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -237,10 +240,6 @@ const Index = () => {
                 </div>
               </div>
               <div className="pt-4 space-y-2 border-t border-primary/20">
-                <div className="flex items-center justify-between py-2">
-                  <span className="text-sm font-medium text-foreground">Theme</span>
-                  <ThemeToggle />
-                </div>
                 <Button className="w-full border-primary/30" variant="outline">Free Quote</Button>
                 <Button className="w-full bg-gradient-to-r from-primary to-secondary">Apply Now</Button>
               </div>
