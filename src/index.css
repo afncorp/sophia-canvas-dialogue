@@ -147,75 +147,79 @@ Target Vibe: "Modern wealth advisor meets Apple-grade fintech"
     --sidebar-ring: 40 48% 42%;
   }
 
-  /* ===== DARK THEME - Warm Charcoal ===== */
+/* ===== DARK THEME - Cool Charcoal with Bronze & Silver/Blue ===== */
   [data-theme="dark"] {
-    /* Warm Charcoal base - #1E1B18 */
-    --background: 25 10% 11%;
-    /* Heading text - #F1ECE6 */
-    --foreground: 30 20% 92%;
+    /* Cool Charcoal base - less brown, more neutral */
+    --background: 220 8% 10%;
+    /* Heading text - cool white */
+    --foreground: 220 10% 92%;
 
-    /* Card background - #2A2622 */
-    --card: 28 9% 15%;
-    --card-foreground: 30 20% 92%;
+    /* Card background - cool charcoal */
+    --card: 220 6% 14%;
+    --card-foreground: 220 10% 92%;
 
-    --popover: 25 10% 11%;
-    --popover-foreground: 30 20% 92%;
+    --popover: 220 8% 10%;
+    --popover-foreground: 220 10% 92%;
 
-    /* Muted Champagne Bronze - #C8A46B */
+    /* Champagne Bronze - #C8A46B */
     --primary: 38 45% 60%;
-    --primary-foreground: 25 15% 12%;
+    --primary-foreground: 220 8% 10%;
     --primary-glow: 40 50% 70%;
 
     /* Bronze Soft - #E2CDA5 */
     --secondary: 40 48% 76%;
-    --secondary-foreground: 25 15% 12%;
+    --secondary-foreground: 220 8% 10%;
 
-    /* Subtle warm muted */
-    --muted: 28 8% 20%;
-    /* Body text - #CFC7BD */
-    --muted-foreground: 30 12% 75%;
+    /* Cool muted surfaces */
+    --muted: 220 6% 18%;
+    /* Body text - cool gray */
+    --muted-foreground: 220 8% 70%;
 
-    /* Tech Blue accent - #5FA8D3 */
-    --accent: 200 55% 60%;
-    --accent-foreground: 25 10% 11%;
+    /* Tech Blue accent - brighter for contrast */
+    --accent: 210 70% 55%;
+    --accent-foreground: 220 8% 10%;
 
-    /* Tech colors */
-    --tech-blue: 200 55% 60%;
-    --tech-indigo: 227 47% 66%;
-    --tech-teal: 165 30% 55%;
+    /* Tech colors - silver/blue tones */
+    --tech-blue: 210 70% 55%;
+    --tech-indigo: 230 50% 62%;
+    --tech-teal: 180 35% 50%;
+    
+    /* Silver accent */
+    --silver: 220 10% 70%;
+    --silver-light: 220 10% 80%;
 
     /* Bronze palette */
     --brass: 38 45% 60%;
     --brass-light: 40 50% 70%;
     
-    /* Neutral warm gray */
-    --neutral: 25 6% 55%;
-    --neutral-light: 25 6% 70%;
+    /* Neutral cool gray */
+    --neutral: 220 6% 50%;
+    --neutral-light: 220 6% 65%;
 
     --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Subtle border - #3A342F */
-    --border: 25 10% 21%;
-    --input: 28 8% 18%;
+    /* Cool border */
+    --border: 220 6% 20%;
+    --input: 220 6% 16%;
     --ring: 38 45% 60%;
 
-    /* Dark theme gradients - reduced contrast, no glow */
+    /* Dark theme gradients - bronze with blue highlights */
     --gradient-primary: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 50% 65%));
-    --gradient-tech: linear-gradient(180deg, hsl(25 10% 11%), hsl(28 9% 15%));
-    --gradient-accent: linear-gradient(135deg, hsl(38 45% 60%), hsl(40 48% 70%));
-    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(38 45% 60% / 0.06), transparent 60%);
-    --shadow-bronze: 0 4px 24px hsl(25 10% 5% / 0.3);
-    --shadow-soft: 0 8px 32px -8px hsl(25 10% 5% / 0.4);
-    --shadow-card: 0 2px 12px hsl(25 10% 5% / 0.25);
+    --gradient-tech: linear-gradient(180deg, hsl(220 8% 10%), hsl(220 6% 14%));
+    --gradient-accent: linear-gradient(135deg, hsl(38 45% 60%), hsl(210 70% 55%));
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(210 70% 55% / 0.08), transparent 60%);
+    --shadow-bronze: 0 4px 24px hsl(220 10% 5% / 0.4);
+    --shadow-soft: 0 8px 32px -8px hsl(220 10% 5% / 0.5);
+    --shadow-card: 0 2px 12px hsl(220 10% 5% / 0.3);
 
-    --sidebar-background: 25 10% 11%;
-    --sidebar-foreground: 30 20% 92%;
+    --sidebar-background: 220 8% 10%;
+    --sidebar-foreground: 220 10% 92%;
     --sidebar-primary: 38 45% 60%;
-    --sidebar-primary-foreground: 25 15% 12%;
-    --sidebar-accent: 28 8% 20%;
-    --sidebar-accent-foreground: 30 20% 92%;
-    --sidebar-border: 25 10% 21%;
+    --sidebar-primary-foreground: 220 8% 10%;
+    --sidebar-accent: 220 6% 18%;
+    --sidebar-accent-foreground: 220 10% 92%;
+    --sidebar-border: 220 6% 20%;
     --sidebar-ring: 38 45% 60%;
   }
 }
@@ -231,35 +235,6 @@ Target Vibe: "Modern wealth advisor meets Apple-grade fintech"
 }
 
 @layer utilities {
-  /* Animated Grid Background - very subtle */
-  .animated-grid {
-    background-image: 
-      linear-gradient(to right, hsl(40 48% 42% / 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(40 48% 42% / 0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
-    animation: grid-move 25s linear infinite;
-  }
-
-  [data-theme="light"] .animated-grid {
-    background-image: 
-      linear-gradient(to right, hsl(40 48% 42% / 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(40 48% 42% / 0.03) 1px, transparent 1px);
-  }
-
-  [data-theme="dark"] .animated-grid {
-    background-image: 
-      linear-gradient(to right, hsl(38 45% 60% / 0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(38 45% 60% / 0.025) 1px, transparent 1px);
-  }
-
-  @keyframes grid-move {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 48px 48px;
-    }
-  }
 
   /* Subtle floating - reduced motion */
   @keyframes float {

@@ -80,18 +80,10 @@ const Index = () => {
   ];
 
   const quickActions = [
-    { icon: FileCheck, label: "Get Pre-Approved", type: "process" as const },
-    { icon: Home, label: "First-Time Buyer Guide", type: "info" as const },
-    { icon: Zap, label: "Refinance Options", type: "info" as const },
-    { icon: DollarSign, label: "Calculate Affordability", type: "info" as const },
-  ];
-
-  const smartPrompts = [
-    "What's my estimated payment?",
-    "Check today's rates",
-    "Can I qualify with FHA?",
-    "Pre-approve me now",
-    "Connect me to Matt",
+    { icon: Zap, label: "Market Update", type: "info" as const },
+    { icon: Home, label: "My Neighborhood", type: "info" as const },
+    { icon: FileCheck, label: "Guidelines", type: "info" as const },
+    { icon: DollarSign, label: "Refi Benefit", type: "info" as const },
   ];
 
   const testimonials = [
@@ -244,7 +236,11 @@ const Index = () => {
                   <a href="#contact" className="block py-1 text-sm text-foreground hover:text-primary">Contact</a>
                 </div>
               </div>
-              <div className="pt-4 space-y-2">
+              <div className="pt-4 space-y-2 border-t border-primary/20">
+                <div className="flex items-center justify-between py-2">
+                  <span className="text-sm font-medium text-foreground">Theme</span>
+                  <ThemeToggle />
+                </div>
                 <Button className="w-full border-primary/30" variant="outline">Free Quote</Button>
                 <Button className="w-full bg-gradient-to-r from-primary to-secondary">Apply Now</Button>
               </div>
@@ -261,29 +257,12 @@ const Index = () => {
 
       {/* Main Layout - Content (75%) + Fixed Chat Sidebar (25%) */}
       <div className="flex-1 flex relative min-h-0">
-        {/* Animated grid background */}
-        <div className="fixed inset-0 pointer-events-none animated-grid opacity-30 z-0"></div>
-        
-        {/* Animated background gradient blobs and particles */}
+        {/* Animated background gradient blobs only - no grid/dots/particles */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
           {/* Floating gradient blobs */}
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary/15 to-transparent rounded-full blur-3xl animate-float"></div>
           <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-secondary/12 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
           <div className="absolute bottom-1/4 left-1/2 w-[550px] h-[550px] bg-gradient-to-br from-accent/10 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
-          
-          {/* Particle effects - primary colored */}
-          <div className="absolute top-1/4 left-1/3 w-2 h-2 bg-gradient-to-br from-primary to-secondary rounded-full shadow-lg shadow-primary/50 animate-particle-float" style={{ animationDelay: '0s' }}></div>
-          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-gradient-to-br from-secondary to-accent rounded-full shadow-lg shadow-secondary/50 animate-particle-float" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-1/3 left-2/3 w-2 h-2 bg-gradient-to-br from-accent to-primary rounded-full shadow-lg shadow-accent/50 animate-particle-float" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-2/3 left-1/4 w-1 h-1 bg-primary/80 rounded-full shadow-md shadow-primary/40 animate-particle-drift" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-secondary/80 rounded-full shadow-md shadow-secondary/40 animate-particle-drift" style={{ animationDelay: '1.5s' }}></div>
-          <div className="absolute bottom-1/2 right-2/3 w-1 h-1 bg-accent/80 rounded-full shadow-md shadow-accent/40 animate-particle-float" style={{ animationDelay: '3s' }}></div>
-          
-          {/* Subtle tech lines with gradient */}
-          <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/15 to-transparent"></div>
-          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary/15 to-transparent"></div>
-          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-accent/10 to-transparent" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         </div>
 
         {/* Scrollable Content Area - 75% on desktop, full on mobile */}
@@ -340,26 +319,13 @@ const Index = () => {
 
                   {/* Contact Buttons */}
                   <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                    <Button size="lg" className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/30 px-3 md:px-4">
-                      <Phone className="w-4 h-4 md:mr-2" />
-                      <span className="hidden md:inline">Call Now</span>
-                      <span className="md:hidden">Call</span>
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
-                      <Mail className="w-4 h-4 md:mr-2" />
-                      <span className="hidden md:inline">Email</span>
-                      <span className="md:hidden">Email</span>
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
-                      <MessageSquare className="w-4 h-4 md:mr-2" />
-                      <span className="hidden md:inline">Text</span>
-                      <span className="md:hidden">Text</span>
-                    </Button>
-                    {/* Mobile-only Save Contact */}
+                    {/* Save Contact - Primary Bronze Button */}
                     <Button 
                       size="lg" 
-                      variant="outline" 
-                      className="lg:hidden border-primary/30 hover:bg-primary/10"
+                      className="relative overflow-hidden border-2 border-primary/60 shadow-lg shadow-primary/20 px-4 md:px-5"
+                      style={{
+                        background: 'linear-gradient(145deg, hsl(40 55% 65%), hsl(38 45% 50%), hsl(35 40% 40%))',
+                      }}
                       onClick={() => {
                         const vcfContent = `BEGIN:VCARD
 VERSION:3.0
@@ -383,8 +349,20 @@ END:VCARD`;
                         URL.revokeObjectURL(url);
                       }}
                     >
-                      <UserPlus className="w-4 h-4 mr-2" />
-                      Save Contact
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent pointer-events-none" />
+                      <UserPlus className="w-4 h-4 md:mr-2 text-primary-foreground" />
+                      <span className="hidden md:inline text-primary-foreground font-semibold">Save Contact</span>
+                      <span className="md:hidden text-primary-foreground font-semibold">Save</span>
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <Mail className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Email</span>
+                      <span className="md:hidden">Email</span>
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <MessageSquare className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Text</span>
+                      <span className="md:hidden">Text</span>
                     </Button>
                   </div>
                 </div>
@@ -499,19 +477,6 @@ END:VCARD`;
 
             {/* Input Area - Always Visible */}
             <div className="flex-shrink-0 p-4 border-t border-primary/20 space-y-3 bg-card/50">
-              {/* Smart Prompt Pills */}
-              <div className="flex flex-wrap gap-1.5">
-                {smartPrompts.map((prompt) => (
-                  <button
-                    key={prompt}
-                    onClick={() => sendMessage(prompt)}
-                    className="px-2.5 py-1 text-[10px] bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-full transition-all hover:scale-105"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-              
               <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
               
               {/* Quick Action Buttons */}
@@ -519,22 +484,18 @@ END:VCARD`;
                 {quickActions.map((action) => (
                   <Button
                     key={action.label}
-                    variant={action.type === 'process' ? 'default' : 'outline'}
+                    variant="outline"
                     size="sm"
-                    className={`justify-start text-xs h-8 px-2.5 ${
-                      action.type === 'process' 
-                        ? 'bg-gradient-to-r from-primary to-secondary hover:opacity-90 font-semibold' 
-                        : 'border-primary/20 hover:bg-primary/10'
-                    }`}
+                    className="justify-start text-xs h-8 px-2.5 border-primary/20 hover:bg-primary/10"
                     onClick={() => {
-                      if (action.label === 'Get Pre-Approved') {
-                        sendMessage("I'd like to get pre-approved for a mortgage. Can you guide me through the process and collect my information?");
-                      } else if (action.label === 'First-Time Buyer Guide') {
-                        sendMessage("I'm a first-time homebuyer. Can you explain the process and what I need to know?");
-                      } else if (action.label === 'Refinance Options') {
-                        sendMessage("I'm interested in refinancing my mortgage. What are my options and how does it work?");
-                      } else if (action.label === 'Calculate Affordability') {
-                        sendMessage("How much home can I afford? Can you help me calculate what I can borrow based on my income?");
+                      if (action.label === 'Market Update') {
+                        sendMessage("Give me today's mortgage market update. What's happening with rates and what should I know?");
+                      } else if (action.label === 'My Neighborhood') {
+                        sendMessage("I want to understand my neighborhood's real estate market. Can you help me analyze property values and trends in my area?");
+                      } else if (action.label === 'Guidelines') {
+                        sendMessage("Help me understand lending guidelines. What are the requirements for different loan programs?");
+                      } else if (action.label === 'Refi Benefit') {
+                        sendMessage("Help me calculate if refinancing makes sense for me. What would be my potential savings?");
                       } else {
                         sendMessage(`Tell me about ${action.label.toLowerCase()}`);
                       }
@@ -647,52 +608,28 @@ END:VCARD`;
           </section>
 
 
-          {/* Video & Calculator Section - Side by Side */}
+          {/* GIF Placeholder for AI Process */}
+          <section className="flex justify-center">
+            <div className="w-full max-w-2xl bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 rounded-2xl border-2 border-dashed border-primary/30 p-8 md:p-12 text-center">
+              <div className="space-y-3">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center">
+                  <Zap className="w-8 h-8 text-primary" />
+                </div>
+                <h4 className="text-lg font-semibold text-foreground">AI Process Demo GIF</h4>
+                <p className="text-sm text-muted-foreground">Placeholder for animated GIF showing how AI helps the mortgage process</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Calculator Section Only */}
           <section 
             ref={videoCalcSection.ref}
-            className="space-y-6 md:space-y-8"
+            className="space-y-6"
           >
-            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+            <div className={`transition-all duration-700 ${
               videoCalcSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground">Experience & Calculate</h2>
-              <p className="text-sm md:text-lg text-muted-foreground">See how we work and estimate your payment</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-              {/* Video Section */}
-              <div className={`transition-all duration-700 delay-200 ${
-                videoCalcSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
-              }`}>
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">AI Workflow Demo</h3>
-                <div className="relative aspect-[3/4] md:aspect-video bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-xl shadow-primary/20 group cursor-pointer hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/30 transition-all">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center space-y-3 z-10 relative px-4">
-                      <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-2xl shadow-primary/50 animate-glow-pulse">
-                        <div className="w-0 h-0 border-t-[10px] md:border-t-[12px] border-t-transparent border-l-[16px] md:border-l-[20px] border-l-white border-b-[10px] md:border-b-[12px] border-b-transparent ml-1 md:ml-1.5"></div>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm md:text-base font-bold text-foreground">See the AI Difference</p>
-                        <p className="text-xs md:text-sm text-muted-foreground">2 minute demo</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute top-2 left-2 w-12 h-12 md:w-16 md:h-16 bg-primary/30 rounded-full blur-xl animate-float"></div>
-                  <div className="absolute bottom-2 right-2 w-16 h-16 md:w-20 md:h-20 bg-secondary/30 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
-                </div>
-                <p className="text-center text-xs text-muted-foreground mt-3">
-                  Video coming soon
-                </p>
-              </div>
-
-              {/* Calculator Section */}
-              <div className={`transition-all duration-700 delay-400 ${
-                videoCalcSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-              }`}>
-                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">Payment Calculator</h3>
-                <MortgageCalculator />
-              </div>
+              <MortgageCalculator />
             </div>
           </section>
 
