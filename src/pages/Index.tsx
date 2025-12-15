@@ -318,7 +318,22 @@ const Index = () => {
 
                   {/* Contact Buttons */}
                   <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                    {/* Save Contact - Primary Bronze Button */}
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <Phone className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Call</span>
+                      <span className="md:hidden">Call</span>
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <Mail className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Email</span>
+                      <span className="md:hidden">Email</span>
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
+                      <MessageSquare className="w-4 h-4 md:mr-2" />
+                      <span className="hidden md:inline">Text</span>
+                      <span className="md:hidden">Text</span>
+                    </Button>
+                    {/* Save Contact - Bronze Button */}
                     <Button 
                       size="lg" 
                       className="relative overflow-hidden border-2 border-primary/60 shadow-lg shadow-primary/20 px-4 md:px-5"
@@ -352,16 +367,6 @@ END:VCARD`;
                       <UserPlus className="w-4 h-4 md:mr-2 text-primary-foreground" />
                       <span className="hidden md:inline text-primary-foreground font-semibold">Save Contact</span>
                       <span className="md:hidden text-primary-foreground font-semibold">Save</span>
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
-                      <Mail className="w-4 h-4 md:mr-2" />
-                      <span className="hidden md:inline">Email</span>
-                      <span className="md:hidden">Email</span>
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-primary/30 hover:bg-primary/10 px-3 md:px-4">
-                      <MessageSquare className="w-4 h-4 md:mr-2" />
-                      <span className="hidden md:inline">Text</span>
-                      <span className="md:hidden">Text</span>
                     </Button>
                   </div>
                 </div>
