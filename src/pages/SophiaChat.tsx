@@ -20,9 +20,9 @@ const SophiaChat = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      {/* Header */}
-      <header className="bg-card/50 backdrop-blur-lg border-b border-primary/20 sticky top-0 z-50">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
+      {/* Fixed Header */}
+      <header className="flex-shrink-0 bg-card/50 backdrop-blur-lg border-b border-primary/20 z-50">
         <div className="px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors">
             <ArrowLeft className="w-5 h-5" />
@@ -45,8 +45,8 @@ const SophiaChat = () => {
         </div>
       </header>
 
-      {/* Sophia Header */}
-      <div className="bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border-b border-primary/20 p-4">
+      {/* Fixed Sophia Header */}
+      <div className="flex-shrink-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border-b border-primary/20 p-4">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center overflow-hidden ring-2 ring-primary/40 shadow-lg">
@@ -74,25 +74,9 @@ const SophiaChat = () => {
             <p className="text-xs text-primary font-semibold">🎙️ Voice Mode Active</p>
           </div>
         )}
-
-        {/* Key Features */}
-        <div className="grid grid-cols-3 gap-2 mt-4">
-          <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 border border-primary/20 text-center">
-            <p className="text-lg">🌐</p>
-            <p className="text-[10px] font-semibold text-foreground">24/7 Available</p>
-          </div>
-          <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 border border-primary/20 text-center">
-            <p className="text-lg">⚡</p>
-            <p className="text-[10px] font-semibold text-foreground">Instant Answers</p>
-          </div>
-          <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 border border-primary/20 text-center">
-            <p className="text-lg">🎯</p>
-            <p className="text-[10px] font-semibold text-foreground">Personalized</p>
-          </div>
-        </div>
       </div>
 
-      {/* Chat Area */}
+      {/* Scrollable Chat Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
           <div className="flex items-start gap-3">
@@ -117,7 +101,7 @@ const SophiaChat = () => {
         )}
       </div>
 
-      {/* Input Area */}
+      {/* Fixed Input Area */}
       <div className="flex-shrink-0 p-4 border-t border-primary/20 space-y-3 bg-card/50 backdrop-blur-lg">
         <ChatInput onSendMessage={sendMessage} disabled={isLoading} />
         
