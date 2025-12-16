@@ -17,7 +17,7 @@ import pathAppIcon from "@/assets/path-app-icon.png";
 import sophiaVideo from "@/assets/sophia-video.mp4";
 import sophiaRobot from "@/assets/sophia-robot.png";
 import mattMainePhoto from "@/assets/matt-maine.jpeg";
-import afnLogo from "@/assets/afn-logo.png";
+import afnLogoBronze from "@/assets/afn-logo-bronze.png";
 import afnLogoWhite from "@/assets/afn-logo-white.png";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useCallback } from "react";
@@ -146,7 +146,7 @@ const Index = () => {
             {/* Logo + Company Name */}
             <div className="flex items-center gap-3 md:gap-4">
               <img 
-                src={isDarkMode ? afnLogoWhite : afnLogo} 
+                src={isDarkMode ? afnLogoWhite : afnLogoBronze} 
                 alt="AFN Logo" 
                 className="h-10 md:h-12 w-auto"
               />
