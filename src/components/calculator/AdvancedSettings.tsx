@@ -38,7 +38,7 @@ export function AdvancedSettings({
     setIsOpen(affordMode);
   }, [affordMode]);
 
-  const taxRateDisplay = (taxRate / 100).toFixed(2).replace(/0$/, '').replace(/\.0$/, '');
+  const taxRateDisplay = (taxRate / 100).toFixed(2);
 
   return (
     <>
