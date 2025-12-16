@@ -548,12 +548,12 @@ END:VCARD`;
 
             <div className="grid md:grid-cols-2 gap-4 md:gap-8">
               {/* Traditional - Hidden on mobile */}
-              <div className={`hidden md:block bg-card/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border/40 transition-all duration-700 delay-200 hover:opacity-100 ${
-                processSection.isVisible ? 'opacity-90 translate-x-0' : 'opacity-0 -translate-x-10'
+              <div className={`hidden md:block bg-card/60 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border/50 transition-all duration-700 delay-200 hover:opacity-100 ${
+                processSection.isVisible ? 'opacity-95 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-muted-foreground">Traditional</h3>
-                  <p className="text-base text-muted-foreground/80 mt-1">Manual. Slow. Uncertain.</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground/70">Traditional</h3>
+                  <p className="text-base text-muted-foreground mt-1">Manual. Slow. Uncertain.</p>
                 </div>
                 <div className="space-y-3">
                   {[
@@ -565,19 +565,19 @@ END:VCARD`;
                   ].map((item, index) => (
                     <div 
                       key={item.step} 
-                      className={`group flex items-start gap-4 p-4 bg-muted/20 rounded-lg border border-border/30 transition-all duration-500 hover:bg-muted/30 ${
-                        processSection.isVisible ? 'opacity-80 translate-x-0' : 'opacity-0 -translate-x-5'
+                      className={`group flex items-start gap-4 p-4 bg-muted/30 rounded-lg border border-border/40 transition-all duration-500 hover:bg-muted/40 ${
+                        processSection.isVisible ? 'opacity-90 translate-x-0' : 'opacity-0 -translate-x-5'
                       }`}
                       style={{ transitionDelay: `${300 + index * 100}ms` }}
                       title={item.hoverDesc}
                     >
-                      <div className="w-10 h-10 rounded-full bg-muted/40 flex items-center justify-center flex-shrink-0 text-base font-bold text-muted-foreground">
+                      <div className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-base font-bold text-foreground/60">
                         {item.step}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-foreground/80 text-lg">{item.label}</p>
-                        <p className="text-base text-muted-foreground/70">{item.time}</p>
-                        <p className="text-sm text-muted-foreground/60 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{item.hoverDesc}</p>
+                        <p className="font-semibold text-foreground/90 text-lg">{item.label}</p>
+                        <p className="text-base text-muted-foreground">{item.time}</p>
+                        <p className="text-sm text-muted-foreground/70 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{item.hoverDesc}</p>
                       </div>
                     </div>
                   ))}
