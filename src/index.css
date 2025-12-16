@@ -388,6 +388,24 @@ Target Vibe: "Modern wealth advisor meets Apple-grade fintech"
     box-shadow: 0 2px 6px hsl(25 10% 5% / 0.25);
   }
 
+  /* Success state (green thumb) */
+  .range-slider-success::-webkit-slider-thumb {
+    background: hsl(var(--color-green));
+  }
+
+  .range-slider-success::-moz-range-thumb {
+    background: hsl(var(--color-green));
+  }
+
+  /* Danger state (red thumb) */
+  .range-slider-danger::-webkit-slider-thumb {
+    background: hsl(var(--color-red));
+  }
+
+  .range-slider-danger::-moz-range-thumb {
+    background: hsl(var(--color-red));
+  }
+
   /* Segment control */
   .segment-control {
     background: hsl(var(--muted) / 0.6);

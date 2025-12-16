@@ -9,6 +9,7 @@ import {
   getRecommendedInsurance,
   calculateMI,
   calculateTotalLoan,
+  calculateMaxAffordablePrice,
 } from './utils';
 import { SegmentControl } from './SegmentControl';
 import { PaymentBar } from './PaymentBar';
@@ -93,6 +94,32 @@ export function MortgageCalculator() {
       total,
     };
   }, [totalLoan, baseLoanAmount, interestRate, loanTerm, homePrice, taxRate, insuranceAnnual, hoaMonthly, loanType, ltv]);
+
+  // Calculate max affordable price when affordability mode is on
+  const maxAffordablePrice = useMemo(() => {
+    if (!affordMode || purpose !== 'purchase') return undefined;
+    
+    const insuranceRate = homePrice > 0 ? insuranceAnnual / homePrice : 0.0035;
+    
+    return calculateMaxAffordablePrice(
+      loanType,
+      grossMonthlyIncome,
+      monthlyDebt,
+      downPercent,
+      interestRate,
+      loanTerm,
+      taxRate,
+      insuranceRate,
+      hoaMonthly
+    );
+  }, [affordMode, purpose, loanType, grossMonthlyIncome, monthlyDebt, downPercent, 
+      interestRate, loanTerm, taxRate, insuranceAnnual, homePrice, hoaMonthly]);
+
+  // Determine thumb state for home price slider
+  const homePriceThumbState = useMemo(() => {
+    if (!affordMode || maxAffordablePrice === undefined) return 'default' as const;
+    return homePrice <= maxAffordablePrice ? 'success' as const : 'danger' as const;
+  }, [affordMode, homePrice, maxAffordablePrice]);
 
   // Update display inputs
   useEffect(() => {
@@ -247,6 +274,9 @@ export function MortgageCalculator() {
             step={5000}
             value={homePrice}
             onChange={handleHomePriceChange}
+            marker={maxAffordablePrice}
+            markerSnapDistance={15000}
+            thumbState={homePriceThumbState}
           />
         </div>
 
@@ -408,6 +438,9 @@ export function MortgageCalculator() {
               step={5000}
               value={homePrice}
               onChange={handleHomePriceChange}
+              marker={maxAffordablePrice}
+              markerSnapDistance={15000}
+              thumbState={homePriceThumbState}
             />
           </div>
 

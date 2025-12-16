@@ -122,3 +122,77 @@ export function calculateTotalLoan(
     upfrontFee: 0,
   };
 }
+
+// Calculate max affordable home price based on income and debt
+export function calculateMaxAffordablePrice(
+  loanType: LoanType,
+  grossMonthlyIncome: number,
+  monthlyDebt: number,
+  downPercent: number,
+  interestRate: number,
+  loanTerm: number,
+  taxRate: number, // in hundredths, e.g., 120 = 1.20%
+  insuranceRate: number, // as decimal, e.g., 0.0035
+  hoaMonthly: number
+): number {
+  // Max DTI by loan type (Conventional: 45%, FHA/VA: 56%)
+  const maxDTI = loanType === 'conv' ? 0.45 : 0.56;
+  
+  // Max total housing payment allowed
+  const maxHousingPayment = (grossMonthlyIncome * maxDTI) - monthlyDebt;
+  
+  if (maxHousingPayment <= 0) return 0;
+  
+  // Setup for iterative calculation
+  const r = interestRate / 1200;
+  const n = loanTerm * 12;
+  const taxRateMonthly = (taxRate / 10000) / 12;
+  const insuranceRateMonthly = insuranceRate / 12;
+  const downRatio = downPercent / 100;
+  const loanRatio = 1 - downRatio;
+  const ltv = loanRatio * 100;
+  
+  // Binary search for max home price
+  let low = 0;
+  let high = 10000000;
+  
+  for (let i = 0; i < 50; i++) {
+    const mid = (low + high) / 2;
+    const baseLoan = mid * loanRatio;
+    
+    // Calculate total loan with fees
+    let totalLoan = baseLoan;
+    if (loanType === 'va') {
+      totalLoan = baseLoan * (1 + VA_FUNDING_FEE_RATE);
+    } else if (loanType === 'fha') {
+      totalLoan = baseLoan * 1.0175; // 1.75% UFMIP
+    }
+    
+    // P&I calculation
+    let pi: number;
+    if (r === 0) {
+      pi = totalLoan / n;
+    } else {
+      pi = totalLoan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    }
+    
+    // Other costs
+    const taxes = mid * taxRateMonthly;
+    const insurance = mid * insuranceRateMonthly;
+    
+    // MI calculation (for FHA, calculate on total loan including UFMIP)
+    const miBase = loanType === 'fha' ? totalLoan : baseLoan;
+    const mi = calculateMI(loanType, miBase, ltv, loanTerm);
+    
+    const totalPayment = pi + taxes + insurance + hoaMonthly + mi;
+    
+    if (totalPayment <= maxHousingPayment) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+  }
+  
+  // Round to nearest $1000
+  return Math.floor(low / 1000) * 1000;
+}
