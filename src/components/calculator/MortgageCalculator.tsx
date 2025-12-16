@@ -33,6 +33,11 @@ export function MortgageCalculator() {
   const [insuranceAnnual, setInsuranceAnnual] = useState(() => getRecommendedInsurance(500000));
   const [hoaMonthly, setHoaMonthly] = useState(0);
 
+  // Afford mode state
+  const [affordMode, setAffordMode] = useState(false);
+  const [grossMonthlyIncome, setGrossMonthlyIncome] = useState(10000);
+  const [monthlyDebt, setMonthlyDebt] = useState(500);
+
   // Input values for editable fields
   const [homePriceInput, setHomePriceInput] = useState(formatCurrencyWhole(500000));
   const [downAmtInput, setDownAmtInput] = useState('');
@@ -147,7 +152,7 @@ export function MortgageCalculator() {
     setDownPercent(snapPercent(downPct));
   }, [loanPctInput]);
 
-  const miRequired = ltv > 80;
+  const miRequired = ltv > 80 || loanType === 'fha';
   const programLabel = `${loanType === 'conv' ? 'Conventional' : loanType.toUpperCase()} · ${purpose === 'refi' ? 'Refinance' : 'Purchase'}`;
 
   return (
@@ -370,13 +375,15 @@ export function MortgageCalculator() {
                   <div className="flex bg-muted rounded-full p-0.5">
                     <button
                       type="button"
-                      className="px-3 py-1 text-xs rounded-full transition-colors text-muted-foreground"
+                      onClick={() => setAffordMode(false)}
+                      className={`px-3 py-1 text-xs rounded-full transition-colors ${!affordMode ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
                     >
                       Off
                     </button>
                     <button
                       type="button"
-                      className="px-3 py-1 text-xs rounded-full transition-colors bg-primary text-primary-foreground"
+                      onClick={() => setAffordMode(true)}
+                      className={`px-3 py-1 text-xs rounded-full transition-colors ${affordMode ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
                     >
                       On
                     </button>
@@ -536,6 +543,11 @@ export function MortgageCalculator() {
         onInsuranceChange={setInsuranceAnnual}
         hoaMonthly={hoaMonthly}
         onHoaChange={setHoaMonthly}
+        affordMode={affordMode && purpose === 'purchase'}
+        grossMonthlyIncome={grossMonthlyIncome}
+        onGrossMonthlyIncomeChange={setGrossMonthlyIncome}
+        monthlyDebt={monthlyDebt}
+        onMonthlyDebtChange={setMonthlyDebt}
       />
 
       {/* CTA Buttons */}

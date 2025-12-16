@@ -11,6 +11,11 @@ interface AdvancedSettingsProps {
   onInsuranceChange: (value: number) => void;
   hoaMonthly: number;
   onHoaChange: (value: number) => void;
+  affordMode?: boolean;
+  grossMonthlyIncome?: number;
+  onGrossMonthlyIncomeChange?: (value: number) => void;
+  monthlyDebt?: number;
+  onMonthlyDebtChange?: (value: number) => void;
 }
 
 export function AdvancedSettings({
@@ -20,6 +25,11 @@ export function AdvancedSettings({
   onInsuranceChange,
   hoaMonthly,
   onHoaChange,
+  affordMode = false,
+  grossMonthlyIncome = 10000,
+  onGrossMonthlyIncomeChange,
+  monthlyDebt = 500,
+  onMonthlyDebtChange,
 }: AdvancedSettingsProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +54,7 @@ export function AdvancedSettings({
       <div
         className={cn(
           'calculator-card mt-2 overflow-hidden transition-all duration-300',
-          isOpen ? 'max-h-[600px] p-3' : 'max-h-0 p-0 border-0'
+          isOpen ? 'max-h-[800px] p-3' : 'max-h-0 p-0 border-0'
         )}
       >
         {/* Property Tax Rate */}
@@ -82,7 +92,7 @@ export function AdvancedSettings({
         </div>
 
         {/* HOA Dues */}
-        <div>
+        <div className={affordMode ? 'mb-3.5' : ''}>
           <div className="text-xs font-semibold text-foreground">HOA Dues</div>
           <div className="text-sm font-medium text-primary mb-1.5">
             <span>$</span>
@@ -97,6 +107,45 @@ export function AdvancedSettings({
             onChange={onHoaChange}
           />
         </div>
+
+        {/* Afford Mode Fields */}
+        {affordMode && (
+          <>
+            {/* Gross Monthly Income */}
+            <div className="mb-3.5">
+              <div className="text-xs font-semibold text-foreground">Gross Monthly Income</div>
+              <div className="text-sm font-medium text-primary mb-1.5">
+                <span>$</span>
+                <span>{formatCurrencyWhole(grossMonthlyIncome)}</span>
+                <span>/mo</span>
+              </div>
+              <RangeSlider
+                min={1000}
+                max={50000}
+                step={500}
+                value={grossMonthlyIncome}
+                onChange={onGrossMonthlyIncomeChange || (() => {})}
+              />
+            </div>
+
+            {/* Monthly Debt */}
+            <div>
+              <div className="text-xs font-semibold text-foreground">Monthly Debt</div>
+              <div className="text-sm font-medium text-primary mb-1.5">
+                <span>$</span>
+                <span>{formatCurrencyWhole(monthlyDebt)}</span>
+                <span>/mo</span>
+              </div>
+              <RangeSlider
+                min={0}
+                max={10000}
+                step={100}
+                value={monthlyDebt}
+                onChange={onMonthlyDebtChange || (() => {})}
+              />
+            </div>
+          </>
+        )}
       </div>
     </>
   );
