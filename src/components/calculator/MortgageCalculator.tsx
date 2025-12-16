@@ -208,6 +208,30 @@ export function MortgageCalculator() {
             value={purpose}
             onChange={setPurpose}
           />
+          {/* Afford toggle - fixed width container so other toggles don't shift */}
+          <div className="w-[120px] flex justify-end">
+            {purpose === 'purchase' && (
+              <div className="flex items-center gap-2">
+                <span className="text-[13px] text-muted-foreground">Afford</span>
+                <div className="flex bg-muted rounded-full p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setAffordMode(false)}
+                    className={`px-3 py-1 text-xs rounded-full transition-colors ${!affordMode ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+                  >
+                    Off
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAffordMode(true)}
+                    className={`px-3 py-1 text-xs rounded-full transition-colors ${affordMode ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+                  >
+                    On
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
