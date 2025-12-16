@@ -548,12 +548,12 @@ END:VCARD`;
 
             <div className="grid md:grid-cols-2 gap-4 md:gap-8">
               {/* Traditional - Hidden on mobile */}
-              <div className={`hidden md:block bg-card/60 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border/50 transition-all duration-700 delay-200 hover:opacity-100 ${
+              <div className={`hidden md:block bg-card/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border/60 transition-all duration-700 delay-200 hover:opacity-100 ${
                 processSection.isVisible ? 'opacity-95 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground/70">Traditional</h3>
-                  <p className="text-base text-muted-foreground mt-1">Manual. Slow. Uncertain.</p>
+                  <h3 className="text-3xl md:text-4xl font-bold text-foreground/70">Traditional</h3>
+                  <p className="text-lg text-muted-foreground mt-1">Manual. Slow. Uncertain.</p>
                 </div>
                 <div className="space-y-3">
                   {[
@@ -565,18 +565,18 @@ END:VCARD`;
                   ].map((item, index) => (
                     <div 
                       key={item.step} 
-                      className={`group flex items-start gap-4 p-4 bg-muted/30 rounded-lg border border-border/40 transition-all duration-500 hover:bg-muted/40 ${
+                      className={`group flex items-start gap-4 p-4 bg-muted/50 rounded-lg border border-border/50 transition-all duration-500 hover:bg-muted/60 ${
                         processSection.isVisible ? 'opacity-90 translate-x-0' : 'opacity-0 -translate-x-5'
                       }`}
                       style={{ transitionDelay: `${300 + index * 100}ms` }}
                       title={item.hoverDesc}
                     >
-                      <div className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-base font-bold text-foreground/60">
+                      <div className="w-11 h-11 rounded-full bg-muted/60 flex items-center justify-center flex-shrink-0 text-lg font-bold text-foreground/60">
                         {item.step}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-foreground/90 text-lg">{item.label}</p>
-                        <p className="text-base text-muted-foreground">{item.time}</p>
+                        <p className="font-semibold text-foreground/90 text-xl">{item.label}</p>
+                        <p className="text-lg text-muted-foreground">{item.time}</p>
                         <p className="text-sm text-muted-foreground/70 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{item.hoverDesc}</p>
                       </div>
                     </div>
@@ -595,9 +595,9 @@ END:VCARD`;
                 
                 <div className="relative">
                   <div className="text-center mb-5 md:mb-6">
-                    <h3 className="text-2xl md:text-3xl font-bold text-primary">AI-Powered</h3>
-                    <p className="text-base text-secondary mt-1 flex items-center justify-center gap-1">
-                      Automated. Accurate. Fast. <Zap className="w-4 h-4 text-primary" />
+                    <h3 className="text-3xl md:text-4xl font-bold text-primary">AI-Powered</h3>
+                    <p className="text-lg text-secondary mt-1 flex items-center justify-center gap-1">
+                      Automated. Accurate. Fast. <Zap className="w-5 h-5 text-primary" />
                     </p>
                   </div>
                   <div className="space-y-3">
@@ -616,19 +616,19 @@ END:VCARD`;
                         style={{ transitionDelay: `${400 + index * 80}ms` }}
                         title={item.hoverDesc}
                       >
-                        <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-base font-bold text-white shadow-lg">
+                        <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-lg font-bold text-white shadow-lg">
                           {item.step}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <p className="font-semibold text-foreground text-base md:text-lg">
+                            <p className="font-semibold text-foreground text-base md:text-xl">
                               <span className="md:hidden">{item.mobileLabel}</span>
                               <span className="hidden md:inline">{item.label}</span>
                             </p>
                             <Zap className="w-4 h-4 text-primary flex-shrink-0" />
                           </div>
-                          <p className="text-sm md:text-base text-secondary font-medium">{item.time}</p>
-                          <p className="text-xs text-muted-foreground mt-1 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">{item.hoverDesc}</p>
+                          <p className="text-sm md:text-lg text-secondary font-medium">{item.time}</p>
+                          <p className="text-sm text-muted-foreground mt-1 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">{item.hoverDesc}</p>
                         </div>
                       </div>
                     ))}
