@@ -1,25 +1,13 @@
 import { cn } from '@/lib/utils';
-import { Purpose, LoanType } from './types';
 
-interface PurposeSegmentControlProps {
-  options: { value: Purpose; label: string }[];
-  value: Purpose;
-  onChange: (value: Purpose) => void;
+interface SegmentControlProps<T extends string> {
+  options: { value: T; label: string }[];
+  value: T;
+  onChange: (value: T) => void;
   className?: string;
 }
 
-interface LoanTypeSegmentControlProps {
-  options: { value: LoanType; label: string }[];
-  value: LoanType;
-  onChange: (value: LoanType) => void;
-  className?: string;
-}
-
-type SegmentControlProps = PurposeSegmentControlProps | LoanTypeSegmentControlProps;
-
-export function SegmentControl(props: SegmentControlProps) {
-  const { options, value, onChange, className } = props as PurposeSegmentControlProps & { className?: string };
-  
+export function SegmentControl<T extends string>({ options, value, onChange, className }: SegmentControlProps<T>) {
   return (
     <div className={cn("segment-control flex gap-1", className)}>
       {options.map((option) => (
@@ -30,7 +18,7 @@ export function SegmentControl(props: SegmentControlProps) {
             'segment-button',
             value === option.value && 'active'
           )}
-          onClick={() => (onChange as (v: string) => void)(option.value)}
+          onClick={() => onChange(option.value)}
         >
           {option.label}
         </button>
