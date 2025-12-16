@@ -537,78 +537,98 @@ END:VCARD`;
           {/* Process Flow Comparison */}
           <section 
             ref={processSection.ref}
-            className="space-y-6 md:space-y-8"
+            className="space-y-6 md:space-y-10"
           >
-            <div className={`text-center space-y-2 md:space-y-3 transition-all duration-700 ${
+            <div className={`text-center space-y-2 md:space-y-4 transition-all duration-700 ${
               processSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground"><span className="hidden md:inline">Traditional vs </span>AI-Enhanced Process</h2>
-              <p className="text-sm md:text-lg text-muted-foreground">See how our AI tech<span className="hidden md:inline">nology</span> accelerates your mortgage journey</p>
+              <h2 className="text-3xl md:text-5xl font-bold text-foreground"><span className="hidden md:inline">Traditional vs </span>AI-Powered Mortgage</h2>
+              <p className="text-sm md:text-xl text-muted-foreground">Same goal. Very different speed.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-3 md:gap-8">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-8">
               {/* Traditional - Hidden on mobile */}
-              <div className={`hidden md:block bg-card/30 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-border/50 hover:border-border transition-all duration-700 delay-200 ${
-                processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+              <div className={`hidden md:block bg-card/20 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-border/30 transition-all duration-700 delay-200 opacity-70 hover:opacity-90 ${
+                processSection.isVisible ? 'opacity-70 translate-x-0' : 'opacity-0 -translate-x-10'
               }`}>
-                <div className="text-center mb-4 md:mb-6">
-                  <h3 className="text-sm md:text-2xl font-bold text-muted-foreground">Traditional Process</h3>
-                  <p className="text-[10px] md:text-sm text-muted-foreground mt-1">Manual work, prone to human error</p>
+                <div className="text-center mb-6">
+                  <h3 className="text-xl md:text-2xl font-bold text-muted-foreground">Traditional</h3>
+                  <p className="text-sm text-muted-foreground/70 mt-1">Manual. Slow. Uncertain.</p>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {[
-                    { step: "1", label: "Wait for Office Hours", time: "1-2 days wait", desc: "Call during business hours" },
-                    { step: "2", label: "Long Paper Application", time: "30-45 minutes", desc: "Fill out extensive forms" },
-                    { step: "3", label: "Manual Document Review", time: "3-5 days", desc: "Human processing, potential errors" },
-                    { step: "4", label: "Manual Underwriting", time: "7-10 business days", desc: "Slow human verification" },
-                    { step: "5", label: "Approval Decision", time: "Total: 3-4 weeks", desc: "If no mistakes found" },
-                  ].map((item) => (
-                    <div key={item.step} className="flex items-start gap-2 md:gap-4 p-2 md:p-3 bg-muted/20 rounded-lg border border-border/30">
-                      <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-muted/50 flex items-center justify-center flex-shrink-0 text-xs md:text-sm font-bold text-muted-foreground">
+                    { step: "1", label: "Office Hours Only", time: "1–2 day wait", hoverDesc: "Wait for business hours to even start" },
+                    { step: "2", label: "Long Application", time: "30–45 minutes", hoverDesc: "Extensive paperwork and forms" },
+                    { step: "3", label: "Manual Review", time: "3–5 days", hoverDesc: "Human checks, rechecks, delays" },
+                    { step: "4", label: "Underwriting Queue", time: "7–10 days", hoverDesc: "Slow verification process" },
+                    { step: "5", label: "Final Decision", time: "3–4 weeks total", hoverDesc: "If no mistakes found" },
+                  ].map((item, index) => (
+                    <div 
+                      key={item.step} 
+                      className={`group flex items-start gap-4 p-3 bg-muted/10 rounded-lg border border-border/20 transition-all duration-500 hover:bg-muted/20 ${
+                        processSection.isVisible ? 'opacity-60 translate-x-0' : 'opacity-0 -translate-x-5'
+                      }`}
+                      style={{ transitionDelay: `${300 + index * 100}ms` }}
+                      title={item.hoverDesc}
+                    >
+                      <div className="w-8 h-8 rounded-full bg-muted/30 flex items-center justify-center flex-shrink-0 text-sm font-bold text-muted-foreground/70">
                         {item.step}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-foreground text-xs md:text-base truncate">{item.label}</p>
-                        <p className="text-[10px] md:text-xs text-muted-foreground">{item.time}</p>
-                        <p className="text-[8px] md:text-[10px] text-muted-foreground/70 mt-0.5 hidden md:block">{item.desc}</p>
+                        <p className="font-semibold text-muted-foreground text-base">{item.label}</p>
+                        <p className="text-sm text-muted-foreground/60">{item.time}</p>
+                        <p className="text-xs text-muted-foreground/50 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{item.hoverDesc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* AI-Enhanced */}
-              <div className={`bg-gradient-to-br from-primary/15 via-secondary/12 to-accent/15 rounded-2xl p-5 md:p-8 border-2 border-primary/50 shadow-xl shadow-primary/25 relative overflow-hidden transition-all duration-700 delay-400 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30 ${
+              {/* AI-Powered */}
+              <div className={`bg-gradient-to-br from-primary/20 via-secondary/15 to-accent/20 rounded-2xl p-5 md:p-8 border-2 border-primary/40 shadow-xl shadow-primary/20 relative overflow-hidden transition-all duration-700 delay-300 hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/30 ${
                 processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/5"></div>
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-secondary/20 rounded-full blur-3xl"></div>
+                
                 <div className="relative">
                   <div className="text-center mb-5 md:mb-6">
-                    <h3 className="text-base md:text-2xl font-bold text-primary">AI-Enhanced Process</h3>
-                    <p className="text-xs md:text-sm text-secondary mt-1">Automated, accurate, fast</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-primary">AI-Powered</h3>
+                    <p className="text-sm text-secondary mt-1 flex items-center justify-center gap-1">
+                      Automated. Accurate. Fast. <Zap className="w-4 h-4 text-primary" />
+                    </p>
                   </div>
-                  <div className="space-y-3 md:space-y-4">
+                  <div className="space-y-3">
                     {[
-                      { step: "1", label: "Chat with Sophia 24/7", mobileLabel: "Chat with Sophia 24/7", time: "Instant response", desc: "Available anytime, anywhere", icon: Zap },
-                      { step: "2", label: "Easy Online/Phone Application", mobileLabel: "Easy Online/Phone App", time: "5-10 minutes", desc: "Simple process guided by AI", icon: Zap },
-                      { step: "3", label: "AI Document Analysis", mobileLabel: "AI Document Analysis", time: "Real-time", desc: "Automated verification, zero errors", icon: Zap },
-                      { step: "4", label: "Smart Pre-Approval", mobileLabel: "Smart Pre-Approval", time: "Same day", desc: "AI + human review for accuracy", icon: Zap },
-                      { step: "5", label: "Final Approval", mobileLabel: "Final Approval", time: "Total: 5-7 days", desc: "Faster, more reliable", icon: Zap },
-                    ].map((item) => (
-                      <div key={item.step} className="flex items-start gap-3 md:gap-4 p-3 md:p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20">
-                        <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-sm md:text-sm font-bold text-white shadow-lg">
+                      { step: "1", label: "Chat with Sophia 24/7", mobileLabel: "Chat with Sophia 24/7", time: "Instant", hoverDesc: "Available anytime, anywhere" },
+                      { step: "2", label: "Apply in Minutes", mobileLabel: "Apply in Minutes", time: "5–10 minutes", hoverDesc: "Simple, guided application" },
+                      { step: "3", label: "AI Document Review", mobileLabel: "AI Document Review", time: "Real-time", hoverDesc: "Automated verification with human oversight" },
+                      { step: "4", label: "Smart Pre-Approval", mobileLabel: "Smart Pre-Approval", time: "Same day", hoverDesc: "AI + human review for accuracy" },
+                      { step: "5", label: "Final Approval", mobileLabel: "Final Approval", time: "5–7 days total", hoverDesc: "Faster, more reliable" },
+                    ].map((item, index) => (
+                      <div 
+                        key={item.step} 
+                        className={`group flex items-start gap-3 md:gap-4 p-3 bg-card/80 backdrop-blur-sm rounded-lg border border-primary/20 transition-all duration-500 hover:border-primary/40 hover:bg-card/90 ${
+                          processSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-5'
+                        }`}
+                        style={{ transitionDelay: `${400 + index * 80}ms` }}
+                        title={item.hoverDesc}
+                      >
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 text-sm font-bold text-white shadow-lg">
                           {item.step}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 md:gap-2">
-                            <p className="font-semibold text-foreground text-sm md:text-base truncate">
+                          <div className="flex items-center gap-2">
+                            <p className="font-semibold text-foreground text-sm md:text-base">
                               <span className="md:hidden">{item.mobileLabel}</span>
                               <span className="hidden md:inline">{item.label}</span>
                             </p>
-                            <item.icon className="w-4 h-4 md:w-4 md:h-4 text-primary flex-shrink-0" />
+                            <Zap className="w-4 h-4 text-primary flex-shrink-0" />
                           </div>
-                          <p className="text-xs md:text-xs text-secondary font-medium">{item.time}</p>
-                          <p className="text-[8px] md:text-[10px] text-muted-foreground mt-0.5 hidden md:block">{item.desc}</p>
+                          <p className="text-xs md:text-sm text-secondary font-medium">{item.time}</p>
+                          <p className="text-xs text-muted-foreground mt-1 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">{item.hoverDesc}</p>
                         </div>
                       </div>
                     ))}
@@ -617,7 +637,7 @@ END:VCARD`;
               </div>
             </div>
 
-            <div className={`text-center transition-all duration-700 delay-600 ${
+            <div className={`text-center transition-all duration-700 delay-700 ${
               processSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}>
               <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 rounded-full px-6 md:px-8 py-3 md:py-4 shadow-lg shadow-primary/20">
