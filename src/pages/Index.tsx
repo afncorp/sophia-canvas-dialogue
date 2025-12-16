@@ -34,6 +34,18 @@ const Index = () => {
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [showFreeQuoteForm, setShowFreeQuoteForm] = useState(false);
   const [showMobileChat, setShowMobileChat] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Theme detection for logo switching
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDarkMode(document.documentElement.getAttribute('data-theme') === 'dark');
+    };
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
 
   // Scroll animation hooks for different sections
   const heroSection = useScrollAnimation({ threshold: 0.2 });
@@ -134,7 +146,7 @@ const Index = () => {
             {/* Logo + Company Name */}
             <div className="flex items-center gap-3 md:gap-4">
               <img 
-                src={afnLogoWhite} 
+                src={isDarkMode ? afnLogoWhite : afnLogo} 
                 alt="AFN Logo" 
                 className="h-10 md:h-12 w-auto"
               />
