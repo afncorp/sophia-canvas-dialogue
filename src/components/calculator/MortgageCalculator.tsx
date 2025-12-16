@@ -152,9 +152,9 @@ export function MortgageCalculator() {
 
   return (
     <div className="calculator-container w-full p-[18px_14px_20px] md:p-[22px_24px_24px]">
-      {/* Header - Total payment + Segments */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-        <div className="text-[36px] md:text-[42px] font-bold text-primary">
+      {/* Desktop Header - Total payment + Segments */}
+      <div className="hidden md:flex md:flex-row md:items-center md:justify-between gap-3 mb-4">
+        <div className="text-[42px] font-bold text-primary">
           ${formatCurrencyWhole(breakdown.total)}
           <span className="text-lg font-medium text-muted-foreground ml-1">/mo</span>
         </div>
@@ -179,8 +179,44 @@ export function MortgageCalculator() {
         </div>
       </div>
 
-      {/* Payment Breakdown */}
-      <PaymentBar breakdown={breakdown} />
+      {/* Mobile Header - Total + Segments + Payment Bar */}
+      <div className="md:hidden mb-3">
+        <div className="text-[36px] font-bold text-primary mb-3">
+          ${formatCurrencyWhole(breakdown.total)}
+          <span className="text-lg font-medium text-muted-foreground ml-1">/mo</span>
+        </div>
+        
+        {/* Purch/Refi toggle */}
+        <SegmentControl
+          options={[
+            { value: 'purchase', label: 'Purch' },
+            { value: 'refi', label: 'Refi' },
+          ]}
+          value={purpose}
+          onChange={setPurpose}
+          className="mb-2"
+        />
+        
+        {/* Conv/FHA/VA toggle */}
+        <SegmentControl
+          options={[
+            { value: 'conv', label: 'Conv' },
+            { value: 'fha', label: 'FHA' },
+            { value: 'va', label: 'VA' },
+          ]}
+          value={loanType}
+          onChange={setLoanType}
+          className="mb-3"
+        />
+        
+        {/* Payment Breakdown */}
+        <PaymentBar breakdown={breakdown} />
+      </div>
+
+      {/* Desktop Payment Breakdown */}
+      <div className="hidden md:block">
+        <PaymentBar breakdown={breakdown} />
+      </div>
 
       {/* Desktop: 2-column grid layout */}
       <div className="hidden md:grid grid-cols-2 gap-3 mt-4">
@@ -322,33 +358,31 @@ export function MortgageCalculator() {
       {/* Mobile: Stacked portrait layout */}
       <div className="md:hidden mt-3">
         <div className="calculator-card p-3.5 space-y-4">
-          {/* Purpose & Loan Type Segments */}
-          <div className="flex gap-2 items-center w-full">
-            <SegmentControl
-              options={[
-                { value: 'purchase', label: 'Purch' },
-                { value: 'refi', label: 'Refi' },
-              ]}
-              value={purpose}
-              onChange={setPurpose}
-              className="flex-1"
-            />
-            <SegmentControl
-              options={[
-                { value: 'conv', label: 'Conv' },
-                { value: 'fha', label: 'FHA' },
-                { value: 'va', label: 'VA' },
-              ]}
-              value={loanType}
-              onChange={setLoanType}
-              className="flex-[1.5]"
-            />
-          </div>
-
-          {/* Home Price */}
+          {/* Home Price with Afford toggle (purchase only) */}
           <div>
-            <div className="text-[13px] font-semibold text-foreground">
-              {purpose === 'refi' ? 'Property Value' : 'Home Price'}
+            <div className="flex items-center gap-3 mb-1">
+              <div className="text-[13px] font-semibold text-foreground">
+                {purpose === 'refi' ? 'Property Value' : 'Home Price'}
+              </div>
+              {purpose === 'purchase' && (
+                <div className="flex items-center gap-2 ml-auto">
+                  <span className="text-[13px] text-muted-foreground">Afford</span>
+                  <div className="flex bg-muted rounded-full p-0.5">
+                    <button
+                      type="button"
+                      className="px-3 py-1 text-xs rounded-full transition-colors text-muted-foreground"
+                    >
+                      Off
+                    </button>
+                    <button
+                      type="button"
+                      className="px-3 py-1 text-xs rounded-full transition-colors bg-primary text-primary-foreground"
+                    >
+                      On
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="flex items-baseline gap-1 text-xl font-semibold text-primary mb-2">
               <span className="text-[0.8em] opacity-90">$</span>
