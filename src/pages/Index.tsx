@@ -604,7 +604,7 @@ END:VCARD`;
                     {[
                       { step: "1", label: "Chat with Sophia 24/7", mobileLabel: "Chat with Sophia 24/7", time: "Instant", hoverDesc: "Available anytime, anywhere" },
                       { step: "2", label: "Apply in Minutes", mobileLabel: "Apply in Minutes", time: "5–10 minutes", hoverDesc: "Simple, guided application" },
-                      { step: "3", label: "AI Document Review", mobileLabel: "AI Document Review", time: "Real-time", hoverDesc: "Automated verification with human oversight" },
+                      { step: "3", label: "AI Document Review", mobileLabel: "AI Document Review", time: "Real-time", hoverDesc: "Automated verification" },
                       { step: "4", label: "Smart Pre-Approval", mobileLabel: "Smart Pre-Approval", time: "Same day", hoverDesc: "AI + human review for accuracy" },
                       { step: "5", label: "Final Approval", mobileLabel: "Final Approval", time: "5–7 days total", hoverDesc: "Faster, more reliable" },
                     ].map((item, index) => (
