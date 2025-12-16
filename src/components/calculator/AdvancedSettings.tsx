@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RangeSlider } from './RangeSlider';
 import { formatCurrencyWhole } from './utils';
 import { ChevronRight } from 'lucide-react';
@@ -32,6 +32,11 @@ export function AdvancedSettings({
   onMonthlyDebtChange,
 }: AdvancedSettingsProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Auto-expand when affordMode turns on, collapse when it turns off
+  useEffect(() => {
+    setIsOpen(affordMode);
+  }, [affordMode]);
 
   const taxRateDisplay = (taxRate / 100).toFixed(2).replace(/0$/, '').replace(/\.0$/, '');
 
@@ -122,7 +127,7 @@ export function AdvancedSettings({
               <RangeSlider
                 min={1000}
                 max={50000}
-                step={500}
+                step={100}
                 value={grossMonthlyIncome}
                 onChange={onGrossMonthlyIncomeChange || (() => {})}
               />
@@ -139,7 +144,7 @@ export function AdvancedSettings({
               <RangeSlider
                 min={0}
                 max={10000}
-                step={100}
+                step={50}
                 value={monthlyDebt}
                 onChange={onMonthlyDebtChange || (() => {})}
               />
